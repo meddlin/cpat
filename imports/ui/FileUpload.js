@@ -33,6 +33,14 @@ class FileUpload extends Component {
 	        console.log(res);
 	      }
 	    });
+
+	    Meteor.call('server.xmlToJson', (error, res) => {
+	    	if (error) {
+	    		console.log(error.reason);
+	    	} else {
+	    		console.log(res);
+	    	}
+	    })
 	  };
 
 	  fr.readAsText(acceptedFiles[0]);

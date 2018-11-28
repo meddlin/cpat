@@ -1,6 +1,9 @@
 import xmltodict
 import pprint
 import json
+import sys
+
+firstarg = sys.argv[1]
 
 # Look here for the guide
 # https://www.journaldev.com/19392/python-xml-to-json-dict
