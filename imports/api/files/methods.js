@@ -19,13 +19,9 @@ Meteor.methods({
 		var datafile_path = process.env.PWD + "/nmap-out.xml";
 		let dataString = '';
 
-		/*updateDataString(data) => {
-			dataString = data;
-		}*/
-
 		bound( () => {
 			var py = spawn('python', [file_path, datafile_path]);
-		
+
 			py.stdout.on('data', function(data) {
 				dataString += data.toString();
 			});
@@ -36,6 +32,7 @@ Meteor.methods({
 				console.log('end of stream');
 				console.log(dataString);
 			});
+
 		});
 
 		console.log('after callback => ' + dataString);
