@@ -1,17 +1,33 @@
 import React, { Component } from 'react';
-import Dropzone from 'react-dropzone';
 import { Meteor } from 'meteor/meteor';
-import FileDataCollection from '../api/files/files';
+import { withTracker } from 'meteor/react-meteor-data';
+import Dropzone from 'react-dropzone';
+
+import { FileData } from '../api/files/files';
 
 class FileUpload extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			files: []
+			files: ''
 		}
 
 		this.handleFileChange = this.handleFileChange.bind(this);
+	}
+
+	renderFiles() {
+		/*let fileData = this.props.files.map((file) => (
+			<span>{file.origination}</span>
+		));
+		this.setState({ files: fileData });*/
+		return this.props.files.map((file) => (
+			<span key={file._id}>{file.origination}</span>
+		));
+	}
+
+	componentDidMount() {
+
 	}
 
 	handleFileChange(selectedFiles) {
@@ -47,6 +63,8 @@ class FileUpload extends Component {
 	}
 	
 	render() {
+		
+		const { files } = this.state;
 		return (
 			<div>
 			    <h1>File Upload</h1>
@@ -55,6 +73,7 @@ class FileUpload extends Component {
 			    <div>
 			    	{/*<input type="file" id="file-input" />*/}
 			    	Uploader Below
+			    	{this.renderFiles()}
 			    </div>
 
 			    <Dropzone onDrop={(files) => this.onDrop(files)} />
@@ -63,4 +82,9 @@ class FileUpload extends Component {
 	}
 }
 
-export default FileUpload;
+/*export default FileUpload;*/
+export default withTracker(() => {
+	return {
+    	files: FileData.find().fetch()
+  	};
+})(FileUpload);
