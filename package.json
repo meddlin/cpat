@@ -12,7 +12,8 @@
     "meteor-node-stubs": "^0.4.1",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
-    "react-dropzone": "^7.0.1"
+    "react-dropzone": "^7.0.1",
+    "react-table": "^6.8.6"
   },
   "meteor": {
     "mainModule": {

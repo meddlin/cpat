@@ -5,9 +5,7 @@ import FileUpload from './FileUpload';
 
 const App = () => (
   <div>
-    <h1>Welcome to Meteor!</h1>
-    <Hello />
-    <Info />
+    
     <FileUpload />
   </div>
 );

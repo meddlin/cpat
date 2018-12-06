@@ -8,13 +8,21 @@ Meteor.methods({
 		return FileData.insert({ source: data });
 	},
 
+	'server.startNmapScan': function startNmapScan() {
+		// bind environment with Meteor.bindEnvironment
+
+		// 1) pass nmap scan (script) to python
+		// 2) kickoff python w/ nmap script
+
+		// 3) Use python to throw output into MongoDB
+	},
+
 	'server.xmlToJson': function xmlToJsonConvert() {
 		const bound = Meteor.bindEnvironment((callback) => {
 			callback();
 		});
 		const { spawn, exec } = require('child_process');
 
-		console.log('test python file Meteor method call...');
 		var file_path = process.env.PWD + "/fileconv.py";
 		var datafile_path = process.env.PWD + "/nmap-out.xml";
 		let dataString = '';
@@ -30,17 +38,10 @@ Meteor.methods({
 			});
 			py.stdout.on('end', function() {
 				console.log('end of stream');
-				console.log(dataString);
+				/*console.log(dataString);*/
 			});
 
-		});
-
-		console.log('after callback => ' + dataString);
-
-		return FileData.insert({ 
-					source: dataString,
-					origination: 'Python Conversion'
-				});		
+		});	
 
 	}
 });

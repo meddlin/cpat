@@ -2,32 +2,30 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import Dropzone from 'react-dropzone';
+import ReactTable from "react-table";
+import 'react-table/react-table.css' 
 
 import { FileData } from '../api/files/files';
+import './FileUpload.css';
 
 class FileUpload extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			files: ''
+			files: '',
+			tableData: []
 		}
 
 		this.handleFileChange = this.handleFileChange.bind(this);
 	}
 
-	renderFiles() {
-		/*let fileData = this.props.files.map((file) => (
-			<span>{file.origination}</span>
-		));
-		this.setState({ files: fileData });*/
-		return this.props.files.map((file) => (
-			<span key={file._id}>{file.origination}</span>
-		));
-	}
-
-	componentDidMount() {
-
+	getTableData() {
+		let arr = [];
+		this.props.files.map( (file) => {
+			arr.push({ message: file._id, converter: file.origination });
+		});
+		return arr;
 	}
 
 	handleFileChange(selectedFiles) {
@@ -63,20 +61,42 @@ class FileUpload extends Component {
 	}
 	
 	render() {
-		
-		const { files } = this.state;
+		const { files, tableData } = this.state;
+
+		if (files.length > 0) {
+			this.setState({ tableData: this.props.files });
+		}
+
 		return (
 			<div>
 			    <h1>File Upload</h1>
-			    <p>upload files here to be injested to MongoDB</p>
 
-			    <div>
-			    	{/*<input type="file" id="file-input" />*/}
-			    	Uploader Below
-			    	{this.renderFiles()}
+			    <div className="horizontal">
+			    	<div id="uploader">
+				    	<Dropzone onDrop={(files) => this.onDrop(files)} />
+				    </div>
+
+				    <div id="listing">
+				    	<h3>Uploaded Data</h3>
+
+				    	<ReactTable data={this.getTableData()} columns={[
+				            {
+				              Header: "Data",
+				              columns: [
+				                {
+				                  Header: "Message",
+				                  accessor: "message"
+				                },
+				                {
+				                	Header: "Converter",
+				                	accessor: "converter"
+				                }
+				              ]
+				            }
+				          ]} />
+				    </div>
 			    </div>
-
-			    <Dropzone onDrop={(files) => this.onDrop(files)} />
+			    
 			  </div>
 		);
 	}
