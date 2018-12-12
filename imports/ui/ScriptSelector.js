@@ -3,8 +3,8 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import ReactTable from "react-table";
 
-/*import { FileData } from '../api/files/files';
-import './FileUpload.css';*/
+import { FileData } from '../api/scripts/scripts';
+/*import './FileUpload.css';*/
 
 class ScriptSelector extends Component {
 	constructor(props) {
@@ -14,6 +14,21 @@ class ScriptSelector extends Component {
 			
 		}
 
+	}
+
+	getTableData() {
+		let arr = [
+			{
+				name: '1.sh',
+				language: 'shell'
+			},
+			{
+				name: 'my.py',
+				language: 'python'
+			}
+		];
+
+		return arr;
 	}
 	
 	render() {
@@ -26,6 +41,22 @@ class ScriptSelector extends Component {
 			    	<div id="uploader">
 				    	
 				    </div>
+			    </div>
+
+			    <div>
+			    	<ReactTable data={this.getTableData()} columns={[
+			    		{
+			    			Header: 'Data',
+			    			columns: [
+			    			{
+			    				Header: 'Name',
+			    				accessor: 'name'
+			    			}, {
+			    				Header: 'Language',
+			    				accessor: 'language'
+			    			}]
+			    		}
+			    	]} />
 			    </div>
 			    
 			  </div>
