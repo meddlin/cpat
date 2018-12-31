@@ -13,7 +13,6 @@ class ScriptSelector extends Component {
 		this.state = {
 			
 		}
-
 	}
 
 	getTableData() {
