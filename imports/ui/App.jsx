@@ -9,12 +9,13 @@ import ScriptSelector from './ScriptSelector';
 
 const App = () => (
   <Router history={history}>
-  <div id="app">
-  	<Header />
-  	<Route path="/" exact={true} component={Home} />
-  	<Route path="/upload" component={FileUpload} />
-  	<Route path="/scripts" component={ScriptSelector} />
-  </div>
+	  <div id="app">
+	  	<Header />
+
+	  	<Route path="/" exact={true} component={Home} />
+	  	<Route path="/upload" component={FileUpload} />
+	  	<Route path="/scripts" component={ScriptSelector} />
+	  </div>
   </Router>
 );
 
