@@ -102,7 +102,6 @@ class FileUpload extends Component {
 	}
 }
 
-/*export default FileUpload;*/
 export default withTracker(() => {
 	return {
     	files: FileData.find().fetch()
