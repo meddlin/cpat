@@ -13,6 +13,7 @@ class Home extends Component {
 					<li><hr /></li>
 					<li><Link to="/scripts">Script Editor</Link></li>
 					<li><Link to="/upload">Upload</Link></li>
+					<li><Link to="/analytics">Analytics</Link></li>
 				</ul>
 			</div>
 		);
