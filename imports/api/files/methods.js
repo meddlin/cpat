@@ -40,7 +40,12 @@ Meteor.methods({
 				/*console.log(dataString);*/
 			});
 
-		});	
+		});
+	},
 
+	'server.searchFiles': function searchFiles(query) {
+		console.log('searchFiles: ' + query);
+		return FileData.find({ $text: { $search: query } });
 	}
+
 });

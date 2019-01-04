@@ -57,8 +57,7 @@ class ScriptSelector extends Component {
 			    		}
 			    	]} />
 			    </div>
-			    
-			  </div>
+			</div>
 		);
 	}
 }
