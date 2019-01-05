@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import FileData from './files';
+import { FileData } from './files';
 
 Meteor.methods({
 

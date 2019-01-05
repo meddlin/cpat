@@ -54,7 +54,7 @@ class FileUpload extends Component {
 	    	} else {
 	    		console.log(res);
 	    	}
-	    })
+	    });
 	  };
 
 	  fr.readAsText(acceptedFiles[0]);
