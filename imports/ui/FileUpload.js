@@ -103,6 +103,8 @@ class FileUpload extends Component {
 }
 
 export default withTracker(() => {
+	Meteor.subscribe('filedata.all');
+
 	return {
     	files: FileData.find().fetch()
   	};
