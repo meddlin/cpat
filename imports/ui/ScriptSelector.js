@@ -4,15 +4,22 @@ import { withTracker } from 'meteor/react-meteor-data';
 import ReactTable from "react-table";
 
 import { FileData } from '../api/scripts/scripts';
-/*import './FileUpload.css';*/
+import './ScriptSelector.css';
 
 class ScriptSelector extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			
-		}
+		this.state = { }
+		this.submitScriptToServer = this.submitScriptToServer.bind(this);
+	}
+
+	submitScriptToServer() {
+		console.log('to submit to server...');
+		Meteor.call('server.pythonNmapParams', function(err, res) {
+			if (err) console.log(err);
+			if (res) console.log(res);
+		})
 	}
 
 	getTableData() {
@@ -41,6 +48,9 @@ class ScriptSelector extends Component {
 				    	
 				    </div>
 			    </div>
+
+			    <input id="script-input" type="text" />
+			    <div id="run-script-btn" onClick={this.submitScriptToServer}>Run</div>
 
 			    <div>
 			    	<ReactTable data={this.getTableData()} columns={[
