@@ -12,6 +12,7 @@ class ScriptSelector extends Component {
 
 		this.state = { }
 		this.submitScriptToServer = this.submitScriptToServer.bind(this);
+		this.checkForPlugins = this.checkForPlugins.bind(this);
 	}
 
 	submitScriptToServer() {
@@ -19,7 +20,14 @@ class ScriptSelector extends Component {
 		Meteor.call('server.pythonNmapParams', function(err, res) {
 			if (err) console.log(err);
 			if (res) console.log(res);
-		})
+		});
+	}
+
+	checkForPlugins() {
+		Meteor.call('server.findScriptPlugins', function(err, res) {
+			if (err) console.log(err);
+			if (res) console.log(res);
+		});
 	}
 
 	getTableData() {
@@ -51,6 +59,7 @@ class ScriptSelector extends Component {
 
 			    <input id="script-input" type="text" />
 			    <div id="run-script-btn" onClick={this.submitScriptToServer}>Run</div>
+			    <div id="run-script-btn" onClick={this.checkForPlugins}>Detect Plugins</div>
 
 			    <div>
 			    	<ReactTable data={this.getTableData()} columns={[

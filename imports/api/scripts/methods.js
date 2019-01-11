@@ -32,5 +32,31 @@ Meteor.methods({
 				console.log('end of stream');
 			});
 		});
+	},
+
+	'server.findScriptPlugins': function findScriptPlugins() {
+		const bound = Meteor.bindEnvironment((callback) => {
+			callback();
+		});
+
+		const { spawn } = require('child_process');
+		var scriptDetection = process.env.PWD + "/script-detection.py";
+		var pluginDir = process.env.PWD + "/tool-scripts";
+		let dataString = '';
+		let errString = '';
+
+		bound(() => {
+			let py = spawn('python', [scriptDetection]);
+			py.stdout.on('data', function(data) {
+				dataString += data.toString();
+				console.log('python -> ' + dataString);
+			});
+			py.stderr.on('data', (data) => {
+				errString += data.toString();
+				console.error('python STDERR -> ' + errString);
+			});
+		});
+
+		return dataString;
 	}
 });
