@@ -2,6 +2,10 @@ import { Meteor } from 'meteor/meteor';
 import Scripts from './scripts';
 
 Meteor.methods({
+	'insert.exampleScript': function insertExampleScript() {
+		return Scripts.insert({ name: 'insert-from-meteor.py', language: 'test' });
+	},
+
 	// proof-of-concept to pass multiple parameters to python process
 	'server.pythonNmapParams': function pythonParams() {
 		const bound = Meteor.bindEnvironment((callback) => {
