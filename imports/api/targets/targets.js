@@ -20,6 +20,14 @@ const TargetsSchema = new SimpleSchema({
 		type: String,
 		optional: true
 	},
+	collectionName: {
+		type: String,
+		optional: true
+	},
+	collectionId: {
+		type: String,
+		optional: true
+	},
 	relations: {
 		type: Array,
 		optional: true

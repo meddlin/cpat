@@ -8,6 +8,11 @@ import FileUpload from './FileUpload';
 import ScriptSelector from './ScriptSelector';
 import Analytics from './Analytics';
 
+import PersonView from './target-types/PersonView';
+import CompanyView from './target-types/CompanyView';
+import DeviceView from './target-types/DeviceView';
+import LocationView from './target-types/LocationView';
+
 const App = () => (
   <Router history={history}>
 	  <div id="app">
@@ -17,6 +22,11 @@ const App = () => (
 	  	<Route path="/upload" component={FileUpload} />
 	  	<Route path="/scripts" component={ScriptSelector} />
 	  	<Route path="/analytics" component={Analytics} />
+
+	  	<Route path="/person/view" component={PersonView} />
+	  	<Route path="/company/view" component={CompanyView} />
+	  	<Route path="/device/view" component={DeviceView} />
+	  	<Route path="/location/view" component={LocationView} />
 	  </div>
   </Router>
 );
