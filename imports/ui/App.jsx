@@ -12,6 +12,7 @@ import PersonView from './target-types/PersonView';
 import CompanyView from './target-types/CompanyView';
 import DeviceView from './target-types/DeviceView';
 import LocationView from './target-types/LocationView';
+import PdfFileView from './target-types/PdfFileView';
 
 const App = () => (
   <Router history={history}>
@@ -27,6 +28,7 @@ const App = () => (
 	  	<Route path="/company/view" component={CompanyView} />
 	  	<Route path="/device/view" component={DeviceView} />
 	  	<Route path="/location/view" component={LocationView} />
+	  	<Route path="/pdfFile/view" component={PdfFileView} />
 	  </div>
   </Router>
 );
