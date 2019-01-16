@@ -67,7 +67,7 @@ const PersonSchema = new SimpleSchema({
 	},
 	"socialLinks.$.url": {
 		type: String
-	}
+	},
 
 	/* Relationships */
 	relations: {

@@ -13,5 +13,7 @@ import '../../api/locations/methods';
 import '../../api/locations/server/publications';
 import '../../api/company/methods';
 import '../../api/company/server/publications';
+import '../../api/pdf-files/methods';
+import '../../api/pdf-files/server/publications';
 import '../../api/targets/methods';
 import '../../api/targets/server/publications';
