@@ -8,6 +8,7 @@ import FileUpload from './FileUpload';
 import ScriptSelector from './ScriptSelector';
 import Analytics from './Analytics';
 
+import TargetView from './target-types/TargetView';
 import PersonView from './target-types/PersonView';
 import CompanyView from './target-types/CompanyView';
 import DeviceView from './target-types/DeviceView';
@@ -24,6 +25,7 @@ const App = () => (
 	  	<Route path="/scripts" component={ScriptSelector} />
 	  	<Route path="/analytics" component={Analytics} />
 
+	  	<Route path="/target/view" component={TargetView} />
 	  	<Route path="/person/view" component={PersonView} />
 	  	<Route path="/company/view" component={CompanyView} />
 	  	<Route path="/device/view" component={DeviceView} />
