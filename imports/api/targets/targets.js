@@ -20,7 +20,7 @@ const TargetsSchema = new SimpleSchema({
 		type: String,
 		optional: true
 	},
-	collectionName: {
+	collectionType: {
 		type: String,
 		optional: true
 	},

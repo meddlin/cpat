@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
-import { Target } from '../../api/targets/targets';
+import Targets from '../../api/targets/targets';
 import './TargetView.css';
 
 class TargetView extends Component {
@@ -21,16 +21,16 @@ class TargetView extends Component {
 	}
 };
 
-export default TargetView;
+//export default TargetView;
 
 // TODO : Finish subscribing to the publication.
 
-/*export default withTracker((props) => {
+export default withTracker((props) => {
 	const docId = props.docId;
 
 	Meteor.subscribe('targets.single', docId);
 
 	return {
-    	target: Target.find().fetch()
+    	target: Targets.find().fetch()
   	};
-})(TargetView);*/
+})(TargetView);
