@@ -1,0 +1,21 @@
+#create-btn {
+	cursor: pointer;
+	background-color: lightgray;
+	max-width: 300px;
+	margin: 1em 0 1em 0;
+	padding: 5px;
+}
+
+.relations {
+	display: flex;
+	flex-direction: column;
+
+	margin-top: 1em;
+}
+	.relations-title {
+		font-weight: bold;
+	}
+	.relations-row {
+		display: flex;
+		flex-direction: row;
+	}
