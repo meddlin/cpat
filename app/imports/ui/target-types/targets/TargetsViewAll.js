@@ -16,6 +16,8 @@ class TargetsViewAll extends Component {
 			<div>
 				<h2>TargetsViewAll</h2>
 
+				<div id="selection">Select Target</div>
+
 				<p>Form goes here.</p>
 				<div>
 			    	<ReactTable 

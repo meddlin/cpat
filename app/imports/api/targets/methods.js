@@ -5,6 +5,7 @@ Meteor.methods({
 	'targets.insert': function insert(data) {
 		return Targets.insert({
 			name: data.name,
+			collectionId: data.collectionId,
 			collectionType: data.collectionType
 		});
 	}

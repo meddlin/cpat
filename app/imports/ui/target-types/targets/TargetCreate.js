@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
-import { Targets } from '../../../api/targets/targets';
+import Targets from '../../../api/targets/targets';
 import './TargetCreate.css';
 
 class TargetCreate extends Component {
@@ -71,11 +71,16 @@ class TargetCreate extends Component {
 					</div>
 				</div>
 
-
 				<div id="create-btn" onClick={this.clickCreate}>CREATE SAMPLE</div>
 			</div>
 		);
 	}
 }
 
-export default TargetCreate;
+export default withTracker((props) => {
+	Meteor.subscribe('targets.all');
+
+	return {
+    	target: Targets.find().fetch()
+  	};
+})(TargetCreate);
