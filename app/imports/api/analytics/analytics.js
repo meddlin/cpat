@@ -7,6 +7,13 @@ const AnalyticsSchema = new SimpleSchema({
 	},
 	amount: {
 		type: Number
+	},
+
+	dateCreated: {
+		type: Date
+	},
+	lastModified: {
+		type: Date
 	}
 });
 

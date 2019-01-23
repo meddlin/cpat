@@ -3,6 +3,7 @@ import pprint
 import json
 import sys
 import uuid
+import datetime
 from pymongo import MongoClient
 from subprocess import Popen, PIPE
 from pymongo import MongoClient
@@ -41,11 +42,14 @@ with open(xmlfile) as fd:
 sourceForInsert = json.dumps(doc)
 printer.pprint(json.dumps(doc))
 docId = str(uuid.uuid4())
+runStats = json.loads(sourceForInsert)
 
 result = db.filedata.insert_one({
 	'_id': docId,
 	'source': sourceForInsert,
-	'origination': 'from python file'
+	'runStats': runStats['nmaprun']['runstats'],
+	'origination': 'from python file',
+	'dateCreated': datetime.datetime.now()
 })
 printer.pprint(result)
 
