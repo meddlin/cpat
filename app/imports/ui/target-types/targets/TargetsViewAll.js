@@ -4,11 +4,27 @@ import { withTracker } from 'meteor/react-meteor-data';
 
 import ReactTable from "react-table";
 import Targets from '../../../api/targets/targets';
-/*import './TargetView.css';*/
+import './TargetsViewAll.css';
 
 class TargetsViewAll extends Component {
 	constructor(props) {
 		super(props);
+
+		this.handleSelectTarget = this.handleSelectTarget.bind(this);
+		this.handleDeselectTarget = this.handleDeselectTarget.bind(this);
+	}
+
+	handleSelectTarget(docId) {
+		Meteor.call('targets.select', docId, (err, res) => {
+			if (err) console.log(err);
+			if (res) console.log(res);
+		});
+	}
+	handleDeselectTarget(docId) {
+		Meteor.call('targets.deselect', docId, (err, res) => {
+			if (err) console.log(err);
+			if (res) console.log(res);
+		});
 	}
 
 	render() {
@@ -18,7 +34,21 @@ class TargetsViewAll extends Component {
 
 				<div id="selection">Select Target</div>
 
-				<p>Form goes here.</p>
+				<div id="target-selection">
+					{this.props.targets.map((doc) => {
+						if (doc.name != null)
+							return (
+								<div id="target-document" key={doc._id}>
+									<span>{doc.name}</span>
+									<div id="target-selection" 
+										onClick={(() => this.handleSelectTarget(doc._id))}>Select</div>
+									<div id="target-selection" 
+										onClick={(() => this.handleDeselectTarget(doc._id))}>DESelect</div>
+								</div>
+							);
+					})}
+				</div>
+
 				<div>
 			    	<ReactTable 
 			    		data = { Targets.find().fetch() } 

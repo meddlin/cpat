@@ -5,7 +5,7 @@ import Dropzone from 'react-dropzone';
 import ReactTable from "react-table";
 import 'react-table/react-table.css' 
 
-import { FileData } from '../api/files/files';
+import FileData from '../api/files/files';
 import './FileUpload.css';
 
 class FileUpload extends Component {

@@ -3,14 +3,19 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import ReactTable from "react-table";
 
-import { FileData } from '../api/scripts/scripts';
+import FileData from '../api/files/files';
+import Targets from '../api/targets/targets';
 import './ScriptSelector.css';
+
 
 class ScriptSelector extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { }
+		this.state = {
+			scriptRuns: []
+		};
+
 		this.submitScriptToServer = this.submitScriptToServer.bind(this);
 		this.checkForPlugins = this.checkForPlugins.bind(this);
 	}
@@ -22,7 +27,9 @@ class ScriptSelector extends Component {
 		});
 	}
 
-	submitScriptToServer() {
+	submitScriptToServer(relatedTargets) {
+		// relate "script submission" call to the 'relatedTargets'
+
 		Meteor.call('server.pythonNmapParams', function(err, res) {
 			if (err) console.log(err);
 			if (res) console.log(res);
@@ -52,6 +59,8 @@ class ScriptSelector extends Component {
 	}
 	
 	render() {
+		const { scriptRuns } = this.state;
+		const { targets } = this.props;
 
 		return (
 			<div>
@@ -65,10 +74,26 @@ class ScriptSelector extends Component {
 
 			    <input id="script-input" type="text" />
 			    <div id="script-controls">
-				    <div id="run-script-btn" onClick={this.submitScriptToServer}>Run</div>
+				    <div id="run-script-btn" onClick={(() => this.submitScriptToServer(targets))}>Run 'nmap'</div>
 				    <div id="run-script-btn" onClick={this.checkForPlugins}>Detect Plugins</div>
 
 				    <div onClick={this.createSampleScript}>Create Sample Entry</div>
+			    </div>
+
+			    <h3>Selected Targets</h3>
+			    <ul>
+			    	{this.props.targets.map((doc) => {
+			    		return (<li key={doc._id}>{doc.name}</li>)
+			    	})}
+			    </ul>
+
+			    <h3>Script Runs</h3>
+			    <div id="script-runs">
+			    	<ul>
+			    		{this.props.files.map(function(doc) {
+			    			return (<li key={doc._id}>{doc.runStats ? doc.runStats.toString() : ""}</li>);
+			    		})}
+			    	</ul>
 			    </div>
 
 			    <div>
@@ -90,9 +115,13 @@ class ScriptSelector extends Component {
 		);
 	}
 }
-export default ScriptSelector;
-/*export default withTracker(() => {
+
+export default withTracker((props) => {
+	Meteor.subscribe('filedata.all');
+	Meteor.subscribe('targets.selected');
+
 	return {
-    	files: FileData.find().fetch()
+    	files: FileData.find().fetch(),
+    	targets: Targets.find().fetch()
   	};
-})(FileUpload);*/
+})(ScriptSelector);

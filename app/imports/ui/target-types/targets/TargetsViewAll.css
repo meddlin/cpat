@@ -1,0 +1,11 @@
+#target-selection #target-document {
+	display: flex;
+	flex-direction: row;
+}
+
+	#target-document > #target-selection {
+		margin-left: 5px;
+	    cursor: pointer;
+	    background-color: lightgray;
+	    padding: 2px;
+	}

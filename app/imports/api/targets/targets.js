@@ -24,8 +24,13 @@ const TargetsSchema = new SimpleSchema({
 		type: String,
 		optional: true
 	},
-	collectionId: {
+	documentId: {
 		type: String,
+		optional: true
+	},
+
+	selected: {
+		type: Boolean,
 		optional: true
 	},
 	relations: {
@@ -38,7 +43,7 @@ const TargetsSchema = new SimpleSchema({
 	"relations.$.collectionName": {
 		type: String
 	},
-	"relations.$.collectionId": {
+	"relations.$.documentId": {
 		type: String
 	}
 });
