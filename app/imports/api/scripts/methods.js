@@ -7,7 +7,7 @@ Meteor.methods({
 	},
 
 	// proof-of-concept to pass multiple parameters to python process
-	'server.pythonNmapParams': function pythonParams() {
+	'server.pythonNmapParams': function pythonParams(targets) {
 		const bound = Meteor.bindEnvironment((callback) => {
 			callback();
 		});
@@ -35,18 +35,37 @@ Meteor.methods({
 
 		// can potentially "validate" the param string here
 
-		bound(() => {
+		let pymongoResult = 'test-id';
+
+		let meteorCallback = function(action) {
+			Meteor.call('targets.relate', action);
+		}
+
+		debugger;
+		bound((meteorCallback) => {
 			var py = spawn('python', [pyScriptPath, paramStr]);
 			py.stdout.on('data', function(data) {
 				dataString += data.toString();
 				console.log('from on->data: ' + dataString);
+
+				// extract pymongo from Python flush results
+				if (data.includes('result:')) {
+					pymongoResult = data.split(': ').pop();
+				}
 			});
 			py.stderr.on('data', function(data) {
 				console.error(`child stderr:\n${data}`);
 			});
-			py.stdout.on('end', function() {
+			py.stdout.on('end', function(meteorCallback) {
 				console.log(dataString);
 				console.log('end of stream');
+
+				debugger;
+				meteorCallback({
+					targets: targets.map(t => t._id),
+					collectionName: "Scripts",
+					collectionId: pymongoResult
+				});
 			});
 		});
 	},

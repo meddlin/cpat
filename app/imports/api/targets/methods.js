@@ -34,7 +34,6 @@ Meteor.methods({
 				actionDocId,
 			}
 		 */
-
 		return Targets.update(
 			{_id: { $in: action.targets.map((a) => a._id) }}, 
 			{ $push: 

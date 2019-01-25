@@ -29,10 +29,14 @@ class ScriptSelector extends Component {
 
 	submitScriptToServer(relatedTargets) {
 		// relate "script submission" call to the 'relatedTargets'
+		let scriptResult = "";
 
-		Meteor.call('server.pythonNmapParams', function(err, res) {
+		Meteor.call('server.pythonNmapParams', this.props.targets, function(err, res) {
 			if (err) console.log(err);
-			if (res) console.log(res);
+			if (res) {
+				console.log(res);
+				scriptResult = res;
+			}
 		});
 	}
 

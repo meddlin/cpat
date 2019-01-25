@@ -44,6 +44,9 @@ printer.pprint(json.dumps(doc))
 docId = str(uuid.uuid4())
 runStats = json.loads(sourceForInsert)
 
+# flush all before pymongo result
+sys.stdout.flush()
+
 result = db.filedata.insert_one({
 	'_id': docId,
 	'source': sourceForInsert,
@@ -51,10 +54,7 @@ result = db.filedata.insert_one({
 	'origination': 'from python file',
 	'dateCreated': datetime.datetime.now()
 })
-printer.pprint(result)
 
-
-
-
-printer.pprint("just before flush...")
+# setup to flush pymongo result back to JS
+printer.pprint("result: " + result)
 sys.stdout.flush()
