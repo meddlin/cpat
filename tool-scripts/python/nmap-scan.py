@@ -47,7 +47,7 @@ runStats = json.loads(sourceForInsert)
 # flush all before pymongo result
 sys.stdout.flush()
 
-result = db.filedata.insert_one({
+resId = db.filedata.insert_one({
 	'_id': docId,
 	'source': sourceForInsert,
 	'runStats': runStats['nmaprun']['runstats'],
@@ -55,6 +55,8 @@ result = db.filedata.insert_one({
 	'dateCreated': datetime.datetime.now()
 })
 
+# 'resId' is an InsertOneResult, not a string that can be concatenated directly with another string
+
 # setup to flush pymongo result back to JS
-printer.pprint("result: " + result)
+printer.pprint("result: " + str(resId.inserted_id)) 
 sys.stdout.flush()
