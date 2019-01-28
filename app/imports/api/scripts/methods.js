@@ -1,8 +1,30 @@
 import { Meteor } from 'meteor/meteor';
+import { MongoInternals } from 'meteor/mongo';
+
 import Scripts from './scripts';
 
 
 Meteor.methods({
+	'scripts.single': function scriptsSingle(docId) {
+		/*let res;
+		async function getOne(docId) {
+			debugger;
+			const { db } = MongoInternals.defaultRemoteCollectionDriver().mongo;
+			res = await db.filedata.findOne({ _id: docId });
+		}
+
+		getOne();*/
+		/*return Scripts.find({ _id: docId }).fetch();*/
+		/*return res;*/
+
+		return Scripts.findOne({ _id: docId }, 
+			{
+				"source": 1,
+				"runStats": 1,
+				"dateCreated": 1
+			});
+	},
+
 	'insert.exampleScript': function insertExampleScript() {
 		return Scripts.insert({ name: 'insert-from-meteor.py', language: 'test' });
 	},

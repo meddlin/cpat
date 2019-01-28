@@ -1,7 +1,11 @@
 import { Meteor } from 'meteor/meteor';
-import { FileData } from './files';
+import FileData from './files';
 
 Meteor.methods({
+
+	'fileData.getSingle': function(docId) {
+		return FileData.findOne({ _id: docId }, { "runStats": 1 });
+	},
 
 	'fileData.insert': function dataInsert(data) {
 		return FileData.insert({ source: data });
