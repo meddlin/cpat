@@ -59,7 +59,7 @@ class TargetView extends Component {
 
 	
 	getTargetRelatedData() {
-		let docId = "QEd38PRkQTzNHbFsE";
+		let docId = this.props.match.params.id;
 		/*import('../../api/person/person')
 			.then((col) => {
 				console.log(col);
