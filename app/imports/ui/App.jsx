@@ -27,7 +27,7 @@ const App = () => (
 	  	<Route path="/scripts" component={ScriptSelector} />
 	  	<Route path="/analytics" component={Analytics} />
 
-	  	<Route path="/target/view" component={TargetView} />
+	  	<Route path="/target/view/:id" component={TargetView} />
 	  	<Route path="/target/viewAll" component={TargetsViewAll} />
 	  	<Route path="/target/create" component={TargetCreate} />
 

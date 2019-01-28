@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
+import { Link } from 'react-router-dom';
 import ReactTable from "react-table";
 import Targets from '../../../api/targets/targets';
 import './TargetsViewAll.css';
@@ -40,6 +41,7 @@ class TargetsViewAll extends Component {
 							return (
 								<div id="target-document" key={doc._id}>
 									<span>{doc.name}</span>
+									<Link to={`/target/view/${doc._id}`}>{doc.name}</Link>
 									<div id="target-selection" 
 										onClick={(() => this.handleSelectTarget(doc._id))}>Select</div>
 									<div id="target-selection" 

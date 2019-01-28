@@ -21,6 +21,10 @@ class TargetView extends Component {
 		this.setupSubscriptions = this.setupSubscriptions.bind(this);
 	}
 
+	componentDidMount() {
+		let id = this.props.match.params.id;
+	}
+
 	/*
 		Is it possible to query an arbitrary collection?--The collection referenced in a Target's relation structure.
 	 */
@@ -160,7 +164,9 @@ class TargetView extends Component {
 
 export default withTracker((props) => {
 	/*const docId = props.docId;*/
-	let docId = "QEd38PRkQTzNHbFsE";
+	/*let docId = "QEd38PRkQTzNHbFsE";*/
+
+	let docId = props.match.params.id;
 	Meteor.subscribe('targets.single', docId);
 
 	return {
