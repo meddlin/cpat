@@ -54,60 +54,14 @@ class TargetView extends Component {
 				Meteor.subscribe('fileData.getSingle', scriptsData[i].documentId);
 			}
 		}
-
 	}
-
 	
 	getTargetRelatedData() {
 		let docId = this.props.match.params.id;
-		/*import('../../api/person/person')
-			.then((col) => {
-				console.log(col);
-			});*/
 		let target = Meteor.call('targets.getRelatedData', docId, (err, res) => {
 			if (err) console.log(err);
 			if (res) this.setState({ target: res });
 		});
-
-		/*if (res.collectionType.toLowerCase() === "person" && res.documentId) {
-					person = Meteor.call('person.single', res.documentId);
-				}*/
-
-
-
-				/*if (res.relations[0].collectionName.toLowerCase() === "scripts") {
-					let s = Meteor.call('scripts.single', res.relations[0].documentId);
-					console.log(s);
-				}*/
-
-		/*Meteor.call('targets.getRelatedData', docId, (err, res) => {
-			if (err) console.log(err);
-			if (res) {
-				console.log(res);
-
-				if (res.collectionType.toLowerCase() === "person") {
-					
-
-					if (res.documentId) {
-						Meteor.call('person.single', res.documentId, (err, res) => {
-							if (err) console.log(err);
-							if (res) console.log(res);
-						});
-					}
-					
-				}
-
-				for (var relationIdx = 0; relationIdx < res.relations.length; relationIdx++) {
-					if (res.relations[relationIdx].collectionName.toLowerCase() === "scripts") {
-						
-						Meteor.call('scripts.single', res.relations[relationIdx].documentId, (err, res) => {
-							if (err) console.log(err);
-							if (res) console.log(res);
-						})
-					}
-				}
-			}
-		})*/
 	}
 
 	getScriptData(docId) {
@@ -130,14 +84,34 @@ class TargetView extends Component {
 
 				<p>Form goes here.--for single Target</p>
 
-				<div onClick={this.getTargetRelatedData}>Get Relations</div>
-				<input type="text" />
+				<div id="btn-get-relations" onClick={this.getTargetRelatedData}>Get Relations</div>
 
-				<p>{this.state.target.collectionType}</p>
+				<p>Type: {this.state.target.collectionType}</p>
+
+				<h4>Relations</h4>
 				<ul>
 				{ this.state.target.relations ? 
 					this.state.target.relations.map((r) => { 
-						return (
+
+						{/*
+							TODO : Loop over all types--generalized--so the type names aren't hard-coded, and
+							we can handle new types being added to the architecture without updating this list
+							every time.
+						*/}
+
+						{/*if (r.collectionName === "Company") return ( <CompanyPreview />);
+						if (r.collectionName === "Device")return (<DevicePreview />);*/}
+
+						if (r.collectionName === "File")return (<FileDataPreview docId={r.documentId} />);
+						if (r.collectionName === "Scripts")return (<FileDataPreview docId={r.documentId} />);
+
+						{/*if (r.collectionName === "Location")return (<LocationPreview />);
+						if (r.collectionName === "PdfFile")return (<PdfFilePreview />);
+						if (r.collectionName === "Person") return ( <PersonPreview />);
+						if (r.collectionName === "Scripts") return ( <ScriptDataPreview />);
+						if (r.collectionName === "Target")return (<TargetPreview />);*/}
+
+						{/*return (
 							<li key={r.documentId} onClick={(() => this.getScriptData(r.documentId))}>
 								{r.collectionName}
 
@@ -150,7 +124,7 @@ class TargetView extends Component {
 									}) : ''}
 								</ul>
 							</li>
-						);
+						);*/}
 					}) : ''}
 				</ul>
 
@@ -163,10 +137,8 @@ class TargetView extends Component {
 // TODO : Finish subscribing to the publication.
 
 export default withTracker((props) => {
-	/*const docId = props.docId;*/
-	/*let docId = "QEd38PRkQTzNHbFsE";*/
-
 	let docId = props.match.params.id;
+
 	Meteor.subscribe('targets.single', docId);
 
 	return {
