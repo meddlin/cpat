@@ -67,12 +67,7 @@ Meteor.methods({
 
 		return res;
 	},
-
-	'targets.getRelatedData': function(docId) {
-		/*Meteor.call('targets.queryRelation');*/
-
-		return Targets.findOne({ _id: docId }, { "relations": 1 });
-	},
+	
 	'targets.queryRelation': async function(collectionName) {
 		// collectionName = "Scripts";
 		// 

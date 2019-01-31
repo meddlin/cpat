@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Device } from './devices';
+import { Device } from './device';
 
 Meteor.methods({
 	'device.insert': function insert(data) {

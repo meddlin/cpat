@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
-import Person from '../../api/person/person';
+import Person from '../../../api/person/person';
 
 // TODO : Get dynamic imports working for the Person collection
 /*async function importPersonMod() {
@@ -14,24 +14,33 @@ import Person from '../../api/person/person';
 class PersonPreview extends Component {
 	constructor(props) {
 		super(props);
-
-		this.state = {
-
-		}
 	}
 
 	render() {
-		<div>
-			<p>{this.props.person._id}</p>
-		</div>
+		const { ready, person } = this.props;
+
+		if (!this.props.ready) {
+	    	return <div>Loading...</div>
+	    } else {
+
+	    	return (
+				<div>
+					<h5>Person</h5>
+					<div>
+						<div>Id: {person ? this.getDisplay(this.props.docId) : 'No data to display'}</div>
+					</div>
+				</div>
+			);
+	    }
 	}
 };
 
 export default withTracker((props) => {
 	const docId = props.docId;
-	Meteor.subscribe('person.single', docId);
+	const handle = Meteor.subscribe('person.single', docId);
 
 	return {
-    	person: Person.findOne()
+		ready: handle.ready(),
+    	person: Person.find().fetch()
   	};
 })(PersonPreview);

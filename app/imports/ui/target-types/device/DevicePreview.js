@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
-import Company from '../../../api/company/company';
+import Device from '../../../api/device/device';
 
 // TODO : Get dynamic imports working for the Person collection
 /*async function importPersonMod() {
-  const p = await import("../../api/company/company");
+  const p = await import("../../api/device/device");
   Person = p;
 }
 */
 
-class CompanyPreview extends Component {
+class DevicePreview extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -22,12 +22,12 @@ class CompanyPreview extends Component {
 	 * @return {string}       [description]
 	 */
 	getDisplay(docId) {
-		let data = this.props.company.find((f) => f._id == docId);
+		let data = this.props.device.find((f) => f._id == docId);
 		return (data) ? data._id : '';
 	}
 
 	render() {
-		const { ready, company } = this.props;
+		const { ready, device } = this.props;
 
 		if (!ready) {
 	    	return <div>Loading...</div>
@@ -35,9 +35,9 @@ class CompanyPreview extends Component {
 
 	    	return (
 				<div>
-					<h5>Company</h5>
+					<h5>Device</h5>
 					<div>
-						<div>Id: {company ? this.getDisplay(this.props.docId) : 'No data to display'}</div>
+						<div>Id: {device ? this.getDisplay(this.props.docId) : 'No data to display'}</div>
 					</div>
 				</div>
 			);
@@ -47,10 +47,10 @@ class CompanyPreview extends Component {
 
 export default withTracker((props) => {
 	const docId = props.docId;
-	const handle = Meteor.subscribe('company.single', docId);
+	const handle = Meteor.subscribe('device.single', docId);
 
 	return {
 		ready: handle.ready(),
-    	company: Company.find().fetch()
+    	device: Device.find().fetch()
   	};
-})(CompanyPreview);
+})(DevicePreview);

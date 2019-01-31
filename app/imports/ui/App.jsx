@@ -8,14 +8,14 @@ import FileUpload from './FileUpload';
 import ScriptSelector from './ScriptSelector';
 import Analytics from './Analytics';
 
-import TargetView from './target-types/TargetView';
+import TargetView from './target-types/targets/TargetView';
 import TargetsViewAll from './target-types/targets/TargetsViewAll';
 import TargetCreate from './target-types/targets/TargetCreate';
-import PersonView from './target-types/PersonView';
-import CompanyView from './target-types/CompanyView';
-import DeviceView from './target-types/DeviceView';
-import LocationView from './target-types/LocationView';
-import PdfFileView from './target-types/PdfFileView';
+import PersonView from './target-types/person/PersonView';
+import CompanyView from './target-types/company/CompanyView';
+import DeviceView from './target-types/device/DeviceView';
+import LocationView from './target-types/location/LocationView';
+import PdfFileView from './target-types/pdf-files/PdfFileView';
 
 const App = () => (
   <Router history={history}>

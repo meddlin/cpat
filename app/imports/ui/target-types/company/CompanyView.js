@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
-import { Device } from '../../api/devices/devices';
-import './DeviceView.css';
+import { Company } from '../../../api/company/company';
+import './CompanyView.css';
 
-class DeviceView extends Component {
+class CompanyView extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -13,7 +13,7 @@ class DeviceView extends Component {
 	render() {
 		return (
 			<div>
-				<h2>Device</h2>
+				<h2>Company</h2>
 
 				<p>Form goes here.</p>
 			</div>
@@ -21,16 +21,16 @@ class DeviceView extends Component {
 	}
 };
 
-export default DeviceView;
+export default CompanyView;
 
 // TODO : Finish subscribing to the publication.
 
 /*export default withTracker((props) => {
 	const docId = props.docId;
 
-	Meteor.subscribe('device.single', docId);
+	Meteor.subscribe('company.single', docId);
 
 	return {
-    	device: Device.find().fetch()
+    	company: Company.find().fetch()
   	};
-})(DeviceView);*/
+})(CompanyView);*/

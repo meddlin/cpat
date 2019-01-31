@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Device } from '../devices';
+import { Device } from '../device';
 
 Meteor.publish('device.all', function deviceAll_Publication() {
 	return Device.find();

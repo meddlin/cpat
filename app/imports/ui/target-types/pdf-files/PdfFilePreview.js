@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
-import Company from '../../../api/company/company';
+import PdfFile from '../../../api/pdf-files/pdf-files';
 
 // TODO : Get dynamic imports working for the Person collection
 /*async function importPersonMod() {
-  const p = await import("../../api/company/company");
+  const p = await import("../../api/pdfFile/pdfFile");
   Person = p;
 }
 */
 
-class CompanyPreview extends Component {
+class PdfFilePreview extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -22,12 +22,12 @@ class CompanyPreview extends Component {
 	 * @return {string}       [description]
 	 */
 	getDisplay(docId) {
-		let data = this.props.company.find((f) => f._id == docId);
+		let data = this.props.pdfFile.find((f) => f._id == docId);
 		return (data) ? data._id : '';
 	}
 
 	render() {
-		const { ready, company } = this.props;
+		const { ready, pdfFile } = this.props;
 
 		if (!ready) {
 	    	return <div>Loading...</div>
@@ -35,9 +35,9 @@ class CompanyPreview extends Component {
 
 	    	return (
 				<div>
-					<h5>Company</h5>
+					<h5>PdfFile</h5>
 					<div>
-						<div>Id: {company ? this.getDisplay(this.props.docId) : 'No data to display'}</div>
+						<div>Id: {pdfFile ? this.getDisplay(this.props.docId) : 'No data to display'}</div>
 					</div>
 				</div>
 			);
@@ -47,10 +47,10 @@ class CompanyPreview extends Component {
 
 export default withTracker((props) => {
 	const docId = props.docId;
-	const handle = Meteor.subscribe('company.single', docId);
+	const handle = Meteor.subscribe('pdfFile.single', docId);
 
 	return {
 		ready: handle.ready(),
-    	company: Company.find().fetch()
+    	pdfFile: PdfFile.find().fetch()
   	};
-})(CompanyPreview);
+})(PdfFilePreview);
