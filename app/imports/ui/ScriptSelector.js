@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
+import { Link } from 'react-router-dom';
 import ReactTable from "react-table";
 
 import FileData from '../api/files/files';
 import Targets from '../api/targets/targets';
+import Scripts from '../api/scripts/scripts';
 import './ScriptSelector.css';
 
 
@@ -52,18 +54,17 @@ class ScriptSelector extends Component {
 	}
 
 	getTableData() {
-		let arr = [
-			{
-				name: '1.sh',
-				language: 'shell'
-			},
-			{
-				name: 'my.py',
-				language: 'python'
-			}
-		];
+		const { scripts } = this.props;
 
-		return arr;
+		if (scripts && scripts.length > 0) {
+			return scripts.map( (s) => {
+				return s
+				/*return ({ name: s.name, 
+							tool: s.tool, 
+							toolCommand: s.toolCommand, 
+							language: s.language })*/
+			});
+		}
 	}
 	
 	render() {
@@ -95,27 +96,39 @@ class ScriptSelector extends Component {
 			    	})}
 			    </ul>
 
-			    <h3>Script Runs</h3>
+			    {/*<h3>Script Runs</h3>
 			    <div id="script-runs">
 			    	<ul>
 			    		{this.props.files.map(function(doc) {
 			    			return (<li key={doc._id}>{doc.runStats ? doc.runStats.toString() : ""}</li>);
 			    		})}
 			    	</ul>
-			    </div>
+			    </div>*/}
 
 			    <div>
 			    	<ReactTable data={this.getTableData()} columns={[
 			    		{
-			    			Header: 'Data',
-			    			columns: [
-			    			{
-			    				Header: 'Name',
-			    				accessor: 'name'
-			    			}, {
-			    				Header: 'Language',
-			    				accessor: 'language'
-			    			}]
+			    			Header: 'Scripts',
+			    			columns: 
+			    			[
+				    			{
+				    				Header: 'Name',
+				    				accessor: 'name',
+				    				Cell: row => (<Link to={`/scripts/edit/${row.original._id}`}>{row.original.name}</Link>)
+				    			}, 
+				    			{
+				    				Header: 'Tool',
+				    				accessor: 'tool'
+				    			}, 
+				    			{
+									Header: 'Tool Cmd',
+				    				accessor: 'toolCommand'
+				    			}, 
+				    			{
+				    				Header: 'Language',
+				    				accessor: 'language'
+				    			}
+			    			]
 			    		}
 			    	]} />
 			    </div>
@@ -127,9 +140,11 @@ class ScriptSelector extends Component {
 export default withTracker((props) => {
 	Meteor.subscribe('filedata.all');
 	Meteor.subscribe('targets.selected');
+	Meteor.subscribe('scripts.all');
 
 	return {
     	files: FileData.find().fetch(),
-    	targets: Targets.find().fetch()
+    	targets: Targets.find().fetch(),
+    	scripts: Scripts.find().fetch()
   	};
 })(ScriptSelector);

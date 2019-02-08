@@ -5,6 +5,17 @@ import Scripts from './scripts';
 
 
 Meteor.methods({
+	'scripts.insert': function scriptsInsert(scriptDoc) {
+		if (scriptDoc) {
+			return Scripts.insert({
+				name: scriptDoc.name,
+				tool: scriptDoc.tool,
+				toolCommand: scriptDoc.toolCommand,
+				language: scriptDoc.language
+			});
+		}
+	},
+
 	'scripts.single': function scriptsSingle(docId) {
 		/*let res;
 		async function getOne(docId) {

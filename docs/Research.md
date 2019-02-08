@@ -27,3 +27,20 @@ Embedding, Two-phase commit, and linking
 - mentions of "distributed locking"
 
 [https://stackoverflow.com/questions/21468975/application-level-distributed-read-write-lock-for-mongodb](https://stackoverflow.com/questions/21468975/application-level-distributed-read-write-lock-for-mongodb)
+
+
+### Python -- parse/process file types
+
+**Excel Spreadsheets (.xsl, .xslx)**
+
+[https://automatetheboringstuff.com/chapter12/](https://automatetheboringstuff.com/chapter12/)
+
+**Word documents (.docx)**
+
+[https://pypi.org/project/python-docx/](https://pypi.org/project/python-docx/)
+
+**PDF**
+
+Good read on some things to try with PDFs
+
+[https://automatetheboringstuff.com/chapter13/](https://automatetheboringstuff.com/chapter13/)

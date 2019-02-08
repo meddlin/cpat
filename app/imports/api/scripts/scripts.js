@@ -5,6 +5,12 @@ const ScriptSchema = new SimpleSchema({
   name: {
     type: String,
   },
+  tool: {
+  	type: String
+  },
+  toolCommand: {
+  	type: String
+  },
   language: {
     type: String
   }
