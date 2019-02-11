@@ -98,6 +98,11 @@ Meteor.methods({
 		console.log(pythonRes);
 	},
 
+	/**
+	 * Kickoff nmap scan from Python.
+	 * @param  {[type]} targets [description]
+	 * @return {[type]}         [description]
+	 */
 	async getPythonOutput(targets) {
 		var Future = require('fibers/future');
 		var fut = new Future();
@@ -191,6 +196,39 @@ Meteor.methods({
 		return res;
 	},
 
+	/**
+	 * Kicks off a metagoofil search by executing the tool from Python.
+	 * @param  {[type]} targets [description]
+	 * @param  {[type]} params  [description]
+	 * @return {[type]}         [description]
+	 */
+	async metagoofilSearch(targets, params) {
+
+		// Python script to call
+		let scriptPath = "/home/meddlin/git/cpat/tool-scripts/metagoofil-search.py";
+
+		// Tool to call from Python (dependency)
+		let toolPath = "/home/meddlin/git/tools/metagoofil/metagoofil.py";
+		let domain = "poolcorp.com";
+		let docTypes = "doc,pdf";
+		let amountToSearch = "200";
+		let amountToDownload = "100";
+		let outputDir = "/home/meddlin/git/cpat/tool-data/metagoofil2";
+		let resultsFile = "results.html";
+
+		let paramStr = "";
+
+		async function callPython(targets, params) {
+			const { spawn, exec } = require('child_process');
+
+			var py = spawn('python', [scriptPath, paramStr]);
+		}
+	}
+
+	/**
+	 * Detects other scripts which exist in the /tool-scripts directory.
+	 * @return {[type]} [description]
+	 */
 	'server.findScriptPlugins': function findScriptPlugins() {
 		const bound = Meteor.bindEnvironment((callback) => {
 			callback();

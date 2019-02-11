@@ -9,6 +9,11 @@ from pymongo import MongoClient
 
 # toolDataLocation = "/home/meddlin/git/cpat/tool-data" + "/" + "Target_metagoofil_" + date.today()
 
+inputParams = sys.argv[1]
+params = inputParams.split(' ')
+
+res = Popen([ "python", params], stdout = PIPE)
+
 # res = subprocess.check_output([ "python", "metagoofil.py", "-d", "poolcorp.com", "-t", "doc,pdf", "-l", "200", "n", "-100", "-o", "~/git/cpat/metagoofil", "-f", "results.html" ])
 res = Popen([ "python", "/home/meddlin/git/tools/metagoofil/metagoofil.py", "-d", "poolcorp.com", "-t", "doc,pdf", "-l", "200", "-n", "100", "-o", "/home/meddlin/git/cpat/tool-data/metagoofil2", "-f", "results.html"], stdout = PIPE)
 
