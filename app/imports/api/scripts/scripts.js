@@ -13,6 +13,9 @@ const ScriptSchema = new SimpleSchema({
   },
   language: {
     type: String
+  },
+  scriptPath: {
+    type: String
   }
 });
 

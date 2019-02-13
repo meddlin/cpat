@@ -15,11 +15,14 @@ class ScriptSelector extends Component {
 		super(props);
 
 		this.state = {
-			scriptRuns: []
+			scriptRuns: [],
+			selectedScript: {}
 		};
 
 		this.submitScriptToServer = this.submitScriptToServer.bind(this);
 		this.checkForPlugins = this.checkForPlugins.bind(this);
+		this.selectScript = this.selectScript.bind(this);
+		this.runScript = this.runScript.bind(this);
 	}
 
 	createSampleScript() {
@@ -53,6 +56,25 @@ class ScriptSelector extends Component {
 		});
 	}
 
+	selectScript(evt) {
+		let name = evt.target.getAttribute('data-name');
+		let command = evt.target.getAttribute('data-toolcommand');
+		let data = { name: name, toolCommand: command };
+
+		this.setState({ selectedScript: data });
+	}
+	runScript() {
+		const { selectedScript } = this.state;
+		const { targets } = this.props;
+
+		if (selectedScript && targets) {
+			Meteor.call('metagoofilSearch', targets, selectedScript, (err, res) => {
+				if (err) console.log(err);
+				if (res) console.log(res);
+			});
+		}
+	}
+
 	getTableData() {
 		const { scripts } = this.props;
 
@@ -68,7 +90,7 @@ class ScriptSelector extends Component {
 	}
 	
 	render() {
-		const { scriptRuns } = this.state;
+		const { scriptRuns, selectedScript } = this.state;
 		const { targets } = this.props;
 
 		return (
@@ -96,6 +118,18 @@ class ScriptSelector extends Component {
 			    	})}
 			    </ul>
 
+			    <div id="selected-script-display">
+			    	<div>
+			    		<span>Name: </span> <span>{selectedScript ? selectedScript.name : ''}</span>
+			    	</div>
+			    	<div>
+			    		<span>cmd: </span> <span>{selectedScript ? selectedScript.toolCommand : ''}</span>
+					</div>
+					<div>
+						<div onClick={this.runScript}>Run</div>
+					</div>
+			    </div>
+
 			    {/*<h3>Script Runs</h3>
 			    <div id="script-runs">
 			    	<ul>
@@ -111,6 +145,15 @@ class ScriptSelector extends Component {
 			    			Header: 'Scripts',
 			    			columns: 
 			    			[
+			    				{
+			    					Header: '',
+			    					accessor: 'name',
+			    					Cell: row => (<div 
+			    						className="script-select-btn" 
+			    						data-name={row.original.name} 
+			    						data-toolcommand={row.original.toolCommand} 
+			    						onClick={(evt) => this.selectScript(evt)}>Select</div>)
+			    				},
 				    			{
 				    				Header: 'Name',
 				    				accessor: 'name',

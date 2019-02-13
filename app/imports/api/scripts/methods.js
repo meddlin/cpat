@@ -202,7 +202,11 @@ Meteor.methods({
 	 * @param  {[type]} params  [description]
 	 * @return {[type]}         [description]
 	 */
+	// TODO : Later to be generalized, and turned into the main entry point for calling any Python scripts
 	async metagoofilSearch(targets, params) {
+
+		console.log(targets);
+		console.log(params);
 
 		// Python script to call
 		let scriptPath = "/home/meddlin/git/cpat/tool-scripts/metagoofil-search.py";
@@ -218,12 +222,13 @@ Meteor.methods({
 
 		let paramStr = "";
 
-		async function callPython(targets, params) {
+		// commented for testing
+		/*async function callPython(targets, params) {
 			const { spawn, exec } = require('child_process');
 
 			var py = spawn('python', [scriptPath, paramStr]);
-		}
-	}
+		}*/
+	},
 
 	/**
 	 * Detects other scripts which exist in the /tool-scripts directory.
