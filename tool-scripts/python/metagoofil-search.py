@@ -48,14 +48,14 @@ for root, dirs, files in os.walk("/home/meddlin/git/cpat/tool-data/metagoofil"):
 			fileName = os.path.join(root, file)
 			
 			data = { 
-				'_id': str(uuid.uuid4()),
-				'fileName': fileName,
-				'fileSize': os.path.getsize(fileName), # this is in bytes
-				'fileType': os.path.splitext(fileName)[1],
-				'fileLocation': fileName,
-				'relations': '',
-				'dateAnalyzed': '',
-				'dateCreated': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+					'_id': str(uuid.uuid4()),
+					'fileName': fileName,
+					'fileSize': os.path.getsize(fileName), # this is in bytes
+					'fileType': os.path.splitext(fileName)[1],
+					'fileLocation': fileName,
+					'relations': '',
+					'dateAnalyzed': '',
+					'dateCreated': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 				}
 			print(data)
 			sys.stdout.flush()

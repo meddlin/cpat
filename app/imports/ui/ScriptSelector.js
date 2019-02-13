@@ -35,14 +35,6 @@ class ScriptSelector extends Component {
 	submitScriptToServer(relatedTargets) {
 		// relate "script submission" call to the 'relatedTargets'
 		let scriptResult = "";
-
-		/*Meteor.call('server.pythonNmapParams', this.props.targets, function(err, res) {
-			if (err) console.log(err);
-			if (res) {
-				console.log(res);
-				scriptResult = res;
-			}
-		});*/
 		Meteor.call('getPythonOutput', relatedTargets, (err, res) => {
 			if (err) console.log(err);
 			if (res) console.log(res);
@@ -59,7 +51,8 @@ class ScriptSelector extends Component {
 	selectScript(evt) {
 		let name = evt.target.getAttribute('data-name');
 		let command = evt.target.getAttribute('data-toolcommand');
-		let data = { name: name, toolCommand: command };
+		let scriptPath = evt.target.getAttribute('data-scriptpath');
+		let data = { name: name, toolCommand: command, scriptPath: scriptPath };
 
 		this.setState({ selectedScript: data });
 	}
@@ -118,12 +111,20 @@ class ScriptSelector extends Component {
 			    	})}
 			    </ul>
 
+			    {/*toggle between automated-can-select-from-table and a manual user-filled input(s) option*/}
 			    <div id="selected-script-display">
 			    	<div>
-			    		<span>Name: </span> <span>{selectedScript ? selectedScript.name : ''}</span>
+			    		<span>Name: </span> 
+			    		<span>{selectedScript ? selectedScript.name : ''}</span>
+			    		<input type="text" />
 			    	</div>
 			    	<div>
 			    		<span>cmd: </span> <span>{selectedScript ? selectedScript.toolCommand : ''}</span>
+			    		<input type="text" />
+					</div>
+					<div>
+			    		<span>cmd: </span> <span>{selectedScript ? selectedScript.scriptPath : ''}</span>
+			    		<input type="text" />
 					</div>
 					<div>
 						<div onClick={this.runScript}>Run</div>
