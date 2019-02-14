@@ -23,6 +23,10 @@ class ScriptSelector extends Component {
 		this.checkForPlugins = this.checkForPlugins.bind(this);
 		this.selectScript = this.selectScript.bind(this);
 		this.runScript = this.runScript.bind(this);
+
+		this.onChangeScriptName = this.onChangeScriptName.bind(this);
+		this.onChangeScriptToolCommand = this.onChangeScriptToolCommand.bind(this);
+		this.onChangeScriptPath = this.onChangeScriptPath.bind(this);
 	}
 
 	createSampleScript() {
@@ -66,6 +70,24 @@ class ScriptSelector extends Component {
 				if (res) console.log(res);
 			});
 		}
+	}
+	onChangeScriptName(evt) {
+		let data = this.state.selectedScript;
+		data.name = evt.target.value;
+
+		this.setState({ selectedScript: data });
+	}
+	onChangeScriptToolCommand(evt) {
+		let data = this.state.selectedScript;
+		data.toolCommand = evt.target.value;
+
+		this.setState({ selectedScript: data });
+	}
+	onChangeScriptPath(evt) {
+		let data = this.state.selectedScript;
+		data.scriptPath = evt.target.value;
+
+		this.setState({ selectedScript: data });
 	}
 
 	getTableData() {
@@ -116,15 +138,15 @@ class ScriptSelector extends Component {
 			    	<div>
 			    		<span>Name: </span> 
 			    		<span>{selectedScript ? selectedScript.name : ''}</span>
-			    		<input type="text" />
+			    		<input type="text" onChange={(evt) => this.onChangeScriptName(evt)} />
 			    	</div>
 			    	<div>
 			    		<span>cmd: </span> <span>{selectedScript ? selectedScript.toolCommand : ''}</span>
-			    		<input type="text" />
+			    		<input type="text" onChange={(evt) => this.onChangeScriptToolCommand(evt)} />
 					</div>
 					<div>
-			    		<span>cmd: </span> <span>{selectedScript ? selectedScript.scriptPath : ''}</span>
-			    		<input type="text" />
+			    		<span>path: </span> <span>{selectedScript ? selectedScript.scriptPath : ''}</span>
+			    		<input type="text" onChange={(evt) => this.onChangeScriptPath(evt)} />
 					</div>
 					<div>
 						<div onClick={this.runScript}>Run</div>
