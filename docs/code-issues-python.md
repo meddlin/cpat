@@ -1,5 +1,11 @@
 ## Python Notes
 
+**Currently: get a metagoofil search kicked off from clien-side JS**
+
+- Name: /home/meddlin/git/cpat/tool-scripts/python/metagoofil-search.py
+- Cmd: -d poolcorp.com -t doc,pdf -l 200 -n 100 -o /home/meddlin/git/cpat/tool-data/metagoofil2 -f results.html
+- Path: /home/meddlin/git/tools/metagoofil/metagoofil.py
+
 **Format datetime to string**
 
 ```python

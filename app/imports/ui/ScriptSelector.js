@@ -64,8 +64,10 @@ class ScriptSelector extends Component {
 		const { selectedScript } = this.state;
 		const { targets } = this.props;
 
+		let targetIds = targets.map((t) => t._id);
+
 		if (selectedScript && targets) {
-			Meteor.call('metagoofilSearch', targets, selectedScript, (err, res) => {
+			Meteor.call('metagoofilSearch', targetIds, selectedScript, (err, res) => {
 				if (err) console.log(err);
 				if (res) console.log(res);
 			});

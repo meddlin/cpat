@@ -201,28 +201,37 @@ Meteor.methods({
 		console.log(params);
 
 		// Python script to call
-		let scriptPath = "/home/meddlin/git/cpat/tool-scripts/metagoofil-search.py";
+		/*let scriptPath = "/home/meddlin/git/cpat/tool-scripts/python/metagoofil-search.py";*/
 
 		// Tool to call from Python (dependency)
-		let toolPath = "/home/meddlin/git/tools/metagoofil/metagoofil.py";
+		/*let toolPath = "/home/meddlin/git/tools/metagoofil/metagoofil.py";
 		let domain = "poolcorp.com";
 		let docTypes = "doc,pdf";
 		let amountToSearch = "200";
 		let amountToDownload = "100";
 		let outputDir = "/home/meddlin/git/cpat/tool-data/metagoofil2";
-		let resultsFile = "results.html";
+		let resultsFile = "results.html";*/
 
-		let paramStr = "";
+		let customScriptName = params.name;
+		let scriptPath = params.scriptPath;
+		let paramStr = params.toolCommand;
 		let dataString = "";
+		let pymongoResult;
 
 		// commented for testing
 		async function callPython(targets, params) {
 			const { spawn, exec } = require('child_process');
 
-			var py = spawn('python', [scriptPath, paramStr]);
+			debugger;
+			console.log('just before "spawn(python, []): "');
+			console.log('name: ' + customScriptName);
+			console.log('scriptPath: ' + scriptPath);
+			console.log('paramStr: ' + paramStr);
+			var py = spawn('python', [customScriptName, scriptPath + ' ' + paramStr]);
+
 			py.stdout.on('data', function(data) {
 				dataString += data.toString();
-				console.log('from on->data: ' + dataString);
+				console.log('JS[python callback].on(data) --> ' + dataString);
 
 				// extract pymongo from Python flush results
 				if (data.toString().includes('result:')) { // at this point, 'data' is a byte array without calling '.toString()'
