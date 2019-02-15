@@ -6,6 +6,8 @@
 - Cmd: -d poolcorp.com -t doc,pdf -l 200 -n 100 -o /home/meddlin/git/cpat/tool-data/metagoofil2 -f results.html
 - Path: /home/meddlin/git/tools/metagoofil/metagoofil.py
 
+- cmd: -d poolcorp.com -t doc,pdf -l 25 -n 10 -o /home/meddlin/git/cpat/tool-data/metagoofil2 -f results.html
+
 **Format datetime to string**
 
 ```python

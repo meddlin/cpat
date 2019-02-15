@@ -21,7 +21,8 @@ sys.stdout.flush()
 paramsForScript = ["python"]
 paramsForScript.extend(params)
 
-print("params: " + paramsForScript)
+print("params for script: ")
+print(paramsForScript)
 sys.stdout.flush()
 
 res = Popen(paramsForScript, stdout = PIPE)
@@ -33,8 +34,14 @@ while res.poll() is None:
 client = MongoClient('mongodb://127.0.0.1:3001')
 db = client.meteor
 
+storageDir = params[params.index('-o') + 1]
+print("storageDir: ")
+print(storageDir)
+sys.stdout.flush()
+
 # Iterates over the files from a 'run'
-for root, dirs, files in os.walk("/home/meddlin/git/cpat/tool-data/metagoofil"):
+# for root, dirs, files in os.walk("/home/meddlin/git/cpat/tool-data/metagoofil"):
+for root, dirs, files in os.walk(storageDir):
 	for file in files:
 		if file.endswith(".pdf"):			
 			fileName = os.path.join(root, file)
