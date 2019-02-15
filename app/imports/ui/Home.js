@@ -22,6 +22,14 @@ class Home extends Component {
 					<li><Link to="/location/view">Location View</Link></li>
 					<li><Link to="/pdfFile/view">PDF File View</Link></li>
 				</ul>
+
+				{/*<p>Analytics
+					<span>multiple mini-components underneath it</span>
+					<span>- number of targets</span>
+					<span>- number of relations each target has</span>
+					<span>- easy access to files as they come in; a link?</span>
+				</p>*/}
+
 			</div>
 		);
 	}
