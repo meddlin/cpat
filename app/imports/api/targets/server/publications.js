@@ -15,7 +15,7 @@ Meteor.publish('targets.selected', function targetsSelected() {
 	});
 });
 
-Meteor.publish('targets.hasRelationsCount', function targetsHasRelationsCount() {
+Meteor.publish('targets.hasRelations', function targetsHasRelationsCount() {
 	return Targets.find(
 				{ $and: 
 					[ 

@@ -32,5 +32,4 @@ export default withTracker((props) => {
 	if (collectionType === "PdfFile") return { ready: handle.ready(), subscribedData: import('../api/pdf-files/pdf-files').then(col => col.find().fetch()) }
 	if (collectionType === "Person") return { ready: handle.ready(), subscribedData: import('../api/person/person').then(col => col.find().fetch()) }
 
-
 })(PreviewComponent);

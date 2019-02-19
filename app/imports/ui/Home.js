@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import TargetCount from './dashboard/TargetCount';
+
 import './Home.css';
 
 class Home extends Component {
@@ -22,6 +24,10 @@ class Home extends Component {
 					<li><Link to="/location/view">Location View</Link></li>
 					<li><Link to="/pdfFile/view">PDF File View</Link></li>
 				</ul>
+
+				<div id="dashboard">
+					<TargetCount />
+				</div>
 
 				{/*<p>Analytics
 					<span>multiple mini-components underneath it</span>
