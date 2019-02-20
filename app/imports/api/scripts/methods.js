@@ -227,7 +227,11 @@ Meteor.methods({
 			console.log('name: ' + customScriptName);
 			console.log('scriptPath: ' + scriptPath);
 			console.log('paramStr: ' + paramStr);
-			var py = spawn('python', [customScriptName, scriptPath + ' ' + paramStr]);
+
+			let targetParam = "targets:" + targets.join(",");
+			console.log(targetParam);
+
+			var py = spawn('python', [customScriptName, scriptPath + ' ' + paramStr + ' ' + targetParam]);
 
 			py.stdout.on('data', function(data) {
 				dataString += data.toString();

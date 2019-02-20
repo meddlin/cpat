@@ -9,36 +9,54 @@ from pymongo import MongoClient
 
 # toolDataLocation = "/home/meddlin/git/cpat/tool-data" + "/" + "Target_metagoofil_" + date.today()
 
+# Split the input string into a parameter array
 inputParams = sys.argv[1]
 params = inputParams.split(' ')
 
+# View what our parameters are
 print("params: ")
 print(params)
 sys.stdout.flush()
 
-# targets => 'targets:_id-1,_id-2'
+# Extract the target id's from the input parameters
+# targets => 'targets:_id-1,id-2'
+targetIds = ''
+if any("targets:" in p for p in params):
+	targetIds = params[-1]
+	targetIds = targetIds.replace('targets:', '')
+	targetIds = targetIds.split(',')
 
+print("targetIds: ")
+print(targetIds)
+sys.stdout.flush()
+
+# Append 'python ' to the beginning of the script (we are executing a Python script from another Python script)
 paramsForScript = ["python"]
 paramsForScript.extend(params)
 
+# View what our parameters for the script are
 print("params for script: ")
 print(paramsForScript)
 sys.stdout.flush()
 
+# Kickoff the metagoofil script (this is where the magic happens)
 res = Popen(paramsForScript, stdout = PIPE)
-# res = Popen([ "python", "/home/meddlin/git/tools/metagoofil/metagoofil.py", "-d", "poolcorp.com", "-t", "doc,pdf", "-l", "200", "-n", "100", "-o", "/home/meddlin/git/cpat/tool-data/metagoofil2", "-f", "results.html"], stdout = PIPE)
 
+# Wait for the metagoofil script to finish before continuing
 while res.poll() is None:
     time.sleep(0.5)
 
+# Setup MongoDB resources
 client = MongoClient('mongodb://127.0.0.1:3001')
 db = client.meteor
 
+# Find the directory where metagoofil put all the goodies
 storageDir = params[params.index('-o') + 1]
 print("storageDir: ")
 print(storageDir)
 sys.stdout.flush()
 
+insertedFileIds = []
 # Iterates over the files from a 'run'
 # for root, dirs, files in os.walk("/home/meddlin/git/cpat/tool-data/metagoofil"):
 for root, dirs, files in os.walk(storageDir):
@@ -60,20 +78,21 @@ for root, dirs, files in os.walk(storageDir):
 			sys.stdout.flush()
 
 			resId = db.filedata.insert_one(data)
+			insertedFileIds.add({collectionName: 'filedata', documentId: resId})
 			print(resId)
 			sys.stdout.flush()
 
-			# for t in targets:
-			# 	targetRelResId = db.targets.update_one({ _id: t._id }, 
-			# 						{ 
-			# 							$push: 
-			# 							{ relations: 
-			# 								{ collectionName: 'filedata', documentId: resid } 
-			# 							} 
-			# 						}, { multi: True })
-			# 	print(targetRelResId)
+			for t in targetIds:
+				targetRelResId = db.targets.update_one({ _id: t._id }, { "$push": { relations: insertedFileIds }}, { multi: True })
+				# targetRelResId = db.targets.update_one({ _id: t._id }, 
+				# 					{ "$push": 
+				# 						{ relations: 
+				# 							{ collectionName: 'filedata', documentId: resid } 
+				# 						} 
+				# 					}, { multi: True })
+				print(targetRelResId)
 
-			# sys.stdout.flush()
+			sys.stdout.flush()
 
 
 

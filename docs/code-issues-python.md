@@ -36,3 +36,13 @@ Ref: [https://stackoverflow.com/questions/541390/extracting-extension-from-filen
 A useful distinction
 
 Ref: [https://stackoverflow.com/questions/7681715/whats-the-difference-between-subprocess-popen-and-call-how-can-i-use-them](https://stackoverflow.com/questions/7681715/whats-the-difference-between-subprocess-popen-and-call-how-can-i-use-them)
+
+## Future Python-based & Scripts
+
+**TheHarvester**
+
+[https://null-byte.wonderhowto.com/how-to/scrape-target-email-addresses-with-theharvester-0176307/](https://null-byte.wonderhowto.com/how-to/scrape-target-email-addresses-with-theharvester-0176307/)
+
+**Operative Framework**
+
+[https://null-byte.wonderhowto.com/how-to/recon-research-person-organization-using-operative-framework-0176323/](https://null-byte.wonderhowto.com/how-to/recon-research-person-organization-using-operative-framework-0176323/)
