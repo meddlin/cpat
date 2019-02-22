@@ -63,8 +63,9 @@ for root, dirs, files in os.walk(storageDir):
 	for file in files:
 		if file.endswith(".pdf"):			
 			fileName = os.path.join(root, file)
+			docId = str(uuid.uuid4())
 			data = { 
-					'_id': str(uuid.uuid4()),
+					'_id': docId,
 					'fileName': fileName,
 					'fileSize': os.path.getsize(fileName), # this is in bytes
 					'fileType': os.path.splitext(fileName)[1],
@@ -78,23 +79,9 @@ for root, dirs, files in os.walk(storageDir):
 			sys.stdout.flush()
 
 			resId = db.filedata.insert_one(data)
-			insertedFileIds.add({collectionName: 'filedata', documentId: resId})
+			insertedFileIds.append({"collectionName": 'filedata', "documentId": docId})
 			print(resId)
 			sys.stdout.flush()
-
-			for t in targetIds:
-				targetRelResId = db.targets.update_one({ _id: t._id }, { "$push": { relations: insertedFileIds }}, { multi: True })
-				# targetRelResId = db.targets.update_one({ _id: t._id }, 
-				# 					{ "$push": 
-				# 						{ relations: 
-				# 							{ collectionName: 'filedata', documentId: resid } 
-				# 						} 
-				# 					}, { multi: True })
-				print(targetRelResId)
-
-			sys.stdout.flush()
-
-
 
 		if file.endswith(".doc"):
 			print("found .doc type")
@@ -107,6 +94,16 @@ for root, dirs, files in os.walk(storageDir):
 
 		if file.endswith(".xlsx"):
 			print("found .xlsx type")
+
+# Update targets with ids from the inserted files
+for t in targetIds:
+	targetRelResId = db.targets.update_one({ "_id": t }, 
+			{ "$push": { "relations": { "$each": insertedFileIds } }
+		})
+	print("updating targets...")
+	print(targetRelResId)
+
+sys.stdout.flush()
 
 # TODO
 # 	--> detect what type of files are retrieved
