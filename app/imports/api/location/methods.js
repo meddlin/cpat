@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Location } from './locations';
+import { Location } from './location';
 
 Meteor.methods({
 	'location.insert': function insert(data) {

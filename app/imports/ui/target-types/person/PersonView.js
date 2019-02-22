@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
-import { PdfFile } from '../../api/pdf-files/pdf-files';
-import './PdfFileView.css';
+import { Person } from '../../../api/person/person';
+import './PersonView.css';
 
-class PdfFileView extends Component {
+class PersonView extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -13,7 +13,7 @@ class PdfFileView extends Component {
 	render() {
 		return (
 			<div>
-				<h2>PDF File</h2>
+				<h2>Person</h2>
 
 				<p>Form goes here.</p>
 			</div>
@@ -21,16 +21,16 @@ class PdfFileView extends Component {
 	}
 };
 
-export default PdfFileView;
+export default PersonView;
 
 // TODO : Finish subscribing to the publication.
 
 /*export default withTracker((props) => {
 	const docId = props.docId;
 
-	Meteor.subscribe('pdfFile.single', docId);
+	Meteor.subscribe('person.single', docId);
 
 	return {
-    	pdfFile: PdfFile.find().fetch()
+    	person: Person.find().fetch()
   	};
-})(PdfFileView);*/
+})(PersonView);*/

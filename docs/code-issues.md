@@ -95,3 +95,34 @@ import(`${API_EntryPath}/${colName}/${colName}.js`)
 		console.log(col);
 	});
 ```
+
+It starts to look like this in practice.
+
+```js
+setupSubscriptions(target) {
+	if (target[0].collectionType.toLowerCase() === "person" && target[0].documentId) {
+		import('../../api/person/person')
+			.then((col) => {
+				console.log(`imported module ${col}`);
+			})
+		Meteor.subscribe('person.single', target[0].documentId);
+	}
+
+	let scriptsData = target[0].relations.filter( (r) => {
+			return (r.collectionName.toLowerCase() == 'scripts')
+		});
+	if (scriptsData.length > 0) {
+		import('../../api/files/files')
+			.then((col) => {
+				console.log(`imported module ${col.default._collection.name}`);
+
+				let d = col.default._collection.findOne();
+				console.log(d);
+			});
+
+		for(var i = 0; i < scriptsData.length; i++) {
+			Meteor.subscribe('fileData.getSingle', scriptsData[i].documentId);
+		}
+	}
+}
+```

@@ -14,3 +14,16 @@ Meteor.publish('targets.selected', function targetsSelected() {
 		selected: true
 	});
 });
+
+Meteor.publish('targets.hasRelations', function targetsHasRelationsCount() {
+	return Targets.find(
+				{ $and: 
+					[ 
+						{ name: {$exists: true} },
+						{ collectionType: {$exists: true} },
+						{ relations: {$exists: true} }
+					]
+				}, 
+				{ name: 1,  relations: 1 }
+			);
+});

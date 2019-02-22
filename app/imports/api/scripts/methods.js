@@ -5,6 +5,17 @@ import Scripts from './scripts';
 
 
 Meteor.methods({
+	'scripts.insert': function scriptsInsert(scriptDoc) {
+		if (scriptDoc) {
+			return Scripts.insert({
+				name: scriptDoc.name,
+				tool: scriptDoc.tool,
+				toolCommand: scriptDoc.toolCommand,
+				language: scriptDoc.language
+			});
+		}
+	},
+
 	'scripts.single': function scriptsSingle(docId) {
 		/*let res;
 		async function getOne(docId) {
@@ -87,6 +98,11 @@ Meteor.methods({
 		console.log(pythonRes);
 	},
 
+	/**
+	 * Kickoff nmap scan from Python.
+	 * @param  {[type]} targets [description]
+	 * @return {[type]}         [description]
+	 */
 	async getPythonOutput(targets) {
 		var Future = require('fibers/future');
 		var fut = new Future();
@@ -152,16 +168,7 @@ Meteor.methods({
 			targets: targets.map(t => t._id),
 			collectionName: "Scripts",
 			actionDocId: res
-		});
-
-		/*for (var docIdx = 0; docIdx < targets.length; docIdx++) {
-			Meteor.call('targets.relate', {
-				targetId: targets[docIdx]._id,
-				collectionName: "Scripts",
-				actionDocId: res
-			});
-		}*/
-		
+		});		
 	},
 
 	// proof-of-concept to pass multiple parameters to python process
@@ -180,6 +187,81 @@ Meteor.methods({
 		return res;
 	},
 
+	/**
+	 * Kicks off a metagoofil search by executing the tool from Python.
+	 * @param  {[type]} targets [description]
+	 * @param  {[type]} params  [description]
+	 * @return {[type]}         [description]
+	 */
+	// TODO : Later to be generalized, and turned into the main entry point for calling any Python scripts
+	async metagoofilSearch(targets, params) {
+		var Future = require('fibers/future');
+		var fut = new Future();
+		console.log(targets);
+		console.log(params);
+
+		// Python script to call
+		/*let scriptPath = "/home/meddlin/git/cpat/tool-scripts/python/metagoofil-search.py";*/
+
+		// Tool to call from Python (dependency)
+		/*let toolPath = "/home/meddlin/git/tools/metagoofil/metagoofil.py";
+		let domain = "poolcorp.com";
+		let docTypes = "doc,pdf";
+		let amountToSearch = "200";
+		let amountToDownload = "100";
+		let outputDir = "/home/meddlin/git/cpat/tool-data/metagoofil2";
+		let resultsFile = "results.html";*/
+
+		let customScriptName = params.name;
+		let scriptPath = params.scriptPath;
+		let paramStr = params.toolCommand;
+		let dataString = "";
+		let pymongoResult;
+
+		// commented for testing
+		async function callPython(targets, params) {
+			const { spawn, exec } = require('child_process');
+
+			debugger;
+			console.log('just before "spawn(python, []): "');
+			console.log('name: ' + customScriptName);
+			console.log('scriptPath: ' + scriptPath);
+			console.log('paramStr: ' + paramStr);
+
+			let targetParam = "targets:" + targets.join(",");
+			console.log(targetParam);
+
+			var py = spawn('python', [customScriptName, scriptPath + ' ' + paramStr + ' ' + targetParam]);
+
+			py.stdout.on('data', function(data) {
+				dataString += data.toString();
+				console.log('JS[python callback].on(data) --> ' + dataString);
+
+				// extract pymongo from Python flush results
+				if (data.toString().includes('result:')) { // at this point, 'data' is a byte array without calling '.toString()'
+					pymongoResult = data.toString().split(': ').pop().replace("'", "");
+				}
+			});
+			py.stderr.on('data', function(data) {
+				if (data) console.error(`child stderr:\n${data.toString()}`);
+			});
+			py.stdout.on('end', function() {
+				console.log(dataString);
+				console.log('end of stream');
+
+				fut.return(pymongoResult);
+			});
+
+			return fut.wait();
+		}
+
+		const res = await callPython(targets, params);
+	},
+
+	/**
+	 * Detects other scripts which exist in the /tool-scripts directory.
+	 * @return {[type]} [description]
+	 */
 	'server.findScriptPlugins': function findScriptPlugins() {
 		const bound = Meteor.bindEnvironment((callback) => {
 			callback();

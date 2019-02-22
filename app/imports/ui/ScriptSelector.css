@@ -3,6 +3,10 @@
 	background-color: lightgray;
 }
 
+.script-select-btn {
+	cursor: pointer;
+}
+
 #script-controls {
 	display: flex;
 	flex-direction: row;
