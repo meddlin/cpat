@@ -15,31 +15,7 @@ Meteor.methods({
 			});
 		}
 	},
-
-	'scripts.single': function scriptsSingle(docId) {
-		/*let res;
-		async function getOne(docId) {
-			debugger;
-			const { db } = MongoInternals.defaultRemoteCollectionDriver().mongo;
-			res = await db.filedata.findOne({ _id: docId });
-		}
-
-		getOne();*/
-		/*return Scripts.find({ _id: docId }).fetch();*/
-		/*return res;*/
-
-		return Scripts.findOne({ _id: docId }, 
-			{
-				"source": 1,
-				"runStats": 1,
-				"dateCreated": 1
-			});
-	},
-
-	'insert.exampleScript': function insertExampleScript() {
-		return Scripts.insert({ name: 'insert-from-meteor.py', language: 'test' });
-	},
-
+	
 	'server.callToPython': async function callToPython() {
 
 		async function sendToPython() {
@@ -199,18 +175,6 @@ Meteor.methods({
 		var fut = new Future();
 		console.log(targets);
 		console.log(params);
-
-		// Python script to call
-		/*let scriptPath = "/home/meddlin/git/cpat/tool-scripts/python/metagoofil-search.py";*/
-
-		// Tool to call from Python (dependency)
-		/*let toolPath = "/home/meddlin/git/tools/metagoofil/metagoofil.py";
-		let domain = "poolcorp.com";
-		let docTypes = "doc,pdf";
-		let amountToSearch = "200";
-		let amountToDownload = "100";
-		let outputDir = "/home/meddlin/git/cpat/tool-data/metagoofil2";
-		let resultsFile = "results.html";*/
 
 		let customScriptName = params.name;
 		let scriptPath = params.scriptPath;
