@@ -15,64 +15,6 @@ Meteor.methods({
 			});
 		}
 	},
-	
-	'server.callToPython': async function callToPython() {
-
-		async function sendToPython() {
-			const bound = Meteor.bindEnvironment((callback) => {
-				callback();
-			});
-
-			const { spawn, exec } = require('child_process');
-
-			/// TODO : Pass parameters from client-side
-			///			'paramStr' can be passed in from basic input; unsure how to validate
-			///			'pyScriptPath' can be a combination of scripts stored in Mongo, and
-			///				a main path stored as an ENV variable. (ex: 'home/meddlin/git/cpat')
-			///			'outputFilePath' can be based on same ENV variable, and provided a new name
-			///				-- file dialog? in html --
-			///			- Allow outputFilePath to also be iterable: new Date(), new Date() + 1, etc.
-
-			var paramStr = "nmap 192.168.1.1 -oX ";
-
-			/*var pyScriptPath = process.env.PWD + "/nmap-scan.py";*/
-			var pyScriptPath = "/home/meddlin/git/cpat/tool-scripts/python/nmap-scan.py";
-			/*var outputFilePath = process.env.PWD + "/nmap-from-cpat-result.xml";*/
-			var outputFilePath = "/home/meddlin/git/cpat/tool-data/nmap-from-cpat-result.xml";
-
-			paramStr = paramStr + outputFilePath;
-			let dataString = '';
-
-			// can potentially "validate" the param string here
-
-			let pymongoResult = 'test-id';
-
-			debugger;
-			bound(() => {
-				var py = spawn('python', [pyScriptPath, paramStr]);
-				py.stdout.on('data', function(data) {
-					dataString += data.toString();
-					console.log('from on->data: ' + dataString);
-
-					// extract pymongo from Python flush results
-					if (data.toString().includes('result:')) { // at this point, 'data' is a byte array without calling '.toString()'
-						pymongoResult = data.toString().split(': ').pop().replace("'", "");
-					}
-				});
-				py.stderr.on('data', function(data) {
-					if (data) console.error(`child stderr:\n${data.toString()}`);
-				});
-				py.stdout.on('end', function() {
-					console.log(dataString);
-					console.log('end of stream');
-					return pymongoResult;
-				});
-			});
-		}
-
-		const pythonRes = await sendToPython();
-		console.log(pythonRes);
-	},
 
 	/**
 	 * Kickoff nmap scan from Python.
@@ -145,22 +87,6 @@ Meteor.methods({
 			collectionName: "Scripts",
 			actionDocId: res
 		});		
-	},
-
-	// proof-of-concept to pass multiple parameters to python process
-	'server.pythonNmapParams': function pythonParams(targets) {	
-		const res = Meteor.call('server.callToPython', (err, res) => {
-			if (res) {
-				let action = {
-					targets: targets.map(t => t._id),
-					collectionName: "Scripts",
-					actionDocId: res
-				};
-				let relationRes = Meteor.call('targets.relate', action);
-			}
-		});
-
-		return res;
 	},
 
 	/**
