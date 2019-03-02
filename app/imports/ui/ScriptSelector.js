@@ -29,13 +29,6 @@ class ScriptSelector extends Component {
 		this.onChangeScriptPath = this.onChangeScriptPath.bind(this);
 	}
 
-	createSampleScript() {
-		Meteor.call('insert.exampleScript', function(err, res) {
-			if (err) console.log(err);
-			if (res) console.log(res);
-		});
-	}
-
 	submitScriptToServer(relatedTargets) {
 		// relate "script submission" call to the 'relatedTargets'
 		let scriptResult = "";
@@ -124,8 +117,6 @@ class ScriptSelector extends Component {
 			    <div id="script-controls">
 				    <div id="run-script-btn" onClick={(() => this.submitScriptToServer(targets))}>Run 'nmap'</div>
 				    <div id="run-script-btn" onClick={this.checkForPlugins}>Detect Plugins</div>
-
-				    <div onClick={this.createSampleScript}>Create Sample Entry</div>
 			    </div>
 
 			    <h3>Selected Targets</h3>

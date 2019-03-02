@@ -15,7 +15,7 @@ class DeviceView extends Component {
 			<div>
 				<h2>Device</h2>
 
-				<p>Form goes here.</p>
+				<p>View form goes here.</p>
 			</div>
 		);
 	}
