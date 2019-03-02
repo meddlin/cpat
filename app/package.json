@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.1.5",
+    "@material-ui/core": "^3.9.2",
     "fibers": "^3.1.1",
     "formik": "^1.5.1",
     "meteor-node-stubs": "^0.4.1",
@@ -19,7 +20,8 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-table": "^6.8.6",
-    "simpl-schema": "^1.5.3"
+    "simpl-schema": "^1.5.3",
+    "yup": "^0.26.10"
   },
   "meteor": {
     "mainModule": {
