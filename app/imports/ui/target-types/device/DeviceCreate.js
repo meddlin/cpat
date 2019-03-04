@@ -17,7 +17,7 @@ class DeviceCreate extends Component {
 				<h2>Create Device</h2>
 
 				<Formik
-					initialValues={{ name: '' }}
+					initialValues={{ name: '', organizations: '' }}
 					onSubmit={(values, actions) => {
 						setTimeout(() => {
 							alert(JSON.stringify(values, null, 2));
@@ -26,15 +26,34 @@ class DeviceCreate extends Component {
 			      	}}
 					render={props => (
 						<form onSubmit={props.handleSubmit}>
-							<label>Device Name</label>
-							<input
-								type="text"
-								onChange={props.handleChange}
-								onBlur={props.handleBlur}
-								value={props.values.name}
-								name="name" />
-							{props.errors.name && <div id="feedback">{props.errors.name}</div>}
-							<button type="submit">Submit</button>
+							<div id="form_device-create">
+								<label>Device Name</label>
+								<input
+									type="text"
+									onChange={props.handleChange}
+									onBlur={props.handleBlur}
+									value={props.values.name}
+									name="name" />
+								{props.errors.name && <div id="feedback">{props.errors.name}</div>}
+
+								<label>Organizations</label>
+								<input
+									type="text"
+									onChange={props.handleChange}
+									onBlur={props.handleBlur}
+									value={props.values.organizations}
+									name="organizations" />
+
+								<label>Relations</label>
+								<input
+									type="text"
+									onChange={props.handleChange}
+									onBlur={props.handleBlur}
+									value={props.values.relations}
+									name="relations" />
+
+								<button type="submit">Submit</button>
+							</div>
 						</form>
 					)}
 			    />

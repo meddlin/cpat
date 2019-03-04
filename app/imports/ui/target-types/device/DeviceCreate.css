@@ -1,0 +1,4 @@
+#form_device-create {
+	display: flex;
+	flex-direction: column;
+}
