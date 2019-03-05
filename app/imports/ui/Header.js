@@ -110,6 +110,49 @@ class Header extends Component {
 	        			<ListItemText primary='Script Editor' />
 	        		</Link>
 	        	</ListItem>
+	        	<ListItem button >
+	        		<Link to="/upload">
+	        			<ListItemText primary='Upload' />
+	        		</Link>
+	        	</ListItem>
+	        	<ListItem button >
+	        		<Link to="/analytics">
+	        			<ListItemText primary='Analytics' />
+	        		</Link>
+	        	</ListItem>
+	        	<ListItem button >
+	        		<Link to="/target/view">
+	        			<ListItemText primary='Target View' />
+	        		</Link>
+	        	</ListItem>
+
+	        	<Divider />
+	        	
+				<ListItem button >
+	        		<Link to="/person/view">
+	        			<ListItemText primary='Person View' />
+	        		</Link>
+	        	</ListItem>
+				<ListItem button >
+					<Link to="/company/view">
+						<ListItemText primary='Company View' />
+					</Link>
+				</ListItem>
+				<ListItem button >
+					<Link to="/device/view">
+						<ListItemText primary='Device View' />
+					</Link>
+				</ListItem>
+				<ListItem button >
+					<Link to="/location/view">
+						<ListItemText primary='Location View' />
+					</Link>
+				</ListItem>
+				<ListItem button >
+					<Link to="/pdfFile/view">
+						<ListItemText primary='PDF File View' />
+					</Link>
+				</ListItem>
 
 	          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
 	            <ListItem button key={text}>
