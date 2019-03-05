@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
+import { Formik } from 'formik';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 import Targets from '../../../api/targets/targets';
 import './TargetCreate.css';
@@ -52,16 +63,22 @@ class TargetCreate extends Component {
 
 		return (
 			<div>
-				<h2>Create Target</h2>
+				<Typography variant="h5" gutterBottom>Create Target</Typography>
 
-				<div>Name</div>
-				<input id="target-name" type="text" value={name} onChange={ (evt) => this.updateName(evt) } />
+				<div className="form-entry__horizontal">
+					<Typography variant="button" gutterBottom>Name</Typography>
+					<TextField id="target-name" type="text" value={name} onChange={ (evt) => this.updateName(evt) } />
+				</div>
 
-				<div>Collection Id</div>
-				<input id="target-collection-id" type="text" value={collectionId} onChange={ (evt) => this.updateCollectionId(evt) } />
+				<div className="form-entry__horizontal">
+					<Typography variant="button" gutterBottom>Collection Id</Typography>
+					<TextField id="target-collection-id" type="text" value={collectionId} onChange={ (evt) => this.updateCollectionId(evt) } />
+				</div>
 
-				<div>Collection Type</div>
-				<input id="target-collection-type" type="text" value={collectionType} onChange={ (evt) => this.updateCollectionType(evt) } />
+				<div className="form-entry__horizontal">
+					<Typography variant="button" gutterBottom>Collection Type</Typography>
+					<TextField id="target-collection-type" type="text" value={collectionType} onChange={ (evt) => this.updateCollectionType(evt) } />
+				</div>
 
 				<div className="relations">
 					<div className="relations-title">Relations</div>
@@ -70,8 +87,27 @@ class TargetCreate extends Component {
 						<div>Id</div>
 					</div>
 				</div>
+				<Typography variant="button" gutterBottom>Relations Table</Typography>
+				<Paper>
+					<Table>
+						<TableHead>
+							<TableRow>
+								<TableCell>_id</TableCell>
+								<TableCell align="right">Collection Type</TableCell>
+								<TableCell align="right">name</TableCell>
+							</TableRow>
+						</TableHead>
+						<TableBody>
+							<TableRow>
+								<TableCell component="th" scope="row"></TableCell>
+								<TableCell align="right"></TableCell>
+								<TableCell align="right"></TableCell>
+				            </TableRow>
+						</TableBody>
+					</Table>
+			    </Paper>
 
-				<div id="create-btn" onClick={this.clickCreate}>CREATE SAMPLE</div>
+				<Button variant="contained" onClick={this.clickCreate}>Create Sample</Button>
 			</div>
 		);
 	}

@@ -13,10 +13,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-import { Device } from '../../../api/device/device';
-import './DeviceCreate.css';
+import { Company } from '../../../api/company/company';
 
-class DeviceCreate extends Component {
+class CompanyCreate extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -24,7 +23,7 @@ class DeviceCreate extends Component {
 	render() {
 		return (
 			<div>
-				<h2>Create Device</h2>
+				<h2>Create Company</h2>
 
 				<Formik
 					initialValues={{ name: '', organizations: '' }}
@@ -36,31 +35,26 @@ class DeviceCreate extends Component {
 			      	}}
 					render={props => (
 						<form onSubmit={props.handleSubmit}>
-							<div id="form_device-create">
-								<Typography variant="button" gutterBottom>Device Name</Typography>
+							<div id="form_company-create">
+								<Typography variant="button" gutterBottom>Company Name</Typography>
 								<TextField
 									type="text"
 									onChange={props.handleChange}
 									onBlur={props.handleBlur}
 									value={props.values.name}
+									label="Name"
 									name="name" />
 								{props.errors.name && <div id="feedback">{props.errors.name}</div>}
 
-								<Typography variant="button" gutterBottom>Organizations</Typography>
-								<TextField
-									type="text"
-									onChange={props.handleChange}
-									onBlur={props.handleBlur}
-									value={props.values.organizations}
-									name="organizations" />
-
 								<Typography variant="button" gutterBottom>Relations</Typography>
 								<TextField
-									type="text"
+									id="company-create__relations"
 									onChange={props.handleChange}
 									onBlur={props.handleBlur}
 									value={props.values.relations}
-									name="relations" />
+									name="relations"
+									label="Relations"
+									margin="normal" />
 
 								<Typography variant="button" gutterBottom>Relations Table</Typography>
 								<Paper>
@@ -82,7 +76,7 @@ class DeviceCreate extends Component {
 									</Table>
 							    </Paper>
 
-								<button type="submit">Submit</button>
+								<Button variant="contained">Submit</Button>
 							</div>
 						</form>
 					)}
@@ -92,16 +86,16 @@ class DeviceCreate extends Component {
 	}
 };
 
-export default DeviceCreate;
+export default CompanyCreate;
 
 // TODO : Finish subscribing to the publication.
 
 /*export default withTracker((props) => {
 	const docId = props.docId;
 
-	Meteor.subscribe('device.single', docId);
+	Meteor.subscribe('company.single', docId);
 
 	return {
-    	device: Device.find().fetch()
+    	company: Device.find().fetch()
   	};
-})(DeviceCreate);*/
+})(CompanyCreate);*/

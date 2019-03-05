@@ -17,7 +17,10 @@ import ScriptCreate from './target-types/scripts/ScriptCreate';
 import ScriptEdit from './target-types/scripts/ScriptEdit';
 
 import PersonView from './target-types/person/PersonView';
+import PersonCreate from './target-types/person/PersonCreate';
+
 import CompanyView from './target-types/company/CompanyView';
+import CompanyCreate from './target-types/company/CompanyCreate';
 
 import DeviceView from './target-types/device/DeviceView';
 import DeviceCreate from './target-types/device/DeviceCreate';
@@ -52,11 +55,13 @@ const App = () => (
 	  	 * Person routes
 	  	 */}
 	  	<Route path="/person/view" component={PersonView} />
+	  	<Route path="/person/create" component={PersonCreate} />
 
 	  	{/**
 	  	 * Company routes
 	  	 */}
 	  	<Route path="/company/view" component={CompanyView} />
+	  	<Route path="/company/create" component={CompanyCreate} />
 
 	  	{/**
 	  	 * Device routes

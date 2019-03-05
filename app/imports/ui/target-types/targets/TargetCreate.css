@@ -1,9 +1,6 @@
-#create-btn {
-	cursor: pointer;
-	background-color: lightgray;
-	max-width: 300px;
-	margin: 1em 0 1em 0;
-	padding: 5px;
+.form-entry__horizontal {
+	display: flex;
+	flex-direction: row;
 }
 
 .relations {
