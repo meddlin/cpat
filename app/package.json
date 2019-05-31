@@ -21,6 +21,9 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-table": "^6.8.6",
+    "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
     "simpl-schema": "^1.5.3",
     "yup": "^0.26.10"
   },
