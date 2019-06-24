@@ -26,6 +26,7 @@ import DeviceView from './target-types/device/DeviceView';
 import DeviceCreate from './target-types/device/DeviceCreate';
 
 import LocationView from './target-types/location/LocationView';
+import LocationCreate from './target-types/location/LocationCreate';
 import PdfFileView from './target-types/pdf-files/PdfFileView';
 
 const App = () => (
@@ -73,6 +74,7 @@ const App = () => (
 	  	 * Location routes
 	  	 */}
 	  	<Route path="/location/view" component={LocationView} />
+		<Route path="/location/create" component={LocationCreate} />
 
 	  	{/**
 	  	 * PDF File routes

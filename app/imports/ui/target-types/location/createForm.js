@@ -4,8 +4,8 @@ import * as Yup from 'yup';
 import { TextField, MaskedTextField, PrimaryButton } from 'office-ui-fabric-react';
 
 class CreateForm extends Component {
-	render() {
-		const { 
+    render() {
+        const { 
 			values,
 			touched,
 			errors,
@@ -15,11 +15,11 @@ class CreateForm extends Component {
 			handleSubmit,
 			handleReset,
 			isSubmitting
-		} = this.props;
-
-		return (
-			<Form>
-				<h3>Create a company</h3>
+        } = this.props;
+        
+        return (
+            <Form>
+                <h3>Create a location</h3>
 
 				<TextField
 					name="name"
@@ -45,7 +45,7 @@ class CreateForm extends Component {
 
 			</Form>
 		);
-	}
+    }
 };
 
 const formikEnhancer = withFormik({
