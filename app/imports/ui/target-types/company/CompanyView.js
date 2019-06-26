@@ -3,6 +3,8 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
 import { Company } from '../../../api/company/company';
+
+import { CompanyTable } from './CompanyTable';
 import './CompanyView.css';
 
 class CompanyView extends Component {
@@ -16,6 +18,8 @@ class CompanyView extends Component {
 				<h2>Company</h2>
 
 				<p>Form goes here.</p>
+
+				<CompanyTable />
 			</div>
 		);
 	}

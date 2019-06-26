@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Company } from '../company';
+import Company from '../company';
 
 Meteor.publish('company.all', function companyAll_Publication() {
 	return Company.find();
