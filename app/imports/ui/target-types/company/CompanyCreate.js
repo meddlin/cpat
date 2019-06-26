@@ -4,7 +4,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 
 import Company from '../../../api/company/company';
 
-import { CreateForm } from './createForm';
+import { CompanyCreateForm } from './CompanyCreateForm';
 
 export default CompanyCreate = withTracker( (props) => {
 	//const docId = props.docId;
@@ -23,4 +23,4 @@ export default CompanyCreate = withTracker( (props) => {
 	let meteorSubd = { loading, company, companyExists, insertDocFunc };
 
 	return { meteorSubd };
-})(CreateForm);
+})(CompanyCreateForm);

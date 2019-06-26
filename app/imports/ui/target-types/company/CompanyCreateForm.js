@@ -3,7 +3,7 @@ import { withFormik, Form } from 'formik';
 import * as Yup from 'yup';
 import { TextField, MaskedTextField, PrimaryButton } from 'office-ui-fabric-react';
 
-class CreateForm extends Component {
+class CompanyCreateForm extends Component {
 	render() {
 		const { 
 			values,
@@ -70,6 +70,6 @@ const formikEnhancer = withFormik({
 
 		setSubmitting(false);
 	}
-})(CreateForm);
+})(CompanyCreateForm);
 
-export { formikEnhancer as CreateForm };
+export { formikEnhancer as CompanyCreateForm };
