@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Company } from './company';
+import Company from './company';
 
 Meteor.methods({
 	'company.insert': function insert(data) {
