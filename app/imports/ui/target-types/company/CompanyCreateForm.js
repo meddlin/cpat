@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { withFormik, Form } from 'formik';
+import { withFormik, Form, Field, FieldArray } from 'formik';
 import * as Yup from 'yup';
-import { TextField, MaskedTextField, PrimaryButton } from 'office-ui-fabric-react';
+import { TextField, MaskedTextField, PrimaryButton, DefaultButton } from 'office-ui-fabric-react';
 
 class CompanyCreateForm extends Component {
 	render() {
@@ -30,14 +30,30 @@ class CompanyCreateForm extends Component {
 					value={values.name} />
 				{(touched.name && errors.name) ? <div>{errors.name}</div> : ""}
 
-				<TextField
+				<FieldArray
 					name="relations"
 					label="Relations"
-					onChange={handleChange}
-					onBlur={handleBlur}
-					value={values.relations}
-					margin="normal" />
-				{(touched.relations && errors.relations) ? <div>{errors.relations}</div> : ""}
+					render={arrayHelpers => (
+						<div>
+							{values.relations && values.relations.length > 0 ? (
+								values.relations.map( (r, index) => (
+									<div key={index}>
+										<div className="ms-Grid ms-Grid-row" dir="ltr">
+											<div className="ms-Grid-col ms-sm6 ms-md4 ms-lg3">
+												<TextField name={`relations.${index}.name`} label="Relation Name" value={r.name} />
+											</div>
+											<div className="ms-Grid-col ms-sm6 ms-md4 ms-lg3">
+												<TextField name={`relations.${index}.type`} label="Relation Type" value={r.type} />
+											</div>
+										</div>
+										<DefaultButton type="button" onClick={() => arrayHelpers.remove(index)}> - </DefaultButton>
+										<DefaultButton type="button" onClick={() => arrayHelpers.insert(index, {name: "", type: ""})}> + </DefaultButton>
+									</div>))
+								) : ( 
+									<DefaultButton type="button" onClick={() => arrayHelpers.push({name: "", type: ""})}>Add a relation</DefaultButton>
+								)}
+						</div>
+				)} />
 
 				<PrimaryButton
 					type="submit"
@@ -52,7 +68,7 @@ const formikEnhancer = withFormik({
 	mapPropsToValues({ name, relations }) {
 		return {
 			name: name || '',
-			relations: relations || ''
+			relations: relations || [ { _id: '', name: "", type: ""} ]
 		}
 	},
 	validationSchema: Yup.object().shape({

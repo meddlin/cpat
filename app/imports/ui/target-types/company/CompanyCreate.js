@@ -19,6 +19,7 @@ export default CompanyCreate = withTracker( (props) => {
 			if (res) console.log(res);
 		});
 	});
+	
 	const loading = '', company = '', companyExists = '';
 	let meteorSubd = { loading, company, companyExists, insertDocFunc };
 
