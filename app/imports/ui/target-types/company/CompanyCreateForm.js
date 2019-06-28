@@ -19,7 +19,7 @@ class CompanyCreateForm extends Component {
 
 		return (
 			<Form>
-				<h3>Create a company</h3>
+				<div className="ms-fontSize-18">Create a company</div>
 
 				<TextField
 					name="name"
@@ -38,19 +38,33 @@ class CompanyCreateForm extends Component {
 							{values.relations && values.relations.length > 0 ? (
 								values.relations.map( (r, index) => (
 									<div key={index}>
-										<div className="ms-Grid ms-Grid-row" dir="ltr">
-											<div className="ms-Grid-col ms-sm6 ms-md4 ms-lg3">
-												<TextField name={`relations.${index}.name`} label="Relation Name" value={r.name} />
+										<div className="ms-Grid-row" dir="ltr">
+											<div className="ms-Grid-col ms-sm6 ms-md4 ms-lg4">
+												<TextField 
+													name={`relations.${index}.collectionName`} 
+													label="Relation Collection Name" 
+													value={r.collectionName} />
 											</div>
-											<div className="ms-Grid-col ms-sm6 ms-md4 ms-lg3">
-												<TextField name={`relations.${index}.type`} label="Relation Type" value={r.type} />
+											<div className="ms-Grid-col ms-sm6 ms-md4 ms-lg4">
+												<TextField 
+													name={`relations.${index}.collectionId`} 
+													label="Relation Collection Id" 
+													value={r.collectionId} />
+											</div>
+											<div className="ms-Grid-col ms-sm-2 ms-md4 ms-lg-2" style={{'marginTop': '1.8em'}}>
+												<DefaultButton 
+													type="button" 
+													onClick={() => arrayHelpers.remove(index)}> - </DefaultButton>
+												<DefaultButton 
+													type="button" 
+													onClick={() => arrayHelpers.insert(index, {collectionName: "", collectionId: ""})}> + </DefaultButton>
 											</div>
 										</div>
-										<DefaultButton type="button" onClick={() => arrayHelpers.remove(index)}> - </DefaultButton>
-										<DefaultButton type="button" onClick={() => arrayHelpers.insert(index, {name: "", type: ""})}> + </DefaultButton>
 									</div>))
 								) : ( 
-									<DefaultButton type="button" onClick={() => arrayHelpers.push({name: "", type: ""})}>Add a relation</DefaultButton>
+									<DefaultButton 
+										type="button" 
+										onClick={() => arrayHelpers.push({name: "", type: ""})}>Add a relation</DefaultButton>
 								)}
 						</div>
 				)} />
@@ -68,7 +82,7 @@ const formikEnhancer = withFormik({
 	mapPropsToValues({ name, relations }) {
 		return {
 			name: name || '',
-			relations: relations || [ { _id: '', name: "", type: ""} ]
+			relations: relations || [ { collectionName: "", collectionId: ""} ]
 		}
 	},
 	validationSchema: Yup.object().shape({
