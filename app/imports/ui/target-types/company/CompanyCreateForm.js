@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withFormik, Form, Field, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import { TextField, MaskedTextField, PrimaryButton, DefaultButton } from 'office-ui-fabric-react';
+import { CompanyCreateFormArray } from './CompanyCreateFormArray';
 
 class CompanyCreateForm extends Component {
 	render() {
@@ -30,44 +31,7 @@ class CompanyCreateForm extends Component {
 					value={values.name} />
 				{(touched.name && errors.name) ? <div>{errors.name}</div> : ""}
 
-				<FieldArray
-					name="relations"
-					label="Relations"
-					render={arrayHelpers => (
-						<div>
-							{values.relations && values.relations.length > 0 ? (
-								values.relations.map( (r, index) => (
-									<div key={index}>
-										<div className="ms-Grid-row" dir="ltr">
-											<div className="ms-Grid-col ms-sm6 ms-md4 ms-lg4">
-												<TextField 
-													name={`relations.${index}.collectionName`} 
-													label="Relation Collection Name" 
-													value={r.collectionName} />
-											</div>
-											<div className="ms-Grid-col ms-sm6 ms-md4 ms-lg4">
-												<TextField 
-													name={`relations.${index}.collectionId`} 
-													label="Relation Collection Id" 
-													value={r.collectionId} />
-											</div>
-											<div className="ms-Grid-col ms-sm-2 ms-md4 ms-lg-2" style={{'marginTop': '1.8em'}}>
-												<DefaultButton 
-													type="button" 
-													onClick={() => arrayHelpers.remove(index)}> - </DefaultButton>
-												<DefaultButton 
-													type="button" 
-													onClick={() => arrayHelpers.insert(index, {collectionName: "", collectionId: ""})}> + </DefaultButton>
-											</div>
-										</div>
-									</div>))
-								) : ( 
-									<DefaultButton 
-										type="button" 
-										onClick={() => arrayHelpers.push({name: "", type: ""})}>Add a relation</DefaultButton>
-								)}
-						</div>
-				)} />
+				<FieldArray name="relations" component={CompanyCreateFormArray} />
 
 				<PrimaryButton
 					type="submit"
@@ -82,7 +46,7 @@ const formikEnhancer = withFormik({
 	mapPropsToValues({ name, relations }) {
 		return {
 			name: name || '',
-			relations: relations || [ { collectionName: "", collectionId: ""} ]
+			relations: relations || [ { } ]
 		}
 	},
 	validationSchema: Yup.object().shape({
@@ -95,7 +59,7 @@ const formikEnhancer = withFormik({
 		if (name) {
 			// kick-off server-side methods to store in DB, here
 			console.log(`Submit on Company Create form. Name: ${name}`);
-			insertDocFunc({ name });
+			insertDocFunc({ name, relations });
 		}
 
 		setSubmitting(false);
