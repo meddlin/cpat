@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { DefaultButton } from 'office-ui-fabric-react';
+import { Panel, PanelType } from 'office-ui-fabric-react';
+import { IconButton } from 'office-ui-fabric-react';
+
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
-import IconButton from '@material-ui/core/IconButton';
+/*import IconButton from '@material-ui/core/IconButton';*/
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import Drawer from '@material-ui/core/Drawer';
@@ -92,11 +96,43 @@ class Header extends Component {
 
 		this.state = {
 		    left: false,
+		    showPanel: false
 		};
 	}
 
 	toggleDrawer = (side, open) => () => {
 		this.setState({ [side]: open, });
+	};
+
+	_onRenderFooterContent = () => {
+		return (
+			<div>
+				<DefaultButton onClick={this._hidePanel}>Dismiss</DefaultButton>
+			</div>
+		);
+	};
+
+	_showPanel = () => {
+		this.setState({ showPanel: true });
+	};
+
+	_hidePanel = () => {
+		this.setState({ showPanel: false });
+	};
+
+	_onDismiss = (ev?) => {
+		if (!ev) {
+			console.log('Panel dismissed.');
+			return;
+		}
+
+		console.log('Close button clicked or light dismissed.');
+		if (ev.nativeEvent.srcElement && ev.nativeEvent.srcElement.className.indexOf('ms-Button-icon') !== -1) {
+			console.log('Close button clicked.');
+		}
+		if (ev.nativeEvent.srcElement && ev.nativeEvent.srcElement.className.indexOf('ms-Overlay') !== -1) {
+			console.log('Light dismissed.');
+		}
 	};
 
 	render() {
@@ -153,23 +189,7 @@ class Header extends Component {
 						<ListItemText primary='PDF File View' />
 					</Link>
 				</ListItem>
-
-	          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-	            <ListItem button key={text}>
-	              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-	              <ListItemText primary={text} />
-	            </ListItem>
-	          ))}
-	        </List>
-	        <Divider />
-	        <List>
-	          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-	            <ListItem button key={text}>
-	              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-	              <ListItemText primary={text} />
-	            </ListItem>
-	          ))}
-	        </List>
+			</List>
 	      </div>
 	    );
 
@@ -177,18 +197,25 @@ class Header extends Component {
 			<div className={classes.fluidMarginCorrection}>
 				<AppBar position="static">
 					<Toolbar variant="dense">
-						<IconButton color="inherit" aria-label="Open drawer" onClick={this.toggleDrawer('left', true)} >
-							<MenuIcon />
-							<Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
-					          <div
-					            tabIndex={0}
-					            role="button"
-					            onClick={this.toggleDrawer('left', false)}
-					            onKeyDown={this.toggleDrawer('left', false)}>
-					            	{sideList}
-					          </div>
-					        </Drawer>
-						</IconButton>
+
+						<div>
+							<IconButton style={{'color': 'white' }}
+								iconProps={{ iconName: 'globalNavButton', style: { fontSize: 20 } }} 
+								onClick={this._showPanel} 
+								title="Global Navigation" 
+								ariaLabel="Global Navigation" />
+					        <Panel
+								headerText="Navigation"
+								isOpen={this.state.showPanel}
+								type={PanelType.smallFixedNear}
+								isFooterAtBottom={true}
+								onDismiss={this._onDismiss}
+								onRenderFooterContent={this._onRenderFooterContent}
+								isLightDismiss={true}>
+					        	<span>{sideList}</span>
+					        </Panel>
+					    </div>
+
 						<Typography variant="h6" color="inherit">CPAT</Typography>
 						<div className={classes.grow} />
 							<div className={classes.search}>
