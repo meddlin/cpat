@@ -4,7 +4,8 @@ import Company from './company';
 Meteor.methods({
 	'company.insert': function insert(data) {
 		return Company.insert({
-			name: data.name
+			name: data.name,
+			relations: data.relations
 		});
 	}
 });

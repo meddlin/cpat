@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { withFormik, Form } from 'formik';
+import { withFormik, Form, Field, FieldArray } from 'formik';
 import * as Yup from 'yup';
-import { TextField, MaskedTextField, PrimaryButton } from 'office-ui-fabric-react';
+import { TextField, MaskedTextField, PrimaryButton, DefaultButton } from 'office-ui-fabric-react';
+import { CompanyCreateFormArray } from './CompanyCreateFormArray';
 
-class CreateForm extends Component {
+class CompanyCreateForm extends Component {
 	render() {
 		const { 
 			values,
@@ -19,7 +20,7 @@ class CreateForm extends Component {
 
 		return (
 			<Form>
-				<h3>Create a company</h3>
+				<div className="ms-fontSize-18">Create a company</div>
 
 				<TextField
 					name="name"
@@ -30,14 +31,7 @@ class CreateForm extends Component {
 					value={values.name} />
 				{(touched.name && errors.name) ? <div>{errors.name}</div> : ""}
 
-				<TextField
-					name="relations"
-					label="Relations"
-					onChange={handleChange}
-					onBlur={handleBlur}
-					value={values.relations}
-					margin="normal" />
-				{(touched.relations && errors.relations) ? <div>{errors.relations}</div> : ""}
+				<FieldArray name="relations" component={CompanyCreateFormArray} />
 
 				<PrimaryButton
 					type="submit"
@@ -52,7 +46,7 @@ const formikEnhancer = withFormik({
 	mapPropsToValues({ name, relations }) {
 		return {
 			name: name || '',
-			relations: relations || ''
+			relations: relations || [ { } ]
 		}
 	},
 	validationSchema: Yup.object().shape({
@@ -65,11 +59,11 @@ const formikEnhancer = withFormik({
 		if (name) {
 			// kick-off server-side methods to store in DB, here
 			console.log(`Submit on Company Create form. Name: ${name}`);
-			insertDocFunc({ name });
+			insertDocFunc({ name, relations });
 		}
 
 		setSubmitting(false);
 	}
-})(CreateForm);
+})(CompanyCreateForm);
 
-export { formikEnhancer as CreateForm };
+export { formikEnhancer as CompanyCreateForm };
