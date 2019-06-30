@@ -1,22 +1,32 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Formik } from 'formik';
-import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 
-import { Device } from '../../../api/device/device';
+import Device from '../../../api/device/device';
+import { DeviceCreateForm } from './DeviceCreateForm';
 import './DeviceCreate.css';
 
-class DeviceCreate extends Component {
+export default DeviceCreate = withTracker( (props) => {
+	//const docId = props.docId;
+	//const deviceHandle = Meteor.subscribe('device.single', docId);
+	//const loading = !deviceHandle.ready();
+	//const device = Device.findOne(docId);
+	//const deviceExists = !loading && !!device;
+
+	const insertDocFunc = ((data) => {
+		Meteor.call('device.insert', data, (err, res) => {
+			if (err) console.log(err);
+			if (res) console.log(res);
+		});
+	});
+
+	const loading = '', device = '', deviceExists = '';
+	let meteorSubd = { loading, device, deviceExists, insertDocFunc };
+
+	return { meteorSubd };
+})(DeviceCreateForm);
+
+/*class DeviceCreate extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -92,9 +102,7 @@ class DeviceCreate extends Component {
 	}
 };
 
-export default DeviceCreate;
-
-// TODO : Finish subscribing to the publication.
+export default DeviceCreate;*/
 
 /*export default withTracker((props) => {
 	const docId = props.docId;
