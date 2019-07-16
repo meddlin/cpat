@@ -14,7 +14,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 import { Person } from '../../../api/person/person';
-import './PersonCreate.css';
+import styles from './PersonCreate.module.css';
 
 class PersonCreate extends Component {
 	constructor(props) {

@@ -3,7 +3,6 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
 import { Person } from '../../../api/person/person';
-import './PersonView.css';
 
 class PersonView extends Component {
 	constructor(props) {
