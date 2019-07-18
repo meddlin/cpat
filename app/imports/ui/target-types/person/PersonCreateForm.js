@@ -3,6 +3,7 @@ import { withFormik, Form, Field, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import { TextField, MaskedTextField, PrimaryButton, DefaultButton } from 'office-ui-fabric-react';
 import { PersonCreateFormArray } from './PersonCreateFormArray';
+import { PersonCreateFormArrayPhoneNumbers } from './PersonCreateFormArrayPhoneNumbers';
 import { PersonCreateFormArraySocialLinks } from './PersonCreateFormArraySocialLinks';
 
 class PersonCreateForm extends Component {
@@ -59,14 +60,7 @@ class PersonCreateForm extends Component {
 					value={values.nickNames} />
 				{(touched.nickNames && errors.nickNames) ? <div>{errors.nickNames}</div> : ""}
 
-				<TextField
-					name="phoneNumbers"
-					label="Phone Numbers"
-					type="text"
-					onChange={handleChange}
-					onBlur={handleBlur}
-					value={values.phoneNumbers} />
-				{(touched.phoneNumbers && errors.phoneNumbers) ? <div>{errors.phoneNumbers}</div> : ""}
+				<FieldArray name="phoneNumbers" component={PersonCreateFormArrayPhoneNumbers} />
 
 				<TextField
 					name="organizations"
@@ -95,17 +89,7 @@ class PersonCreateForm extends Component {
 					value={values.employers} />
 				{(touched.employers && errors.employers) ? <div>{errors.employers}</div> : ""}
 
-				{/*<TextField
-					name="socialLinks"
-					label="Social Links"
-					type="text"
-					onChange={handleChange}
-					onBlur={handleBlur}
-					value={values.socialLinks} />
-				{(touched.socialLinks && errors.socialLinks) ? <div>{errors.socialLinks}</div> : ""}*/}
-
 				<FieldArray name="socialLinks" component={PersonCreateFormArraySocialLinks} />
-
 				<FieldArray name="relations" component={PersonCreateFormArray} />
 
 				<PrimaryButton type="submit" text="Submit" />
@@ -116,29 +100,30 @@ class PersonCreateForm extends Component {
 };
 
 const formikEnhancer = withFormik({
-	mapPropsToValues({ firstName, middleName, lastName, nickNames, organizations, emailAddresses, employers, socialLinks, relations }) {
+	mapPropsToValues({ firstName, middleName, lastName, nickNames, phoneNumbers, organizations, emailAddresses, employers, socialLinks, relations }) {
 		return {
 			firstName: firstName || '',
 			middleName: middleName || '',
 			lastName: lastName || '',
 			nickNames: nickNames || '',
+			phoneNumbers: phoneNumbers || [''],
 			organizations: organizations || '',
 			emailAddresses: emailAddresses || '',
 			employers: employers || '',
 			socialLinks: socialLinks || [{}],
-			relations: relations || [ { } ]
+			relations: relations || [{}]
 		}
 	},
 	validationSchema: Yup.object().shape({
 		firstName: Yup.string().required("First name is required.")
 	}),
 	handleSubmit: (values, { props, setSubmitting }) => {
-		const { firstName, middleName, lastName, nickNames, organizations, emailAddresses, employers, socialLinks, relations } = values;
+		const { firstName, middleName, lastName, nickNames, phoneNumbers, organizations, emailAddresses, employers, socialLinks, relations } = values;
 		const { insertDocFunc } = props.meteorSubd;
 
 		// kick-off server-side methods to store in DB, here
 		console.log(`Submit on Person Create form. Name: ${firstName}`);
-		insertDocFunc({ firstName, middleName, lastName, nickNames, organizations, emailAddresses, employers, socialLinks, relations });
+		insertDocFunc({ firstName, middleName, lastName, nickNames, phoneNumbers, organizations, emailAddresses, employers, socialLinks, relations });
 
 		setSubmitting(false);
 	}
