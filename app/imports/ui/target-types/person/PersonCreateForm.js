@@ -3,6 +3,7 @@ import { withFormik, Form, Field, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import { TextField, MaskedTextField, PrimaryButton, DefaultButton } from 'office-ui-fabric-react';
 import { PersonCreateFormArray } from './PersonCreateFormArray';
+import { PersonCreateFormArraySocialLinks } from './PersonCreateFormArraySocialLinks';
 
 class PersonCreateForm extends Component {
 	render() {
@@ -94,20 +95,20 @@ class PersonCreateForm extends Component {
 					value={values.employers} />
 				{(touched.employers && errors.employers) ? <div>{errors.employers}</div> : ""}
 
-				<TextField
+				{/*<TextField
 					name="socialLinks"
 					label="Social Links"
 					type="text"
 					onChange={handleChange}
 					onBlur={handleBlur}
 					value={values.socialLinks} />
-				{(touched.socialLinks && errors.socialLinks) ? <div>{errors.socialLinks}</div> : ""}
+				{(touched.socialLinks && errors.socialLinks) ? <div>{errors.socialLinks}</div> : ""}*/}
 
-				{/*<FieldArray name="relations" component={PersonCreateFormArray} />*/}
+				<FieldArray name="socialLinks" component={PersonCreateFormArraySocialLinks} />
 
-				<PrimaryButton
-					type="submit"
-					text="Submit" />
+				<FieldArray name="relations" component={PersonCreateFormArray} />
+
+				<PrimaryButton type="submit" text="Submit" />
 
 			</Form>
 		);
@@ -124,7 +125,7 @@ const formikEnhancer = withFormik({
 			organizations: organizations || '',
 			emailAddresses: emailAddresses || '',
 			employers: employers || '',
-			/*socialLinks: socialLinks || '',*/
+			socialLinks: socialLinks || [{}],
 			relations: relations || [ { } ]
 		}
 	},
