@@ -78,10 +78,12 @@ const PersonSchema = new SimpleSchema({
 		type: Object
 	},
 	"relations.$.collectionName": {
-		type: String
+		type: String,
+		optional: true
 	},
 	"relations.$.collectionId": {
-		type: String
+		type: String,
+		optional: true
 	}
 });
 

@@ -5,7 +5,14 @@ Meteor.methods({
 	'person.insert': function insert(data) {
 		return Person.insert({
 			firstName: data.firstName,
-			lastName: data.lastName
+			middleName: data.middleName,
+			lastName: data.lastName,
+			nickNames: data.nickNames, 
+			organizations: data.organizations, 
+			emailAddresses: data.emailAddresses, 
+			employers: data.employers, 
+			socialLinks: data.socialLinks,
+			relations: data.relations 
 		});
 	},
 
