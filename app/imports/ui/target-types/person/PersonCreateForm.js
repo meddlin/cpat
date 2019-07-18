@@ -4,7 +4,11 @@ import * as Yup from 'yup';
 import { TextField, MaskedTextField, PrimaryButton, DefaultButton } from 'office-ui-fabric-react';
 import { PersonCreateFormArray } from './PersonCreateFormArray';
 import { PersonCreateFormArrayPhoneNumbers } from './PersonCreateFormArrayPhoneNumbers';
+import { PersonCreateFormArrayNicknames } from './PersonCreateFormArrayNicknames';
+import { PersonCreateFormArrayEmployers } from './PersonCreateFormArrayEmployers';
 import { PersonCreateFormArraySocialLinks } from './PersonCreateFormArraySocialLinks';
+import { PersonCreateFormArrayEmailAddresses } from './PersonCreateFormArrayEmailAddresses';
+import { PersonCreateFormArrayOrganizations } from './PersonCreateFormArrayOrganizations';
 
 class PersonCreateForm extends Component {
 	render() {
@@ -51,44 +55,11 @@ class PersonCreateForm extends Component {
 					value={values.lastName} />
 				{(touched.lastName && errors.lastName) ? <div>{errors.lastName}</div> : ""}
 
-				<TextField
-					name="nickNames"
-					label="Nick Names/Pseudonyms"
-					type="text"
-					onChange={handleChange}
-					onBlur={handleBlur}
-					value={values.nickNames} />
-				{(touched.nickNames && errors.nickNames) ? <div>{errors.nickNames}</div> : ""}
-
+				<FieldArray name="nickNames" component={PersonCreateFormArrayNicknames} />
 				<FieldArray name="phoneNumbers" component={PersonCreateFormArrayPhoneNumbers} />
-
-				<TextField
-					name="organizations"
-					label="Organizations"
-					type="text"
-					onChange={handleChange}
-					onBlur={handleBlur}
-					value={values.organizations} />
-				{(touched.organizations && errors.organizations) ? <div>{errors.organizations}</div> : ""}
-
-				<TextField
-					name="emailAddresses"
-					label="Email Addresses"
-					type="text"
-					onChange={handleChange}
-					onBlur={handleBlur}
-					value={values.emailAddresses} />
-				{(touched.emailAddresses && errors.emailAddresses) ? <div>{errors.emailAddresses}</div> : ""}
-
-				<TextField
-					name="employers"
-					label="Employers"
-					type="text"
-					onChange={handleChange}
-					onBlur={handleBlur}
-					value={values.employers} />
-				{(touched.employers && errors.employers) ? <div>{errors.employers}</div> : ""}
-
+				<FieldArray name="organizations" component={PersonCreateFormArrayOrganizations} />
+				<FieldArray name="emailAddresses" component={PersonCreateFormArrayEmailAddresses} />
+				<FieldArray name="employers" component={PersonCreateFormArrayEmployers} />
 				<FieldArray name="socialLinks" component={PersonCreateFormArraySocialLinks} />
 				<FieldArray name="relations" component={PersonCreateFormArray} />
 
@@ -105,11 +76,11 @@ const formikEnhancer = withFormik({
 			firstName: firstName || '',
 			middleName: middleName || '',
 			lastName: lastName || '',
-			nickNames: nickNames || '',
+			nickNames: nickNames || [''],
 			phoneNumbers: phoneNumbers || [''],
-			organizations: organizations || '',
-			emailAddresses: emailAddresses || '',
-			employers: employers || '',
+			organizations: organizations || [''],
+			emailAddresses: emailAddresses || [''],
+			employers: employers || [''],
 			socialLinks: socialLinks || [{}],
 			relations: relations || [{}]
 		}
