@@ -25,7 +25,7 @@ import CompanyCreate from './target-types/company/company-create/CompanyCreate';
 import DeviceView from './target-types/device/device-view/DeviceView';
 import DeviceCreate from './target-types/device/device-create/DeviceCreate';
 
-import LocationView from './target-types/location/LocationView';
+import LocationView from './target-types/location/location-view/LocationView';
 import LocationCreate from './target-types/location/LocationCreate';
 import PdfFileView from './target-types/pdf-files/PdfFileView';
 

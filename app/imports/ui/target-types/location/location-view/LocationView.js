@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
-import Location from '../../../api/location/location';
-import './LocationView.css';
+import Location from '../../../../api/location/location';
+import './LocationView.module.scss';
 
 class LocationView extends Component {
 	constructor(props) {
