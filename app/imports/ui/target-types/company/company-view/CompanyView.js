@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
-import { Company } from '../../../api/company/company';
+import { Company } from '../../../../api/company/company';
 
-import { CompanyTable } from './CompanyTable';
-import './CompanyView.css';
+import { CompanyTable } from '../CompanyTable';
+import styles from './CompanyView.module.scss';
 
 class CompanyView extends Component {
 	constructor(props) {
