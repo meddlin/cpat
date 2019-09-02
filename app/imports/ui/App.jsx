@@ -20,7 +20,7 @@ import PersonView from './target-types/person/PersonView';
 import PersonCreate from './target-types/person/PersonCreate';
 
 import CompanyView from './target-types/company/company-view/CompanyView';
-import CompanyCreate from './target-types/company/CompanyCreate';
+import CompanyCreate from './target-types/company/company-create/CompanyCreate';
 
 import DeviceView from './target-types/device/DeviceView';
 import DeviceCreate from './target-types/device/DeviceCreate';
