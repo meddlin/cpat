@@ -26,7 +26,7 @@ import DeviceView from './target-types/device/device-view/DeviceView';
 import DeviceCreate from './target-types/device/device-create/DeviceCreate';
 
 import LocationView from './target-types/location/location-view/LocationView';
-import LocationCreate from './target-types/location/LocationCreate';
+import LocationCreate from './target-types/location/location-create/LocationCreate';
 import PdfFileView from './target-types/pdf-files/PdfFileView';
 
 const App = () => (

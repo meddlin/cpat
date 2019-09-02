@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Location } from '../location';
+import Location from '../location';
 
 Meteor.publish('location.all', function locationAll_Publication() {
 	return Location.find();

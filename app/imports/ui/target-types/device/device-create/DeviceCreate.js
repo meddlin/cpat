@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
-import Device from '../../../../api/device/device';
 import { DeviceCreateForm } from './DeviceCreateForm';
 
 export default DeviceCreate = withTracker( (props) => {
