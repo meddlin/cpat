@@ -22,8 +22,8 @@ import PersonCreate from './target-types/person/PersonCreate';
 import CompanyView from './target-types/company/company-view/CompanyView';
 import CompanyCreate from './target-types/company/company-create/CompanyCreate';
 
-import DeviceView from './target-types/device/DeviceView';
-import DeviceCreate from './target-types/device/DeviceCreate';
+import DeviceView from './target-types/device/device-view/DeviceView';
+import DeviceCreate from './target-types/device/device-create/DeviceCreate';
 
 import LocationView from './target-types/location/LocationView';
 import LocationCreate from './target-types/location/LocationCreate';
