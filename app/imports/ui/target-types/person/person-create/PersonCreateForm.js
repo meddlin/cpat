@@ -9,6 +9,7 @@ import { PersonCreateFormArrayEmployers } from './PersonCreateFormArrayEmployers
 import { PersonCreateFormArraySocialLinks } from './PersonCreateFormArraySocialLinks';
 import { PersonCreateFormArrayEmailAddresses } from './PersonCreateFormArrayEmailAddresses';
 import { PersonCreateFormArrayOrganizations } from './PersonCreateFormArrayOrganizations';
+import { PersonTable } from '../PersonTable';
 
 class PersonCreateForm extends Component {
 	render() {
@@ -25,47 +26,52 @@ class PersonCreateForm extends Component {
 		} = this.props;
 
 		return (
-			<Form>
-				<div className="ms-fontSize-18">Create a person</div>
 
-				<TextField
-					name="firstName"
-					label="First Name"
-					type="text"
-					onChange={handleChange}
-					onBlur={handleBlur}
-					value={values.firstName} />
-				{(touched.firstName && errors.firstName) ? <div>{errors.firstName}</div> : ""}
+			<div>
+				<Form>
+					<div className="ms-fontSize-18">Create a person</div>
 
-				<TextField
-					name="middleName"
-					label="Middle Name"
-					type="text"
-					onChange={handleChange}
-					onBlur={handleBlur}
-					value={values.middleName} />
-				{(touched.middleName && errors.middleName) ? <div>{errors.middleName}</div> : ""}
+					<TextField
+						name="firstName"
+						label="First Name"
+						type="text"
+						onChange={handleChange}
+						onBlur={handleBlur}
+						value={values.firstName} />
+					{(touched.firstName && errors.firstName) ? <div>{errors.firstName}</div> : ""}
 
-				<TextField
-					name="lastName"
-					label="Last Name"
-					type="text"
-					onChange={handleChange}
-					onBlur={handleBlur}
-					value={values.lastName} />
-				{(touched.lastName && errors.lastName) ? <div>{errors.lastName}</div> : ""}
+					<TextField
+						name="middleName"
+						label="Middle Name"
+						type="text"
+						onChange={handleChange}
+						onBlur={handleBlur}
+						value={values.middleName} />
+					{(touched.middleName && errors.middleName) ? <div>{errors.middleName}</div> : ""}
 
-				<FieldArray name="nickNames" component={PersonCreateFormArrayNicknames} />
-				<FieldArray name="phoneNumbers" component={PersonCreateFormArrayPhoneNumbers} />
-				<FieldArray name="organizations" component={PersonCreateFormArrayOrganizations} />
-				<FieldArray name="emailAddresses" component={PersonCreateFormArrayEmailAddresses} />
-				<FieldArray name="employers" component={PersonCreateFormArrayEmployers} />
-				<FieldArray name="socialLinks" component={PersonCreateFormArraySocialLinks} />
-				<FieldArray name="relations" component={PersonCreateFormArray} />
+					<TextField
+						name="lastName"
+						label="Last Name"
+						type="text"
+						onChange={handleChange}
+						onBlur={handleBlur}
+						value={values.lastName} />
+					{(touched.lastName && errors.lastName) ? <div>{errors.lastName}</div> : ""}
 
-				<PrimaryButton type="submit" text="Submit" />
+					<FieldArray name="nickNames" component={PersonCreateFormArrayNicknames} />
+					<FieldArray name="phoneNumbers" component={PersonCreateFormArrayPhoneNumbers} />
+					<FieldArray name="organizations" component={PersonCreateFormArrayOrganizations} />
+					<FieldArray name="emailAddresses" component={PersonCreateFormArrayEmailAddresses} />
+					<FieldArray name="employers" component={PersonCreateFormArrayEmployers} />
+					<FieldArray name="socialLinks" component={PersonCreateFormArraySocialLinks} />
+					<FieldArray name="relations" component={PersonCreateFormArray} />
 
-			</Form>
+					<PrimaryButton type="submit" text="Submit" />
+
+				</Form>
+
+				<PersonTable />
+			</div>
 		);
 	}
 };

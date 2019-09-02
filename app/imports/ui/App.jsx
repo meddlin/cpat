@@ -17,7 +17,7 @@ import ScriptCreate from './target-types/scripts/ScriptCreate';
 import ScriptEdit from './target-types/scripts/ScriptEdit';
 
 import PersonView from './target-types/person/PersonView';
-import PersonCreate from './target-types/person/PersonCreate';
+import PersonCreate from './target-types/person/person-create/PersonCreate';
 
 import CompanyView from './target-types/company/company-view/CompanyView';
 import CompanyCreate from './target-types/company/company-create/CompanyCreate';
