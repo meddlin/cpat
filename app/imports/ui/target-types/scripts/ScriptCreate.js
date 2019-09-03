@@ -4,7 +4,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import ReactTable from "react-table";
 
 import Scripts from '../../../api/scripts/scripts';
-import './ScriptCreate.css';
+import styles from './ScriptCreate.module.scss';
 
 
 class ScriptCreate extends Component {

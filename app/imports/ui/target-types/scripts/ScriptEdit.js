@@ -4,7 +4,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import ReactTable from "react-table";
 
 import Scripts from '../../../api/scripts/scripts';
-import './ScriptEdit.css';
+import styles from './ScriptEdit.module.scss';
 
 
 class ScriptEdit extends Component {
