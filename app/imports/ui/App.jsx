@@ -13,8 +13,8 @@ import TargetsViewAll from './target-types/targets/TargetsViewAll';
 import TargetCreate from './target-types/targets/TargetCreate';
 
 import ScriptSelector from './ScriptSelector';
-import ScriptCreate from './target-types/scripts/ScriptCreate';
-import ScriptEdit from './target-types/scripts/ScriptEdit';
+import ScriptCreate from './target-types/scripts/script-create/ScriptCreate';
+import ScriptEdit from './target-types/scripts/script-edit/ScriptEdit';
 
 import PersonView from './target-types/person/PersonView';
 import PersonCreate from './target-types/person/person-create/PersonCreate';

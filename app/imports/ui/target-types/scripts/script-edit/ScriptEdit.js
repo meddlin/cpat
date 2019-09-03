@@ -3,14 +3,13 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import ReactTable from "react-table";
 
-import Scripts from '../../../api/scripts/scripts';
+import Scripts from '../../../../api/scripts/scripts';
 import styles from './ScriptEdit.module.scss';
 
 
 class ScriptEdit extends Component {
 	constructor(props) {
 		super(props);
-
 	}
 	
 	render() {
