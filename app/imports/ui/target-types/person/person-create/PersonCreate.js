@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
-
-import { Person } from '../../../../api/person/person';
 import { PersonCreateForm } from './PersonCreateForm';
+
 import styles from './PersonCreate.module.scss';
 
 export default PersonCreate = withTracker( (props) => {
