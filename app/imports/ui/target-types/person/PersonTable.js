@@ -26,10 +26,10 @@ class PersonTable extends Component {
                     personList.map(d => {
                         return (
                             <div key={d._id} className="ms-Grid-row">
-                                <div className="ms-Grid-col ms-lg2">{d._id}</div>
-                                <div className="ms-Grid-col ms-lg4">{d.name}</div>
-                                <div className="ms-Grid-col ms-lg2">{d.organizations.length}</div>
-                                <div className="ms-Grid-col ms-lg2">{d.relations.length}</div>
+                                <div className="ms-Grid-col ms-lg2">{d ? d._id : ''}</div>
+                                <div className="ms-Grid-col ms-lg4">{d ? d.name : ''}</div>
+                                <div className="ms-Grid-col ms-lg2">{d && d.organizations ? d.organizations.length : ''}</div>
+                                <div className="ms-Grid-col ms-lg2">{d && d.relations ? d.relations.length : ''}</div>
                                 <div className="ms-Grid-col ms-lg2">
                                     <DefaultButton type="button">
                                         <Link to={{ pathname: "/person/view", state: d }}>View</Link>
