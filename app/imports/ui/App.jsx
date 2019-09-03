@@ -8,9 +8,9 @@ import FileUpload from './FileUpload';
 
 import Analytics from './Analytics';
 
-import TargetView from './target-types/targets/TargetView';
-import TargetsViewAll from './target-types/targets/TargetsViewAll';
-import TargetCreate from './target-types/targets/TargetCreate';
+import TargetView from './target-types/targets/target-view/TargetView';
+import TargetsViewAll from './target-types/targets/target-viewall/TargetsViewAll';
+import TargetCreate from './target-types/targets/target-create/TargetCreate';
 
 import ScriptSelector from './ScriptSelector';
 import ScriptCreate from './target-types/scripts/script-create/ScriptCreate';

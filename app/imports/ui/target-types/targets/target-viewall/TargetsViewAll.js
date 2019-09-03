@@ -4,7 +4,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 
 import { Link } from 'react-router-dom';
 import ReactTable from "react-table";
-import Targets from '../../../api/targets/targets';
+import Targets from '../../../../api/targets/targets';
 import './TargetsViewAll.css';
 
 class TargetsViewAll extends Component {

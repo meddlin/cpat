@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
-import CompanyPreview from '../company/CompanyPreview';
-import DevicePreview from '../device/DevicePreview';
-import FileDataPreview from '../filedata/FileDataPreview';
-import LocationPreview from '../location/LocationPreview';
-import PdfFilePreview from '../pdf-files/PdfFilePreview';
-import PersonPreview from '../person/PersonPreview';
-import ScriptDataPreview from '../scripts/ScriptDataPreview';
-import TargetPreview from '../targets/TargetPreview';
+import CompanyPreview from '../../company/CompanyPreview';
+import DevicePreview from '../../device/DevicePreview';
+import FileDataPreview from '../../filedata/FileDataPreview';
+import LocationPreview from '../../location/LocationPreview';
+import PdfFilePreview from '../../pdf-files/PdfFilePreview';
+import PersonPreview from '../../person/PersonPreview';
+import ScriptDataPreview from '../../scripts/ScriptDataPreview';
+import TargetPreview from '../TargetPreview';
 
-import Targets from '../../../api/targets/targets';
-import './TargetView.css';
+import Targets from '../../../../api/targets/targets';
+import styles from './TargetView.module.scss';
 
 class TargetView extends Component {
 	constructor(props) {
