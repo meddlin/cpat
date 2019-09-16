@@ -38,17 +38,13 @@ Meteor.methods({
 
 			var paramStr = "nmap 192.168.1.1 -oX ";
 
-			/*var pyScriptPath = process.env.PWD + "/nmap-scan.py";*/
-			var pyScriptPath = "/home/meddlin/git/cpat/tool-scripts/python/nmap-scan.py";
-			/*var outputFilePath = process.env.PWD + "/nmap-from-cpat-result.xml";*/
-			var outputFilePath = "/home/meddlin/git/cpat/tool-data/nmap-from-cpat-result.xml";
+			// Try to move this over to using 'process.env.PWD' to build relative paths
+			var pyScriptPath = "/home/meddlin/git/cpat/tool-scripts/python/nmap-scan.py"; // process.env.PWD + "/nmap-scan.py";
+			var outputFilePath = "/home/meddlin/git/cpat/tool-data/nmap-from-cpat-result.xml"; // process.env.PWD + "/nmap-from-cpat-result.xml";
 
 			paramStr = paramStr + outputFilePath;
 			let dataString = '';
-
-			// can potentially "validate" the param string here
-
-			let pymongoResult;
+			let pymongoResult = '';
 			
 			var py = spawn('python', [pyScriptPath, paramStr]);
 			py.stdout.on('data', function(data) {

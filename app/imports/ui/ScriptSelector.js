@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Link } from 'react-router-dom';
 import ReactTable from "react-table";
+import { TextField, PrimaryButton, DefaultButton } from 'office-ui-fabric-react';
 
 import FileData from '../api/files/files';
 import Targets from '../api/targets/targets';
@@ -53,6 +54,7 @@ class ScriptSelector extends Component {
 
 		this.setState({ selectedScript: data });
 	}
+
 	runScript() {
 		const { selectedScript } = this.state;
 		const { targets } = this.props;
@@ -66,18 +68,21 @@ class ScriptSelector extends Component {
 			});
 		}
 	}
+
 	onChangeScriptName(evt) {
 		let data = this.state.selectedScript;
 		data.name = evt.target.value;
 
 		this.setState({ selectedScript: data });
 	}
+
 	onChangeScriptToolCommand(evt) {
 		let data = this.state.selectedScript;
 		data.toolCommand = evt.target.value;
 
 		this.setState({ selectedScript: data });
 	}
+
 	onChangeScriptPath(evt) {
 		let data = this.state.selectedScript;
 		data.scriptPath = evt.target.value;
@@ -91,10 +96,6 @@ class ScriptSelector extends Component {
 		if (scripts && scripts.length > 0) {
 			return scripts.map( (s) => {
 				return s
-				/*return ({ name: s.name, 
-							tool: s.tool, 
-							toolCommand: s.toolCommand, 
-							language: s.language })*/
 			});
 		}
 	}
@@ -112,21 +113,27 @@ class ScriptSelector extends Component {
 				    	
 				    </div>
 			    </div>
-
-			    <input id="script-input" type="text" />
+			    
 			    <div id="script-controls">
-				    <div id="run-script-btn" onClick={(() => this.submitScriptToServer(targets))}>Run 'nmap'</div>
-				    <div id="run-script-btn" onClick={this.checkForPlugins}>Detect Plugins</div>
+				    <DefaultButton
+				    	type="button"
+				    	onClick={(() => this.submitScriptToServer(targets))}
+				    >Run nmap</DefaultButton>
+				    <DefaultButton
+				    	type="button"
+				    	onClick={this.checkForPlugins}
+				    >Detect Plugins</DefaultButton>
+
+				    <div>
+					    <h3>Selected Targets</h3>
+					    <ul>
+					    	{this.props.targets.map((doc) => {
+					    		return (<li key={doc._id}>{doc.name}</li>)
+					    	})}
+					    </ul>
+			    	</div>
 			    </div>
 
-			    <h3>Selected Targets</h3>
-			    <ul>
-			    	{this.props.targets.map((doc) => {
-			    		return (<li key={doc._id}>{doc.name}</li>)
-			    	})}
-			    </ul>
-
-			    {/*toggle between automated-can-select-from-table and a manual user-filled input(s) option*/}
 			    <div id="selected-script-display">
 			    	<div>
 			    		<span>Name: </span> 
@@ -145,15 +152,6 @@ class ScriptSelector extends Component {
 						<div onClick={this.runScript}>Run</div>
 					</div>
 			    </div>
-
-			    {/*<h3>Script Runs</h3>
-			    <div id="script-runs">
-			    	<ul>
-			    		{this.props.files.map(function(doc) {
-			    			return (<li key={doc._id}>{doc.runStats ? doc.runStats.toString() : ""}</li>);
-			    		})}
-			    	</ul>
-			    </div>*/}
 
 			    <div>
 			    	<ReactTable data={this.getTableData()} columns={[
