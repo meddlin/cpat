@@ -1,10 +1,9 @@
 import React from 'react';
-import { Form, Field, FieldArray } from 'formik';
-import { TextField, MaskedTextField, PrimaryButton, DefaultButton } from 'office-ui-fabric-react';
+import { Form } from 'formik';
+import { TextField, DefaultButton } from 'office-ui-fabric-react';
 
-export const CompanyCreateFormArray = ({ move, swap, push, insert, unshift, pop, form }) => (
+export const LocationCreateFormArray = ({ move, swap, push, insert, unshift, pop, form }) => (
 	<Form>
-		<br />
 		<div className="ms-fontSize-16">Relations</div>
 
 		{form.values.relations && form.values.relations.length > 0 ? (
@@ -14,14 +13,14 @@ export const CompanyCreateFormArray = ({ move, swap, push, insert, unshift, pop,
 						<div className="ms-Grid-col ms-sm6 ms-md4 ms-lg4">
 							<TextField 
 								name={`relations.${index}.collectionName`} 
-								label="Relation Collection Name"
+								label="Collection Name"
 								onChange={form.handleChange}
 								value={r.collectionName} />
 						</div>
 						<div className="ms-Grid-col ms-sm6 ms-md4 ms-lg4">
 							<TextField 
 								name={`relations.${index}.collectionId`} 
-								label="Relation Collection Id"
+								label="Collection Id"
 								onChange={form.handleChange}
 								value={r.collectionId} />
 						</div>

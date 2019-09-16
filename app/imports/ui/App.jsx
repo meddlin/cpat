@@ -8,25 +8,25 @@ import FileUpload from './FileUpload';
 
 import Analytics from './Analytics';
 
-import TargetView from './target-types/targets/TargetView';
-import TargetsViewAll from './target-types/targets/TargetsViewAll';
-import TargetCreate from './target-types/targets/TargetCreate';
+import TargetView from './target-types/targets/target-view/TargetView';
+import TargetsViewAll from './target-types/targets/target-viewall/TargetsViewAll';
+import TargetCreate from './target-types/targets/target-create/TargetCreate';
 
 import ScriptSelector from './ScriptSelector';
-import ScriptCreate from './target-types/scripts/ScriptCreate';
-import ScriptEdit from './target-types/scripts/ScriptEdit';
+import ScriptCreate from './target-types/scripts/script-create/ScriptCreate';
+import ScriptEdit from './target-types/scripts/script-edit/ScriptEdit';
 
 import PersonView from './target-types/person/PersonView';
-import PersonCreate from './target-types/person/PersonCreate';
+import PersonCreate from './target-types/person/person-create/PersonCreate';
 
-import CompanyView from './target-types/company/CompanyView';
-import CompanyCreate from './target-types/company/CompanyCreate';
+import CompanyView from './target-types/company/company-view/CompanyView';
+import CompanyCreate from './target-types/company/company-create/CompanyCreate';
 
-import DeviceView from './target-types/device/DeviceView';
-import DeviceCreate from './target-types/device/DeviceCreate';
+import DeviceView from './target-types/device/device-view/DeviceView';
+import DeviceCreate from './target-types/device/device-create/DeviceCreate';
 
-import LocationView from './target-types/location/LocationView';
-import LocationCreate from './target-types/location/LocationCreate';
+import LocationView from './target-types/location/location-view/LocationView';
+import LocationCreate from './target-types/location/location-create/LocationCreate';
 import PdfFileView from './target-types/pdf-files/PdfFileView';
 
 const App = () => (

@@ -13,8 +13,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-import Targets from '../../../api/targets/targets';
-import './TargetCreate.css';
+import Targets from '../../../../api/targets/targets';
+import styles from './TargetCreate.module.scss';
 
 class TargetCreate extends Component {
 	constructor(props) {

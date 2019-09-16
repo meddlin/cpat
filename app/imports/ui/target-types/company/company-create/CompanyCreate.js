@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
-import Company from '../../../api/company/company';
+import Company from '../../../../api/company/company';
 
 import { CompanyCreateForm } from './CompanyCreateForm';
 

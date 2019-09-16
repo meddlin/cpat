@@ -3,7 +3,7 @@ import { withFormik, Form, Field, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import { TextField, MaskedTextField, PrimaryButton, DefaultButton } from 'office-ui-fabric-react';
 import { DeviceCreateFormArray } from './DeviceCreateFormArray';
-import { DeviceTable } from './DeviceTable';
+import { DeviceTable } from '../DeviceTable';
 
 class DeviceCreateForm extends Component {
 	render() {

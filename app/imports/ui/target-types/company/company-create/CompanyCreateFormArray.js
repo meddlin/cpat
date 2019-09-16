@@ -1,8 +1,8 @@
 import React from 'react';
-import { Form, Field, FieldArray } from 'formik';
-import { TextField, MaskedTextField, PrimaryButton, DefaultButton } from 'office-ui-fabric-react';
+import { Form } from 'formik';
+import { TextField, DefaultButton } from 'office-ui-fabric-react';
 
-export const PersonCreateFormArray = ({ move, swap, push, insert, remove, unshift, pop, form }) => (
+export const CompanyCreateFormArray = ({ move, swap, push, insert, unshift, pop, form }) => (
 	<Form>
 		<br />
 		<div className="ms-fontSize-16">Relations</div>

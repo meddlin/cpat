@@ -4,18 +4,23 @@ import { Mongo } from 'meteor/mongo';
 const ScriptSchema = new SimpleSchema({
   name: {
     type: String,
+    optional: true
   },
   tool: {
-  	type: String
+  	type: String,
+    optional: true
   },
   toolCommand: {
-  	type: String
+  	type: String,
+    optional: true
   },
   language: {
-    type: String
+    type: String,
+    optional: true
   },
   scriptPath: {
-    type: String
+    type: String,
+    optional: true
   }
 });
 

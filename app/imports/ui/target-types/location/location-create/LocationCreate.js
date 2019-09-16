@@ -1,9 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
-
-import Location from '../../../api/location/location';
-
-import { CreateForm } from './createForm';
+import { LocationCreateForm } from './LocationCreateForm';
 
 export default LocationCreate = withTracker((props) => {
     //const docId = props.docId;
@@ -22,4 +19,4 @@ export default LocationCreate = withTracker((props) => {
     let meteorSubd = { loading, location, locationExists, insertDocFunc };
 
     return { meteorSubd };
-})(CreateForm);
+})(LocationCreateForm);
