@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import AccountsUIWrapper from '../ui/components/users/AccountsUIWrapper';
 import { DefaultButton } from 'office-ui-fabric-react';
 import { Panel, PanelType } from 'office-ui-fabric-react';
 import { IconButton } from 'office-ui-fabric-react';
@@ -120,7 +121,7 @@ class Header extends Component {
 		this.setState({ showPanel: false });
 	};
 
-	_onDismiss = (ev?) => {
+	_onDismiss = (ev) => {
 		if (!ev) {
 			console.log('Panel dismissed.');
 			return;
@@ -218,7 +219,7 @@ class Header extends Component {
 
 						<Typography variant="h6" color="inherit">CPAT</Typography>
 						<div className={classes.grow} />
-							<div className={classes.search}>
+						<div className={classes.search}>
 							<div className={classes.searchIcon}>
 								<SearchIcon />
 							</div>
@@ -227,8 +228,8 @@ class Header extends Component {
 								classes={{
 									root: classes.inputRoot,
 									input: classes.inputInput,
-								}}
-							/>
+								}} />
+							<AccountsUIWrapper />
 						</div>
 					</Toolbar>
 				</AppBar>
@@ -241,5 +242,4 @@ Header.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-/*export default Header;*/
 export default withStyles(styles)(Header);
