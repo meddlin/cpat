@@ -20,3 +20,5 @@ react-meteor-data       # React higher-order component for reactively tracking M
 aldeed:collection2@3.0.0
 fourseven:scss
 dynamic-import@0.5.1
+accounts-ui
+accounts-password
