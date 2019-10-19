@@ -1,4 +1,5 @@
 node_modules/
 metagoofil/
+python-rest-api/venv
 
 *.pdf
