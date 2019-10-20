@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
+import { Link } from 'react-router-dom';
 
 import FileData from '../../../api/files/files';
 
@@ -31,7 +32,9 @@ class FileDataPreview extends Component {
 	 * 		So, it's more accurate to think of this publication as "one at a time" instead of simply "one".
 	 */
 	getDisplay(docId) {
-		let data = this.props.filedata.find((f) => f._id == docId);
+		const { filedata } = this.props;
+
+		let data = filedata.find((f) => f._id == docId);
 
 		// Checking for truthiness of 'data'.
 		// See note above this method; as documents are sent to the client, for this component, the particular _id
@@ -45,11 +48,12 @@ class FileDataPreview extends Component {
 	}
 
 	render() {
+		const { ready, filedata, docId } = this.props;
 		
 		// Checking if the subscription is ready. NOTE: This does NOT mean the data is available!!
 		// See, more info on "ready()": http://www.meteor-tuts.com/chapters/1/pubsub.html
 		// See, "is ready pattern": https://forums.meteor.com/t/react-component-mount-wait-for-subscriptions-ready/13646
-		if (!this.props.ready) {
+		if (!ready) {
 	    	return <div>Loading...</div>
 	    } else {
 
@@ -57,15 +61,11 @@ class FileDataPreview extends Component {
 				<div>
 					<h5>File Data</h5>
 					<div>
-						<div>Id: {this.props.filedata ? this.getDisplay(this.props.docId) : 'No data to display'}</div>
-						{/*<div>Source: {this.props.filedata ? this.getSourceDisplay(this.props.docId) : 'No data to display'}</div>*/}
+						<div>Id: {filedata ? this.getDisplay(docId) : 'No data to display'}</div>
+						{filedata ? 
+								<Link to={`/filedata/view/${this.getDisplay(docId)}`}>View Details</Link> : 
+								'No data to display' }
 					</div>
-
-					{/*<p>{ preview ? preview._id : ''}</p>
-					<p>{ this.props.filedata.length > 0 ? this.props.filedata[0]._id : ''}</p>
-					<p>{preview ? preview.source : ''}</p>*/}
-					
-					{/*<p>{ this.props.filedata.length > 0 ? this.props.filedata[0].source : ''}</p>*/}
 				</div>
 			);
 	    }

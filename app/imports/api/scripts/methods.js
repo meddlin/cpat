@@ -56,9 +56,11 @@ Meteor.methods({
 					pymongoResult = data.toString().split(': ').pop().replace("'", "");
 				}
 			});
+			
 			py.stderr.on('data', function(data) {
 				if (data) console.error(`child stderr:\n${data.toString()}`);
 			});
+
 			py.stdout.on('end', function() {
 				console.log(dataString);
 				console.log('end of stream');

@@ -28,6 +28,7 @@ import DeviceCreate from './target-types/device/device-create/DeviceCreate';
 import LocationView from './target-types/location/location-view/LocationView';
 import LocationCreate from './target-types/location/location-create/LocationCreate';
 import PdfFileView from './target-types/pdf-files/PdfFileView';
+import FileDataView from './target-types/filedata/FileDataView';
 
 const App = () => (
   <Router history={history}>
@@ -80,6 +81,11 @@ const App = () => (
 	  	 * PDF File routes
 	  	 */}
 	  	<Route path="/pdfFile/view" component={PdfFileView} />
+
+		{/**
+		 * FileData routes
+		 */}
+		<Route path="/filedata/view/:id" component={FileDataView} />
 	  </div>
   </Router>
 );
