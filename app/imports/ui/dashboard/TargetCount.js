@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
+import { Link } from 'react-router-dom';
 
 import Targets from '../../api/targets/targets';
 
@@ -27,7 +28,12 @@ class TargetCount extends Component {
 				{targets ? targets.map( (t) => {
 					return (
 						<div key={t._id}>
-							<p>Target: {t._id}</p>
+							<p>
+								<Link to={`/target/view/${t._id}`}>
+									<b>{t.name}</b>
+								</Link>
+								<span>, id: {t._id} (Target)</span>
+							</p>
 							<p>relations: {t.relations.length}</p>
 						</div>
 					)

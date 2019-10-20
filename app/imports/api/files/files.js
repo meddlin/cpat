@@ -20,8 +20,3 @@ const FileData = new Mongo.Collection('filedata');
 FileData.attachSchema(FileDataSchema);
 
 export default FileData;
-
-/*
-	Index created with:
-	db.filedata.createIndex( { source: "text" } )
-*/
