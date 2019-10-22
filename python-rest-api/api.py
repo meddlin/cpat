@@ -17,4 +17,11 @@ def nmap():
 	printer.pprint(result)
 	return result
 
+@app.route('/metagoofil', methods=['GET'])
+def metagoofil():
+	p = Popen("metagoofil", stdout = PIPE)
+	result = p.communicate()[0]
+	printer.pprint(result)
+	return result
+
 app.run()
