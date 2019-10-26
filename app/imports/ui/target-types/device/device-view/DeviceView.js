@@ -14,6 +14,8 @@ class DeviceView extends Component {
 			<div>
 				<div className="ms-fontSize-18">Device</div>
 
+				
+
 				{doc ? (
 					<div className="ms-Grid" dir="ltr">
 						<div className="ms-Grid-row">

@@ -176,7 +176,7 @@ class Header extends Component {
 					</Link>
 				</ListItem>
 				<ListItem button >
-					<Link to="/device/view">
+					<Link to="/device/viewall">
 						<ListItemText primary='Device View' />
 					</Link>
 				</ListItem>
