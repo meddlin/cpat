@@ -24,7 +24,8 @@ import CompanyCreate from './target-types/company/company-create/CompanyCreate';
 
 import DeviceView from './target-types/device/device-view/DeviceView';
 import DeviceCreate from './target-types/device/device-create/DeviceCreate';
-import {DeviceTable} from './target-types/device/DeviceTable';
+import DeviceEdit from './target-types/device/edit/DeviceEdit';
+import { DeviceTable } from './target-types/device/DeviceTable';
 
 import LocationView from './target-types/location/location-view/LocationView';
 import LocationCreate from './target-types/location/location-create/LocationCreate';
@@ -73,6 +74,7 @@ const App = () => (
 	  	 */}
 	  	<Route path="/device/viewAll" component={DeviceTable} />
 		<Route path="/device/view/:id" component={DeviceView} />
+		<Route path="/device/edit/:id" component={DeviceEdit} />
 	  	<Route path="/device/create" component={DeviceCreate} />
 
 	  	{/**
