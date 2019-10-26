@@ -15,7 +15,12 @@ class DeviceTable extends Component {
         const { ready, deviceList } = this.props;
 
         return (
-            <div className="ms-Grid" dir="ltr">
+            <div>
+                <DefaultButton>
+                    <Link to={{ pathname: `/device/create`}}>New Device</Link>
+                </DefaultButton>
+
+                <div className="ms-Grid" dir="ltr">
                 <div className="ms-Grid-row">
                     <div className="ms-Grid-col ms-lg2 ms-fontSize-18">Id</div>
                     <div className="ms-Grid-col ms-lg4 ms-fontSize-18">Name</div>
@@ -32,13 +37,17 @@ class DeviceTable extends Component {
                                 <div className="ms-Grid-col ms-lg2">{d.relations.length}</div>
                                 <div className="ms-Grid-col ms-lg2">
                                     <DefaultButton type="button">
-                                        <Link to={{ pathname: "/device/view", state: d }}>View</Link>
+                                        <Link to={{ pathname: `/device/view/${d._id}`, state: d }}>View</Link>
+                                    </DefaultButton>
+                                    <DefaultButton type="button">
+                                        <Link to={{ pathname: `/device/edit/${d._id}`, state: d }}>Edit</Link>
                                     </DefaultButton>
                                 </div>
                             </div>
                         )
                     }) : ''
                 }
+            </div>
             </div>
         );
     }

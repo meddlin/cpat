@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Meteor } from 'meteor/meteor';
-import { withTracker } from 'meteor/react-meteor-data';
 import { Device } from '../../../../api/device/device';
 
 import styles from './DeviceView.module.scss';
