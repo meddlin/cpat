@@ -4,15 +4,16 @@ import { DeviceEditForm } from './DeviceEditForm';
 
 export default DeviceEdit = withTracker((props) => {
 
-    const updateDocFunc = ((data) => {
-        Meteor.call('device.update', data, (err, res) => {
+    const updateDocFunc = ((docId, data) => {
+        Meteor.call('device.update', docId, data, (err, res) => {
             if (err) console.log(err);
 			if (res) console.log(res);
         });
     });
 
+    const doc = props.location.state;
     const loading = '', device = '', deviceExists = '';
-    let meteorSubd = { loading, device, deviceExists, updateDocFunc };
+    let meteorSubd = { doc, loading, device, deviceExists, updateDocFunc };
 
     return { meteorSubd };
 })(DeviceEditForm);

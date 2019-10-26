@@ -39,6 +39,9 @@ class DeviceTable extends Component {
                                     <DefaultButton type="button">
                                         <Link to={{ pathname: `/device/view/${d._id}`, state: d }}>View</Link>
                                     </DefaultButton>
+                                    <DefaultButton type="button">
+                                        <Link to={{ pathname: `/device/edit/${d._id}`, state: d }}>Edit</Link>
+                                    </DefaultButton>
                                 </div>
                             </div>
                         )

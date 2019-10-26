@@ -81,7 +81,7 @@ const App = () => (
 	  	 * Location routes
 	  	 */}
 	  	<Route path="/location/view" component={LocationView} />
-		  {/* <Route path="/location/viewAll" component={LocationViewAll} /> */}
+		{/* <Route path="/location/viewAll" component={LocationViewAll} /> */}
 		<Route path="/location/create" component={LocationCreate} />
 
 	  	{/**
