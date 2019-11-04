@@ -60,6 +60,7 @@ namespace SignalRTest
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<ChatHub>("/chathub");
+                endpoints.MapHub<TargetHub>("/targethub");
             });
         }
     }
