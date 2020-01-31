@@ -1,10 +1,18 @@
 from flask import Flask, request, jsonify
+import connexion
 import pprint
+from datetime import datetime
 from subprocess import Popen, PIPE
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
 printer = pprint.PrettyPrinter(indent=4)
+
+# Create the application instance
+# app = connexion.App(__name__, specification_dir='./')
+
+# Read the swagger.yml file to configure the endpoints
+# app.add_api('swagger.yml')
 
 
 @app.route('/', methods=['GET'])
@@ -24,7 +32,11 @@ def foo():
 	for q in data:
 		printer.pprint("{}={}".format(q, data[q]))
 
-	return jsonify(data)
+	return jsonify(
+		tool = "foo",
+		result = data,
+		executedAt = datetime.now()
+	)
 
 
 @app.route('/query-example')
@@ -37,8 +49,12 @@ def queryExample():
 def ls():
 	p = Popen(["ls", "-l"], stdout = PIPE)
 	result = p.communicate()[0]
-	printer.pprint(result)
-	return result
+
+	return jsonify(
+		tool = "ls",
+		result = result,
+		executedAt = datetime.now()
+	)
 
 
 @app.route('/nmap', methods=['POST'])
@@ -60,7 +76,11 @@ def nmap():
 
 	result = p.communicate()[0]
 	printer.pprint(result)
-	return result
+	return jsonify(
+		tool = "nmap",
+		result = result,
+		executedAt = datetime.now()
+	)
 
 
 @app.route('/metagoofil', methods=['GET'])
@@ -68,6 +88,10 @@ def metagoofil():
 	p = Popen("metagoofil", stdout = PIPE)
 	result = p.communicate()[0]
 	printer.pprint(result)
-	return result
+	return jsonify(
+		tool = "metagoofil",
+		result = result,
+		executedAt = datetime.now()
+	)
 
 app.run()

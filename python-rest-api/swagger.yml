@@ -1,0 +1,19 @@
+swagger: "2.0"
+info:
+    description: This is the swagger file that goes with our server code
+    version: "1.0.0"
+    title: Swagger CPAT OSINT
+consumes:
+    - "application/json"
+produces:
+    - "application/json"
+            
+basePath: "/api"
+            
+# paths supported by the server application
+paths:            
+    /metagoofil:
+        get:
+            operationId: "api.metagoofil"
+            tags:
+                - "nmap"
