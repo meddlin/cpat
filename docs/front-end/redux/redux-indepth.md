@@ -7,6 +7,12 @@ For a deep-dive on the individual methods and inner-workings of redux, it is rec
 
 ## Setup Store and Middleware
 
+### Install packages
+
+```bash
+npm install redux react-redux
+```
+
 ## Establish Actions and Constants
 
 *NOTE: This organization scheme stops just shy of setting up fully decoupled action creators. This is only a decision of coding and organization style--not functionality. See more about action creators here:* [https://redux.js.org/basics/actions/#action-creators](https://redux.js.org/basics/actions/#action-creators)
