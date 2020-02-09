@@ -3,7 +3,10 @@ using cpat_core.Models.Utility;
 
 namespace cpat_core.Models
 {
-    public class Target
+    /// <summary>
+    /// A physical person.
+    /// </summary>
+    public class Person
     {
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
@@ -16,7 +19,11 @@ namespace cpat_core.Models
         public List<Company> Employers { get; set; }
         public List<SocialLink> SocialLinks { get; set; }
 
-        
+        /// <summary>
+        /// A list of <c>DocumentRelation</c> objects connecting one <c>Person</c> to
+        /// n-number of other pieces of information.
+        /// </summary>
+        /// <value></value>
         public IEnumerable<DocumentRelation> Relations { get; set; }
 
         public DateTime DateCreated { get; set; }
