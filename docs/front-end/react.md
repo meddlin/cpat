@@ -17,42 +17,55 @@ webpack for you. It's robust enough to handle moderate configurations and deploy
 to production.
 
 **Recommendation**: *Stay with CRA until your deployment needs become too
-demanding and/or cumbersome
+demanding and/or cumbersome for the built-in webpack configuration.*
 
 
 ### Styling
 
-styled-components
-https://styled-components.com/
+styled-components - https://styled-components.com/
+
+```bash
+npm install --save styled-components
+```
 
 
 ### State Management
 
-redux
-https://react-redux.js.org/
+redux - https://react-redux.js.org/
+
+```bash
+npm install --save redux react-redux redux-thunk redux-logger
+```
 
 
 ### Routing
 
-react-router
-https://reacttraining.com/react-router/
+react-router - https://reacttraining.com/react-router/
 
+```bash
+npm install react-router-dom
+```
 
 ### Forms
 
-formik
-https://github.com/jaredpalmer/formik
+formik - https://github.com/jaredpalmer/formik
+
+yup - https://github.com/jquense/yup
+
+```bash
+npm install --save formik yup
+```
 
 
 ### Testing
 
-Jest & enzyme
-https://create-react-app.dev/docs/running-tests/
+Jest & enzyme - https://create-react-app.dev/docs/running-tests/
 
 
 ## Documentation (Site)
 
 ### Gatsby.js
+
 https://www.gatsbyjs.org/
 
 Gatsby.js is a static site generator built with React and GraphQL. However, don't
