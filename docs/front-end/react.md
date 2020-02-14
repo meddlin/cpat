@@ -1,20 +1,13 @@
-
-
-React.js Standards
+# React.js Standards
 
 ## General Applications
 
-### Toolchain
+CRA - Create React App [https://reactjs.org/docs/create-a-new-react-app.html](https://reactjs.org/docs/create-a-new-react-app.html)
 
-CRA - Create React App
-https://reactjs.org/docs/create-a-new-react-app.html
 
 Stay on this for as long as possible.
 
-CRA provides a means for quickly getting started with React and moving forward.
-It is an integrated toolchain for React which largely sets up and handles
-webpack for you. It's robust enough to handle moderate configurations and deploy
-to production.
+CRA is a means to avoid setting up a tedious webpack toolchain configuration. It provides a means for quickly getting started with 95% of what is needed with React and then moving forward. It's robust enough to handle moderate configurations and deploy to production.
 
 **Recommendation**: *Stay with CRA until your deployment needs become too
 demanding and/or cumbersome for the built-in webpack configuration.*
