@@ -443,13 +443,168 @@ return Object.assign({}, ...state, {
 });
 ```
 
-> Read more about Object.assign and the spread operator here.
+> Read more about `Object.assign` and the spread operator here.
 > - [Object.assign()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
 > - [Spread syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax)
 
-## Hookup Services
+## Connect Services
 
+Now for the final piece, connecting our redux flow to a service handler to make requests against endpoints. First, create the file, `table/services.js`.
 
+*NOTE: I'll be referencing a REST API in this section that we're using to make example calls against. I'll cover more of the specifics later on, but for now assume it's just a standard REST API written in any popular server-side language.*
+
+At the top of the file, we export the name of our functions (only one for now) and setup an object for easier use of our config information.
+
+```js
+export const tableService = {
+    getInitialTable
+};
+
+const config = {
+    apiUrl: process.env.REACT_APP_API_URL || 'https://localhost:5001'
+};
+```
+
+Here is our `getInitialTable()` function. Pretty simplistic, but this leaves room for stretching things out for more complex requests. For a GET request we don't have much to setup, but create the `requestOptions` object anyway. Then we pass this data along to `fetch()` from the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
+
+Notice the use of a [template literal](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) to pull in the API endpoint URL, and `requestOptions` are passed as a parameter.
+
+Finally, `fetch()` returns a Promise which we handle with a `.then(handleResponse)`. We'll cover this next.
+
+```js
+function getInitialTable() {
+    const requestOptions = {
+        method: 'GET',
+    };
+
+    return fetch(`${config.apiUrl}/table`, requestOptions).then(handleResponse);
+};
+```
+
+If things looked a _little too simplistic_ with that `fetch()` call, then this should answer any straggling questions. Our `handleResponse()` handles the literal HTTP response from our call to the API.
+
+```js
+function handleResponse(response) {
+    return response.text().then(text => {
+        const data = text && JSON.parse(text);
+        if (!response.ok) {
+            if (response.status === 401) {
+                // auto logout if 401 response returned from api
+                authenticationService.logout();
+                Location.reload(true);
+            }
+
+            const error = (data && data.message) || response.statusText;
+            return Promise.reject(error);
+        }
+
+        return data;
+    });
+}
+```
+
+That's it! Here's the `table/services.js` in its entirety. Of course, as you add more complexity to the API communication (e.g. CORS support, JWT authorization, and/or other HTTP request methods) this piece of the application will grow.
+
+_*src/table/services.js*_
+
+```js
+export const tableService = {
+    getInitialTable
+};
+
+const config = {
+    apiUrl: process.env.REACT_APP_API_URL || 'https://localhost:5001'
+};
+
+/**
+ * Get an initial set of data from the API to show in a table.
+ */
+function getInitialTable() {
+    const requestOptions = {
+        method: 'GET',
+        // headers: { 'Authorization': `Bearer ${user.token}`, 'Content-Type': 'application/json' }
+    };
+
+    return fetch(`${config.apiUrl}/table`, requestOptions).then(handleResponse);
+};
+
+/**
+ * Generic handler to manage the HTTP response from the endpoint.
+ * @param {*} response 
+ */
+function handleResponse(response) {
+    return response.text().then(text => {
+        const data = text && JSON.parse(text);
+        if (!response.ok) {
+            if (response.status === 401) {
+                // auto logout if 401 response returned from api
+                // authenticationService.logout();
+                Location.reload(true);
+            }
+
+            const error = (data && data.message) || response.statusText;
+            return Promise.reject(error);
+        }
+
+        return data;
+    });
+}
+```
+
+## Circling Back...Final Connections
+
+Previously, we left certain pieces out so the application wouldn't be constantly crashing while we were trying to build out all of the Redux pieces. Let's add those back in to bring it all together.
+
+### Revisit imports
+
+_*src/components/Table.js*_
+
+In the Table component , add/uncomment an import for the actions and `connect()`.
+
+```js
+import { connect } from 'react-redux';
+import { tableActions } from '../table/actions';
+```
+
+_*src/table/actions.js*_
+
+In the actions file, add/uncomment an import for the services.
+
+```js
+import { tableService } from './services';
+```
+
+### Adjust the store
+
+Now that we have a reducer, update your `store.js` to the following. We're importing the table reducer, and then "combining" it into a `rootReducer`. This is how reducers communicate their changes back to the store.
+
+_*src/_helpers/store.js*_
+
+```js
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import thunkMiddleware from 'redux-thunk';
+import { createLogger } from 'redux-logger';
+import { table } from '../table/reducers';
+
+const loggerMiddleware = createLogger();
+
+const rootReducer = combineReducers({
+	table
+});
+
+export const store = createStore(
+	rootReducer,
+	applyMiddleware(thunkMiddleware, loggerMiddleware)
+);
+```
+
+At this point it's good to double check your `services.js`, `constants.js`, and `reducers.js` files too.
+
+### Make the call in the Table component
+
+```js
+/* Table needs to actually call the tableActions instead of rely on hardcoded dummy data. */
+```
 
 ## What's left: Add Logging Support (`redux-logger`)
 
