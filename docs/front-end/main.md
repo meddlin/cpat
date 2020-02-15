@@ -71,8 +71,15 @@ redux - [Link](https://react-redux.js.org/)
 
 `redux-thunk` explanation: [https://alligator.io/redux/redux-thunk/](https://alligator.io/redux/redux-thunk/)
 
+Enables async functionality in Redux data flow.
+
 `redux-logger`: [https://github.com/LogRocket/redux-logger](https://github.com/LogRocket/redux-logger)
 
+Excellent default logging functionality--even if only during development time.
+
+(Untested/Experimental) `redux-appinsights`: [https://github.com/wbuchwalter/redux-appinsights](https://github.com/wbuchwalter/redux-appinsights)
+
+The `redux-appinsights` middleware is a potential solution for logging capabilities of React client-side applications having a standardized feel similar to what's available server-side in C#/.NET Core.
 
 ### Routing
 
