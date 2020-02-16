@@ -1,5 +1,7 @@
+using cpat_core.DataAccess.TargetTypes;
+using cpat_core.Models.TargetTypes;
+using System;
 using System.Collections.Generic;
-using cpat_core.Models.Utility;
 
 namespace cpat_core.Models
 {
@@ -9,7 +11,7 @@ namespace cpat_core.Models
     /// - Someone/something could "own" it
     /// Cell phone, computer, laptop, tablet, server(?), camera, vehicle, etc.
     /// </summary>
-    public class Device
+    public class Device : AbstractTarget
     {
         public string Name { get; set; }
         public List<string> Organizations { get; set; }
@@ -18,11 +20,22 @@ namespace cpat_core.Models
         /// A list of <c>DocumentRelation</c> objects connecting one <c>Device</c> to
         /// n-number of other pieces of information.
         /// </summary>
-        /// <value></value>        
+        /// <value></value>
         public IEnumerable<DocumentRelation> Relations { get; set; }
 
-        public DateTime DateCreated { get; set; }
-        public DateTime UpdatedAt { get; set; }
-        public User LastModifiedBy { get; set; }
+        public static Device Translate(DeviceDto data)
+        {
+            return new Device()
+            {
+                Name = data.Name,
+                //Organizations = data.Organizations,
+
+                //Relations = data.DocumentRelationJson,
+
+                DateCreated = data.DateCreated,
+                UpdatedAt = data.UpdatedAt,
+                //LastModifiedBy = data.LastModifiedByUserId
+            };
+        }
     }
 }

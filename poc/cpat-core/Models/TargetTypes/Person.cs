@@ -1,12 +1,14 @@
+using cpat_core.DataAccess.TargetTypes;
+using cpat_core.Models.TargetTypes;
+using System;
 using System.Collections.Generic;
-using cpat_core.Models.Utility;
 
 namespace cpat_core.Models
 {
     /// <summary>
     /// A physical person.
     /// </summary>
-    public class Person
+    public class Person : AbstractTarget
     {
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
@@ -26,7 +28,31 @@ namespace cpat_core.Models
         /// <value></value>
         public IEnumerable<DocumentRelation> Relations { get; set; }
 
-        public DateTime DateCreated { get; set; }
-        public DateTime UpdatedAt { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static Person Translate(PersonDto data)
+        {
+            return new Person()
+            {
+                FirstName = data.FirstName,
+                MiddleName = data.MiddleName,
+                LastName = data.LastName,
+                //Nicknames = data.Nicknames,
+                //PhoneNumbers = data.PhoneNumbers,
+                //EmailAddresses = data.EmailAddresses,
+                //Organizations = data.Organizations,
+                //Employers = data.Employers,
+                //SocialLinks = data.SocialLinks,
+
+                //Relations = data.DocumentRelationJson,
+
+                DateCreated = data.DateCreated,
+                UpdatedAt = data.UpdatedAt,
+                //LastModifiedBy = data.LastModifiedByUserId
+            };
+        }
     }
 }
