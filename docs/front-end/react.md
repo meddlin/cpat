@@ -12,7 +12,6 @@ CRA is a means to avoid setting up a tedious webpack toolchain configuration. It
 **Recommendation**: *Stay with CRA until your deployment needs become too
 demanding and/or cumbersome for the built-in webpack configuration.*
 
-
 ### Styling
 
 styled-components - https://styled-components.com/

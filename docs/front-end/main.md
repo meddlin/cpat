@@ -7,6 +7,20 @@ and reusable UI/UX system)
 
 Below we have the motivations
 
+<hr />
+
+#### A Note on TypeScript
+
+_I'll quote the Redux documentation here. TypeScript is generally the recommended choice over JavaScript. Redux will likely be the most complex piece of any of these standards to implement. Seeing that it comes with a recommendation for TypeScript provides a good starting point for a practical argument for other uses of these tools to use TypeScript as well._
+
+> While we do officially recommend use of static typing with Redux, use of TypeScript does have tradeoffs in terms of setup, amount of code written, and readability. TypeScript will likely provide a net benefit in larger apps or codebases need to be maintained over time by many people, but may feel like too much overhead in smaller projects. Take time to evaluate the tradeoffs and decide whether it's worth using TS in your own application.
+
+_Further, the examples and sample code in these docs aren't using TypeScript because the time and research to convert everything to TypeScript hasn't 
+
+[https://redux.js.org/recipes/usage-with-typescript/](https://redux.js.org/recipes/usage-with-typescript/)
+
+<hr />
+
 #### React & Tools
 
 The big advantage React provides is modularity by components. This core tenant of the library

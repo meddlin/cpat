@@ -57,3 +57,26 @@ A couple notes on some common issues setting this up.
 > - New hooks in react-router: [https://dev.to/finallynero/hooks-introduced-in-react-router-v5-1-7g8](https://dev.to/finallynero/hooks-introduced-in-react-router-v5-1-7g8)
 > - BrowserRouter issue: [https://stackoverflow.com/questions/42857283/react-router-typeerror-this-props-history-is-undefined](https://stackoverflow.com/questions/42857283/react-router-typeerror-this-props-history-is-undefined)
 > - Using `useHistory()` hook in sub-components of `BrowserRouter` only: [https://stackoverflow.com/questions/58220995/cannot-read-property-history-of-undefined-usehistory-hook-of-react-router-5](https://stackoverflow.com/questions/58220995/cannot-read-property-history-of-undefined-usehistory-hook-of-react-router-5)
+
+## Routes with `params`
+
+If you have a route like: `https://localhost/mypage/1` or `https://localhost/edit/some-tag`, we would write the route(s) like so.
+
+```js
+function App() {
+	return (
+		<div className="App">
+			<Router history={history}>
+				<NavigationBar />
+
+				<div>
+					<Route path="/browse/tags" exact={true} name="browseTags" component={BrowseTags} />
+					<Route path="/browse" exact={true} name="browsePosts" component={BrowsePosts} />
+					<Route path="/edit/tag/:id" exact={true}  component={TagEditor} />
+					<Route path="/edit/:id" exact={true} component={Editor} />
+				</div>
+			</Router>
+		</div>
+	);
+}
+```
