@@ -16,6 +16,11 @@ namespace cpat_core.Models
         /// <value></value>
         public IEnumerable<DocumentRelation> Relations { get; set; }
 
+        /// <summary>
+        /// Converts a <c>CompanyDto</c> object to a <c>Company</c> object.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public static Company Translate(CompanyDto data)
         {
             return new Company()
@@ -28,6 +33,22 @@ namespace cpat_core.Models
                 UpdatedAt = data.UpdatedAt,
                 //LastModifiedBy = data.LastModifiedByUserId
             };
+        }
+
+        /// <summary>
+        /// Converts a collection of <c>CompanyDto</c> to a collection of <c>Company</c>.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static IEnumerable<Company> Translate(List<CompanyDto> data)
+        {
+            var compList = new List<Company>();
+            data.ForEach(d =>
+            {
+                compList.Add(Company.Translate(d));
+            });
+
+            return compList;
         }
     }
 }
