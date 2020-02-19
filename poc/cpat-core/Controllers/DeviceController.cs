@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using cpat_core.Models;
 
 namespace cpat_core.Controllers
 {
@@ -23,12 +21,11 @@ namespace cpat_core.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IEnumerable<DeviceController> Get()
+        public IEnumerable<Device> Get()
         {
-            return new List<Device>()
-            {
-                new Device() { Name = "Phone" },
-                new Device() { Name = "PC" },
+            return new List<Device>() { 
+                new Device() { Name = "Phone" }, 
+                new Device() { Name = "PC" } 
             };
         }
     }

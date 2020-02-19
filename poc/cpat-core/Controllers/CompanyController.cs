@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using cpat_core.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -23,7 +24,7 @@ namespace cpat_core.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IEnumerable<CompanyController> Get()
+        public IEnumerable<Company> Get()
         {
             return new List<Company>()
             {

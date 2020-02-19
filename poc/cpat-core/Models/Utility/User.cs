@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace cpat_core.Models 
@@ -16,7 +17,6 @@ namespace cpat_core.Models
                 return $"{FirstName} {LastName}";
             }
         }
-
 
         public DateTime DateCreated { get; set; }
         public DateTime UpdatedAt { get; set; }
