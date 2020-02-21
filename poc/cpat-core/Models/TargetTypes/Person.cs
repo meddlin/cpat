@@ -29,7 +29,7 @@ namespace cpat_core.Models
         public IEnumerable<DocumentRelation> Relations { get; set; }
 
         /// <summary>
-        /// 
+        /// Converts a <c>PersonDto</c> object to a <c>PersonDto</c> object.
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
@@ -53,6 +53,22 @@ namespace cpat_core.Models
                 UpdatedAt = data.UpdatedAt,
                 //LastModifiedBy = data.LastModifiedByUserId
             };
+        }
+
+        /// <summary>
+        /// Converts a collection of <c>PersonDto</c> to a collection of <c>Person</c>.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static IEnumerable<Person> Translate(List<PersonDto> data)
+        {
+            var personList = new List<Person>();
+            data.ForEach(d =>
+            {
+                personList.Add(Person.Translate(d));
+            });
+
+            return personList;
         }
     }
 }

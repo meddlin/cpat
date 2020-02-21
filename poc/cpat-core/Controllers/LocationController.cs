@@ -35,7 +35,7 @@ namespace cpat_core.Controllers
         }
 
         /// <summary>
-        /// Insert a single <c>Device</c> record.
+        /// Insert a single <c>Location</c> record.
         /// </summary>
         /// <param name="data"></param>
         [HttpPost]
@@ -46,7 +46,7 @@ namespace cpat_core.Controllers
         }
 
         /// <summary>
-        /// Insert a collection of <c>Device</c> records.
+        /// Insert a collection of <c>Location</c> records.
         /// </summary>
         /// <param name="data"></param>
         [HttpPost]
@@ -57,7 +57,7 @@ namespace cpat_core.Controllers
         }
 
         /// <summary>
-        /// Update a <c>Device</c> record.
+        /// Update a <c>Location</c> record.
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
@@ -69,7 +69,7 @@ namespace cpat_core.Controllers
         }
 
         /// <summary>
-        /// Remove a <c>Device</c> record.
+        /// Remove a <c>Location</c> record.
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
