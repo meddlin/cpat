@@ -23,6 +23,11 @@ namespace cpat_core.Models
         /// <value></value>
         public IEnumerable<DocumentRelation> Relations { get; set; }
 
+        /// <summary>
+        /// Converts a <c>DeviceDto</c> object to a <c>Device</c> object.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public static Device Translate(DeviceDto data)
         {
             return new Device()
@@ -36,6 +41,22 @@ namespace cpat_core.Models
                 UpdatedAt = data.UpdatedAt,
                 //LastModifiedBy = data.LastModifiedByUserId
             };
+        }
+
+        /// <summary>
+        /// Converts a collection of <c>DeviceDto</c> to a collection of <c>Device</c>.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static IEnumerable<Device> Translate(List<DeviceDto> data)
+        {
+            var deviceList = new List<Device>();
+            data.ForEach(d =>
+            {
+                deviceList.Add(Device.Translate(d));
+            });
+
+            return deviceList;
         }
     }
 }

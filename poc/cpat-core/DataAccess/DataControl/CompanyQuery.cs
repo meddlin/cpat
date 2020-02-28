@@ -119,7 +119,6 @@ namespace cpat_core.DataAccess.DataControl
         public int Remove(Company company)
         {
             int res;
-
             using (var conn = new NpgsqlConnection(dbAccess.connectionString))
             {
                 using (var db = new NPoco.Database(conn))

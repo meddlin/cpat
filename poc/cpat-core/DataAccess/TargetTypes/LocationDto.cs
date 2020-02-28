@@ -1,5 +1,7 @@
-﻿using NPoco;
+﻿using cpat_core.Models;
+using NPoco;
 using System;
+using System.Collections.Generic;
 
 namespace cpat_core.DataAccess.TargetTypes
 {
@@ -21,5 +23,39 @@ namespace cpat_core.DataAccess.TargetTypes
         [Column("datecreated")] public DateTime DateCreated { get; set; }
         [Column("updatedat")] public DateTime UpdatedAt { get; set; }
         [Column("lastmodifiedbyuserid")] public Guid LastModifiedByUserId { get; set; }
+
+        /// <summary>
+        /// Converts a <c>Location</c> object to a <c>LocationDto</c> object.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static LocationDto Translate(Location data)
+        {
+            return new LocationDto()
+            {
+                Id = Guid.NewGuid(),
+                Name = data.Name,
+                // Organizations = data.Organizations,
+                // DocumentRelationJson = data.Relations,
+                DateCreated = data.DateCreated != null ? data.DateCreated : DateTime.Now,
+                UpdatedAt = data.UpdatedAt != null ? data.UpdatedAt : DateTime.Now
+            };
+        }
+
+        /// <summary>
+        /// Converts a collection of <c>Location</c> to a collection of <c>LocationDto</c>.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static IEnumerable<LocationDto> Translate(List<Location> data)
+        {
+            var dtoList = new List<LocationDto>();
+            data.ForEach(d =>
+            {
+                dtoList.Add(LocationDto.Translate(d));
+            });
+
+            return dtoList;
+        }
     }
 }

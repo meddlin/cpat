@@ -51,5 +51,16 @@ namespace cpat_core.Models
                 //LastModifiedBy = data.LastModifiedByUserId
             };
         }
+
+        public static IEnumerable<Target> Translate(List<TargetDto> data)
+        {
+            var targetList = new List<Target>();
+            data.ForEach(d =>
+            {
+                targetList.Add(Target.Translate(d));
+            });
+
+            return targetList;
+        }
     }
 }
