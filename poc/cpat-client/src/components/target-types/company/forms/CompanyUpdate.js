@@ -3,6 +3,7 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withFormik, Form } from 'formik';
 import * as Yup from 'yup';
+import { Button, TextInput, Heading } from 'evergreen-ui';
 import styled from 'styled-components';
 import { companyActions } from '../../../../state-management/company/actions';
 
@@ -31,12 +32,12 @@ const CompanyUpdate = (props) => {
 
     return (
         <div>
-            <h2>Company: Update</h2>
+            <Heading size={600}>Company: Update</Heading>
 
             <FormStyle>
                 <Form>
                     <label>Name</label>
-                    <input 
+                    <TextInput 
                         name="name"
                         label="Name"
                         onChange={handleChange}
@@ -46,30 +47,30 @@ const CompanyUpdate = (props) => {
                     {(touched.name && errors.name) ? <div>{errors.name}</div> : ""}
 
                     <label>Date Created:</label>
-                    <input 
+                    <TextInput 
                         disabled 
                         
                         value={`${new Date('2020-01-30').toLocaleDateString()}`} />
 
                     <label>Updated At:</label>
-                    <input 
+                    <TextInput 
                         disabled 
                         name="updatedAt"
                         label="Updated At"
                         value={`${new Date().toLocaleDateString()}`} />
 
                     <label>Last Modified By:</label>
-                    <input 
+                    <TextInput 
                         disabled 
                         name="lastModifiedBy"
                         label="Last Modified By"
                         value={`You - User 1`} />
                 </Form>
 
-                <button type="submit">Create</button>
-                <button onClick={handleReset}>Cancel</button>
+                <Button type="submit">Create</Button>
+                <Button onClick={handleReset}>Cancel</Button>
 
-                <button onClick={() => history.goBack()}>Back</button>
+                <Button onClick={() => history.goBack()}>Back</Button>
             </FormStyle>
         </div>
     )
