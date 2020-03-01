@@ -16,6 +16,7 @@ import { PersonUpdate } from './components/target-types/person/forms/PersonUpdat
 import { TargetUpdate } from './components/target-types/target/forms/TargetUpdate';
 
 const Dashboard = React.lazy(() => import ('./pages/Dashboard'));
+const NavigationBar = React.lazy(() => import ('./components/NavigationBar'));
 
 const CompanyListing = React.lazy(() => import ('./pages/CompanyListing'));
 const DeviceListing = React.lazy(() => import ('./pages/DeviceListing'));
@@ -35,33 +36,37 @@ const App = () => {
 			<Router>
 				<div>
 					<Suspense fallback={<div>Loading...</div>}>
-						<Switch>
-							<Route path="/" exact={true} name="dashbaord" component={Dashboard} />
-							
-							<Route path="/companies" exact={true} name="dashbaord" component={CompanyListing} />
-							<Route path="/devices" exact={true} name="dashbaord" component={DeviceListing} />
-							<Route path="/locations" exact={true} name="dashbaord" component={LocationListing} />
-							<Route path="/people" exact={true} name="dashbaord" component={PersonListing} />
-							<Route path="/targets" exact={true} name="dashbaord" component={TargetListing} />
-							
-							<Route path="/company/detail" exact={true} name="dashbaord" component={CompanyDetail} />
-							<Route path="/device/detail" exact={true} name="dashbaord" component={DeviceDetail} />
-							<Route path="/location/detail" exact={true} name="dashbaord" component={LocationDetail} />
-							<Route path="/person/detail" exact={true} name="dashbaord" component={PersonDetail} />
-							<Route path="/target/detail" exact={true} name="dashbaord" component={TargetDetail} />
+						<div style={{ padding: '10px' }}>
+							<NavigationBar />
 
-							<Route path="/company/create" exact={true} name="dashbaord" component={CompanyCreate} />
-							<Route path="/device/create" exact={true} name="dashbaord" component={DeviceCreate} />
-							<Route path="/location/create" exact={true} name="dashbaord" component={LocationCreate} />
-							<Route path="/person/create" exact={true} name="dashbaord" component={PersonCreate} />
-							<Route path="/target/create" exact={true} name="dashbaord" component={TargetCreate} />
+							<Switch>
+								<Route path="/" exact={true} name="dashbaord" component={Dashboard} />
+								
+								<Route path="/companies" exact={true} name="dashbaord" component={CompanyListing} />
+								<Route path="/devices" exact={true} name="dashbaord" component={DeviceListing} />
+								<Route path="/locations" exact={true} name="dashbaord" component={LocationListing} />
+								<Route path="/people" exact={true} name="dashbaord" component={PersonListing} />
+								<Route path="/targets" exact={true} name="dashbaord" component={TargetListing} />
+								
+								<Route path="/company/detail" exact={true} name="dashbaord" component={CompanyDetail} />
+								<Route path="/device/detail" exact={true} name="dashbaord" component={DeviceDetail} />
+								<Route path="/location/detail" exact={true} name="dashbaord" component={LocationDetail} />
+								<Route path="/person/detail" exact={true} name="dashbaord" component={PersonDetail} />
+								<Route path="/target/detail" exact={true} name="dashbaord" component={TargetDetail} />
 
-							<Route path="/company/update" exact={true} name="dashbaord" component={CompanyUpdate} />
-							<Route path="/device/update" exact={true} name="dashbaord" component={DeviceUpdate} />
-							<Route path="/location/update" exact={true} name="dashbaord" component={LocationUpdate} />
-							<Route path="/person/update" exact={true} name="dashbaord" component={PersonUpdate} />
-							<Route path="/target/update" exact={true} name="dashbaord" component={TargetUpdate} />
-						</Switch>
+								<Route path="/company/create" exact={true} name="dashbaord" component={CompanyCreate} />
+								<Route path="/device/create" exact={true} name="dashbaord" component={DeviceCreate} />
+								<Route path="/location/create" exact={true} name="dashbaord" component={LocationCreate} />
+								<Route path="/person/create" exact={true} name="dashbaord" component={PersonCreate} />
+								<Route path="/target/create" exact={true} name="dashbaord" component={TargetCreate} />
+
+								<Route path="/company/update" exact={true} name="dashbaord" component={CompanyUpdate} />
+								<Route path="/device/update" exact={true} name="dashbaord" component={DeviceUpdate} />
+								<Route path="/location/update" exact={true} name="dashbaord" component={LocationUpdate} />
+								<Route path="/person/update" exact={true} name="dashbaord" component={PersonUpdate} />
+								<Route path="/target/update" exact={true} name="dashbaord" component={TargetUpdate} />
+							</Switch>
+						</div>
 					</Suspense>
 				</div>
 			</Router>
