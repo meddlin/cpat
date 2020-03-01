@@ -7,6 +7,8 @@ const StyledBar = styled.div`
     display: flex;
     align-content: center;
     align-items: center;
+    
+    background-color: lightgray;
 
     h2 {
         margin: 0;

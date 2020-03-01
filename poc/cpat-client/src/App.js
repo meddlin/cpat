@@ -36,9 +36,8 @@ const App = () => {
 			<Router>
 				<div>
 					<Suspense fallback={<div>Loading...</div>}>
+						<NavigationBar />
 						<div style={{ padding: '10px' }}>
-							<NavigationBar />
-
 							<Switch>
 								<Route path="/" exact={true} name="dashbaord" component={Dashboard} />
 								
