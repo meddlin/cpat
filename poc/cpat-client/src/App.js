@@ -1,19 +1,26 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Dashboard from './pages/Dashboard';
-import './App.css';
+import { connect } from 'react-redux';
 
-const CompanyDetail = React.lazy(() => import ('./components/target-types/company/CompanyDetail'));
-const DeviceDetail = React.lazy(() => import ('./components/target-types/device/DeviceDetail'));
-const LocationDetail = React.lazy(() => import ('./components/target-types/location/LocationDetail'));
-const PersonDetail = React.lazy(() => import ('./components/target-types/person/PersonDetail'));
-const TargetDetail = React.lazy(() => import ('./components/target-types/target/TargetDetail'));
+import { CompanyCreate } from './components/target-types/company/forms/CompanyCreate';
+import { DeviceCreate } from './components/target-types/device/forms/DeviceCreate';
+import { LocationCreate } from './components/target-types/location/forms/LocationCreate';
+import { PersonCreate } from './components/target-types/person/forms/PersonCreate';
+import { TargetCreate } from './components/target-types/target/forms/TargetCreate';
+
+const Dashboard = React.lazy(() => import ('./pages/Dashboard'));
 
 const CompanyListing = React.lazy(() => import ('./pages/CompanyListing'));
 const DeviceListing = React.lazy(() => import ('./pages/DeviceListing'));
 const LocationListing = React.lazy(() => import ('./pages/LocationListing'));
 const PersonListing = React.lazy(() => import ('./pages/PersonListing'));
 const TargetListing = React.lazy(() => import ('./pages/TargetListing'));
+
+const CompanyDetail = React.lazy(() => import ('./components/target-types/company/CompanyDetail'));
+const DeviceDetail = React.lazy(() => import ('./components/target-types/device/DeviceDetail'));
+const LocationDetail = React.lazy(() => import ('./components/target-types/location/LocationDetail'));
+const PersonDetail = React.lazy(() => import ('./components/target-types/person/PersonDetail'));
+const TargetDetail = React.lazy(() => import ('./components/target-types/target/TargetDetail'));
 
 const App = () => {
 	return (
@@ -35,6 +42,12 @@ const App = () => {
 							<Route path="/location/detail" exact={true} name="dashbaord" component={LocationDetail} />
 							<Route path="/person/detail" exact={true} name="dashbaord" component={PersonDetail} />
 							<Route path="/target/detail" exact={true} name="dashbaord" component={TargetDetail} />
+
+							<Route path="/company/create" exact={true} name="dashbaord" component={CompanyCreate} />
+							<Route path="/device/create" exact={true} name="dashbaord" component={DeviceCreate} />
+							<Route path="/location/create" exact={true} name="dashbaord" component={LocationCreate} />
+							<Route path="/person/create" exact={true} name="dashbaord" component={PersonCreate} />
+							<Route path="/target/create" exact={true} name="dashbaord" component={TargetCreate} />
 						</Switch>
 					</Suspense>
 				</div>
@@ -43,5 +56,10 @@ const App = () => {
 	);
 }
 	
-export default App;
+function mapStateToProps(state) {
+	return {};
+}
+
+const connectedApp = connect(mapStateToProps)(App);
+export { connectedApp as App };
 	
