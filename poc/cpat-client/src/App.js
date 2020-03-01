@@ -60,11 +60,11 @@ const App = () => {
 								<Route path="/person/create" exact={true} name="dashbaord" component={PersonCreate} />
 								<Route path="/target/create" exact={true} name="dashbaord" component={TargetCreate} />
 
-								<Route path="/company/update" exact={true} name="dashbaord" component={CompanyUpdate} />
-								<Route path="/device/update" exact={true} name="dashbaord" component={DeviceUpdate} />
-								<Route path="/location/update" exact={true} name="dashbaord" component={LocationUpdate} />
-								<Route path="/person/update" exact={true} name="dashbaord" component={PersonUpdate} />
-								<Route path="/target/update" exact={true} name="dashbaord" component={TargetUpdate} />
+								<Route path="/company/update/:id" exact={true} name="dashbaord" component={CompanyUpdate} />
+								<Route path="/device/update/:id" exact={true} name="dashbaord" component={DeviceUpdate} />
+								<Route path="/location/update/:id" exact={true} name="dashbaord" component={LocationUpdate} />
+								<Route path="/person/update/:id" exact={true} name="dashbaord" component={PersonUpdate} />
+								<Route path="/target/update/:id" exact={true} name="dashbaord" component={TargetUpdate} />
 							</Switch>
 						</div>
 					</Suspense>

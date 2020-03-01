@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Dialog, Table, Button } from 'evergreen-ui';
+import { Dialog, Table, Button, Heading } from 'evergreen-ui';
+import { useHistory } from 'react-router-dom';
 const PersonRemove = React.lazy(() => import ('../components/target-types/person/PersonRemove'));
 
 const data = [
@@ -18,10 +19,11 @@ const data = [
 const PersonListing = () => {
     const [isShown, setIsShown] = useState(false);
     const [dialogObject, setDialogObject] = useState({});
+    let history = useHistory();
 
     return (
         <div>
-            <h1>PersonListing</h1>
+            <Heading size={700}>PersonListing</Heading>
 
             <Table>
                 <Table.Head>
@@ -31,8 +33,9 @@ const PersonListing = () => {
                     <Table.TextHeaderCell>Date Created</Table.TextHeaderCell>
                     <Table.TextHeaderCell>Last Modified By</Table.TextHeaderCell>
                     <Table.TextHeaderCell></Table.TextHeaderCell>
+                    <Table.TextHeaderCell></Table.TextHeaderCell>
                 </Table.Head>
-                <Table.Body height={240}>
+                <Table.Body>
                     {data.map(d => (
                         <Table.Row key={d.id}>
                             <Table.TextCell>{d.firstName}</Table.TextCell>
@@ -40,6 +43,9 @@ const PersonListing = () => {
                             <Table.TextCell>{d.lastName}</Table.TextCell>
                             <Table.TextCell>{d.dateCreated}</Table.TextCell>
                             <Table.TextCell>{d.lastModifiedBy}</Table.TextCell>
+                            <Table.Cell onClick={() => history.push(`/person/update/${d.id}`)}>
+                                <Button appearance="minimal" intent="none">Update</Button>
+                            </Table.Cell>
                             <Table.Cell onClick={() => {
                                 setDialogObject(d);
                                 setIsShown(true);
@@ -50,6 +56,13 @@ const PersonListing = () => {
                     ))}
                 </Table.Body>
             </Table>
+
+            <Button 
+                appearance="minimal" 
+                intent="success"
+                onClick={() => history.push("/person/create")}>
+                Create New
+            </Button>
 
             <Dialog
                 isShown={isShown}

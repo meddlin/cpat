@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Dialog, Table, Button } from 'evergreen-ui';
+import { Dialog, Table, Button, Heading } from 'evergreen-ui';
+import { useHistory } from 'react-router-dom';
 const LocationRemove = React.lazy(() => import ('../components/target-types/location/LocationRemove'));
 
 const data = [
@@ -16,10 +17,11 @@ const data = [
 const LocationListing = () => {
     const [isShown, setIsShown] = useState(false);
     const [dialogObject, setDialogObject] = useState({});
+    let history = useHistory();
 
     return (
         <div>
-            <h1>LocationListing</h1>
+            <Heading size={700}>LocationListing</Heading>
 
             <Table>
                 <Table.Head>
@@ -27,13 +29,17 @@ const LocationListing = () => {
                     <Table.TextHeaderCell>Date Created</Table.TextHeaderCell>
                     <Table.TextHeaderCell>Last Modified By</Table.TextHeaderCell>
                     <Table.TextHeaderCell></Table.TextHeaderCell>
+                    <Table.TextHeaderCell></Table.TextHeaderCell>
                 </Table.Head>
-                <Table.Body height={240}>
+                <Table.Body>
                     {data.map(d => (
                         <Table.Row key={d.id}>
                             <Table.TextCell>{d.name}</Table.TextCell>
                             <Table.TextCell>{d.dateCreated}</Table.TextCell>
                             <Table.TextCell>{d.lastModifiedBy}</Table.TextCell>
+                            <Table.Cell onClick={() => history.push(`/location/update/${d.id}`)}>
+                                <Button appearance="minimal" intent="none">Update</Button>
+                            </Table.Cell>
                             <Table.Cell onClick={() => {
                                 setDialogObject(d);
                                 setIsShown(true);
@@ -44,6 +50,13 @@ const LocationListing = () => {
                     ))}
                 </Table.Body>
             </Table>
+
+            <Button 
+                appearance="minimal" 
+                intent="success"
+                onClick={() => history.push("/location/create")}>
+                Create New
+            </Button>
 
             <Dialog
                 isShown={isShown}

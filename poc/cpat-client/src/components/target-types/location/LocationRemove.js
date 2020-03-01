@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button } from 'evergreen-ui';
+import { locationActions } from '../../../state-management/location/actions';
 const DocumentAnalyticsDetail = React.lazy(() => import ('../../DocumentAnalyticsDetail'));
 
 const LocationRemove = (props) => {
-    const { data } = props;
+    const { data, dispatch } = props;
 
     console.log(`Showing data from...${data && data.name ? data.name : ''}`)
 
@@ -25,7 +26,10 @@ const LocationRemove = (props) => {
             <div>
                 <b>Are you sure?</b>
 
-                <Button appearance="minimal" type="submit">Remove</Button>
+                <Button 
+                    appearance="minimal" 
+                    onClick={() => dispatch(locationActions.removeLocation(data.id))}>Remove
+                </Button>
                 <Button appearance="minimal">Cancel</Button>
             </div>
         </div>

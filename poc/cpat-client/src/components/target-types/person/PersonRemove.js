@@ -1,11 +1,10 @@
 import React from 'react';
 import { Button } from 'evergreen-ui';
+import { personActions } from '../../../state-management/person/actions';
 const DocumentAnalyticsDetail = React.lazy(() => import ('../../DocumentAnalyticsDetail'));
 
 const PersonRemove = (props) => {
-    const { data } = props;
-
-    console.log(`Showing data from...${data && data.firstName ? data.firstName : ''}`)
+    const { data, dispatch } = props;
 
     return (
         <div>
@@ -25,7 +24,10 @@ const PersonRemove = (props) => {
             <div>
                 <b>Are you sure?</b>
 
-                <Button appearance="minimal" type="submit">Remove</Button>
+                <Button 
+                    appearance="minimal" 
+                    onClick={() => dispatch(personActions.removePerson(data.id))}>Remove
+                </Button>
                 <Button appearance="minimal">Cancel</Button>
             </div>
         </div>

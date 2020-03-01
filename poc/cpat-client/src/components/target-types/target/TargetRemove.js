@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button } from 'evergreen-ui';
+import { targetActions } from '../../../state-management/target/actions';
 const DocumentAnalyticsDetail = React.lazy(() => import ('../../DocumentAnalyticsDetail'));
 
 const TargetRemove = (props) => {
-    const { data } = props;
+    const { data, dispatch } = props;
 
     console.log(`Showing data from...${data && data.name ? data.name : ''}`)
 
@@ -25,7 +26,10 @@ const TargetRemove = (props) => {
             <div>
                 <b>Are you sure?</b>
 
-                <Button appearance="minimal" type="submit">Remove</Button>
+                <Button 
+                    appearance="minimal" 
+                    onClick={() => dispatch(targetActions.removeTarget(data.id))}>Remove
+                </Button>
                 <Button appearance="minimal">Cancel</Button>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withFormik, Form } from 'formik';
 import * as Yup from 'yup';
@@ -20,15 +20,14 @@ const DeviceUpdate = (props) => {
         values,
         touched,
         errors,
-        dirty,
         handleChange,
         handleBlur,
-        handleSubmit,
         handleReset,
-        isSubmitting,
     } = props;
 
     let history = useHistory();
+    let match = useRouteMatch('/company/update/:id');
+    console.log(`match: ${match && match.params ? match.params.id : ''}`);
 
     return (
         <div>
@@ -79,7 +78,6 @@ const DeviceUpdate = (props) => {
 const formikEnhancer = withFormik({
     mapPropsToValues: ({ 
         name,
-        dateCreated,
         updatedAt,
         lastModifiedBy
     }) => {
