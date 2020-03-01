@@ -1,40 +1,7 @@
-import React from 'react';
-import DataTable from 'react-data-table-component';
+import React, { useState } from 'react';
+import { Dialog, Table, Button } from 'evergreen-ui';
+const LocationRemove = React.lazy(() => import ('../components/target-types/location/LocationRemove'));
 
-const columns = [
-    {
-        name: 'Id',
-        selector: 'id'
-    },
-    {
-        name: 'Name',
-        selector: 'name',
-        sortable: true
-    },
-    {
-        name: 'Latitude',
-        selector: 'latitude',
-    },
-    {
-        name: 'Longitude',
-        selector: 'longitude',
-    },
-    {
-        name: 'Date Created',
-        selector: 'dateCreated',
-        sortable: true
-    },
-    {
-        name: 'Updated At',
-        selector: 'updatedAt',
-        sortable: true
-    },
-    {
-        name: 'Last Modified By',
-        selector: 'lastModifiedBy',
-        sortable: true
-    }
-];
 const data = [
     {
         id: '0',
@@ -47,11 +14,46 @@ const data = [
     }
 ];
 const LocationListing = () => {
+    const [isShown, setIsShown] = useState(false);
+    const [dialogObject, setDialogObject] = useState({});
+
     return (
         <div>
             <h1>LocationListing</h1>
 
-            <DataTable title="Locations" columns={columns} data={data} />
+            <Table>
+                <Table.Head>
+                    <Table.TextHeaderCell>Name</Table.TextHeaderCell>
+                    <Table.TextHeaderCell>Date Created</Table.TextHeaderCell>
+                    <Table.TextHeaderCell>Last Modified By</Table.TextHeaderCell>
+                    <Table.TextHeaderCell></Table.TextHeaderCell>
+                </Table.Head>
+                <Table.Body height={240}>
+                    {data.map(d => (
+                        <Table.Row key={d.id}>
+                            <Table.TextCell>{d.name}</Table.TextCell>
+                            <Table.TextCell>{d.dateCreated}</Table.TextCell>
+                            <Table.TextCell>{d.lastModifiedBy}</Table.TextCell>
+                            <Table.Cell onClick={() => {
+                                setDialogObject(d);
+                                setIsShown(true);
+                            }}>
+                                <Button appearance="minimal" intent="danger">Remove</Button>
+                            </Table.Cell>
+                        </Table.Row>
+                    ))}
+                </Table.Body>
+            </Table>
+
+            <Dialog
+                isShown={isShown}
+                title="Danger intent"
+                intent="danger"
+                onCloseComplete={() => setIsShown(false)}
+                confirmLabel="Delete">
+
+                <LocationRemove data={dialogObject} />
+            </Dialog>
         </div>
     );
 };

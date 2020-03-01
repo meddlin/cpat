@@ -1,48 +1,7 @@
-import React from 'react';
-import DataTable from 'react-data-table-component';
+import React, { useState } from 'react';
+import { Dialog, Table, Button } from 'evergreen-ui';
+const PersonRemove = React.lazy(() => import ('../components/target-types/person/PersonRemove'));
 
-const columns = [
-    {
-        name: 'Id',
-        selector: 'id'
-    },
-    {
-        name: 'First Name',
-        selector: 'firstName',
-        sortable: true
-    },
-    {
-        name: 'Middle Name',
-        selector: 'middleName',
-        sortable: true
-    },
-    {
-        name: 'Last Name',
-        selector: 'lastName',
-        sortable: true
-    },
-
-    // {
-    //     // Need button, etc. that somehow represents "small" lists of data
-    //     // i.e. nicknames, phone numbers, email addresses, organizations, etc.
-    // },
-    
-    {
-        name: 'Date Created',
-        selector: 'dateCreated',
-        sortable: true
-    },
-    {
-        name: 'Updated At',
-        selector: 'updatedAt',
-        sortable: true
-    },
-    {
-        name: 'Last Modified By',
-        selector: 'lastModifiedBy',
-        sortable: true
-    }
-];
 const data = [
     {
         id: '0',
@@ -57,11 +16,50 @@ const data = [
 ];
 
 const PersonListing = () => {
+    const [isShown, setIsShown] = useState(false);
+    const [dialogObject, setDialogObject] = useState({});
+
     return (
         <div>
             <h1>PersonListing</h1>
 
-            <DataTable title="People" columns={columns} data={data} />
+            <Table>
+                <Table.Head>
+                    <Table.TextHeaderCell>First Name</Table.TextHeaderCell>
+                    <Table.TextHeaderCell>Middle Name</Table.TextHeaderCell>
+                    <Table.TextHeaderCell>Last Name</Table.TextHeaderCell>
+                    <Table.TextHeaderCell>Date Created</Table.TextHeaderCell>
+                    <Table.TextHeaderCell>Last Modified By</Table.TextHeaderCell>
+                    <Table.TextHeaderCell></Table.TextHeaderCell>
+                </Table.Head>
+                <Table.Body height={240}>
+                    {data.map(d => (
+                        <Table.Row key={d.id}>
+                            <Table.TextCell>{d.firstName}</Table.TextCell>
+                            <Table.TextCell>{d.middleName}</Table.TextCell>
+                            <Table.TextCell>{d.lastName}</Table.TextCell>
+                            <Table.TextCell>{d.dateCreated}</Table.TextCell>
+                            <Table.TextCell>{d.lastModifiedBy}</Table.TextCell>
+                            <Table.Cell onClick={() => {
+                                setDialogObject(d);
+                                setIsShown(true);
+                            }}>
+                                <Button appearance="minimal" intent="danger">Remove</Button>
+                            </Table.Cell>
+                        </Table.Row>
+                    ))}
+                </Table.Body>
+            </Table>
+
+            <Dialog
+                isShown={isShown}
+                title="Danger intent"
+                intent="danger"
+                onCloseComplete={() => setIsShown(false)}
+                confirmLabel="Delete">
+
+                <PersonRemove data={dialogObject} />
+            </Dialog>
         </div>
     );
 };
