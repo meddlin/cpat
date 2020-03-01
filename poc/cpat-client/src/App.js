@@ -8,6 +8,12 @@ import { LocationCreate } from './components/target-types/location/forms/Locatio
 import { PersonCreate } from './components/target-types/person/forms/PersonCreate';
 import { TargetCreate } from './components/target-types/target/forms/TargetCreate';
 
+import { CompanyUpdate } from './components/target-types/company/forms/CompanyUpdate';
+import { DeviceUpdate } from './components/target-types/device/forms/DeviceUpdate';
+import { LocationUpdate } from './components/target-types/location/forms/LocationUpdate';
+import { PersonUpdate } from './components/target-types/person/forms/PersonUpdate';
+import { TargetUpdate } from './components/target-types/target/forms/TargetUpdate';
+
 const Dashboard = React.lazy(() => import ('./pages/Dashboard'));
 
 const CompanyListing = React.lazy(() => import ('./pages/CompanyListing'));
@@ -48,6 +54,12 @@ const App = () => {
 							<Route path="/location/create" exact={true} name="dashbaord" component={LocationCreate} />
 							<Route path="/person/create" exact={true} name="dashbaord" component={PersonCreate} />
 							<Route path="/target/create" exact={true} name="dashbaord" component={TargetCreate} />
+
+							<Route path="/company/update" exact={true} name="dashbaord" component={CompanyUpdate} />
+							<Route path="/device/update" exact={true} name="dashbaord" component={DeviceUpdate} />
+							<Route path="/location/update" exact={true} name="dashbaord" component={LocationUpdate} />
+							<Route path="/person/update" exact={true} name="dashbaord" component={PersonUpdate} />
+							<Route path="/target/update" exact={true} name="dashbaord" component={TargetUpdate} />
 						</Switch>
 					</Suspense>
 				</div>
