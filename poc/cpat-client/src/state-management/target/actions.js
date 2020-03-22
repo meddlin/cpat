@@ -6,7 +6,8 @@ export const targetActions = {
     getTargetList,
     insertTarget,
     updateTarget,
-    removeTarget
+    removeTarget,
+    setTarget
 };
 
 /**
@@ -127,4 +128,28 @@ function removeTarget(id) {
     function request(id) { return { type: targetConstants.REMOVE_TARGET_REQUEST, id } }
     function success(result) { return { type: targetConstants.REMOVE_TARGET_SUCCESS, result } }
     function failure(error) { return { type: targetConstants.REMOVE_TARGET_FAILURE, error } }
+}
+
+/**
+ * 
+ * @param {*} target
+ */
+function setTarget(target) {
+    return dispatch => {
+        dispatch(request(target));
+
+        targetService.setTarget(target)
+            .then(
+                result => {
+                    dispatch(success(result));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                }
+            );
+    };
+
+    function request() { return { type: targetConstants.SET_TARGET_REQUEST,  } }
+    function success(result) { return { type: targetConstants.SET_TARGET_SUCCESS, result } }
+    function failure(error) { return { type: targetConstants.SET_TARGET_FAILURE, error } }
 }

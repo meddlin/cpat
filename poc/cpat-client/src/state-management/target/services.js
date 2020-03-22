@@ -3,7 +3,8 @@ export const targetService = {
     getList,
     insert,
     update,
-    remove
+    remove,
+    setTarget
 };
 
 /**
@@ -22,7 +23,7 @@ function getSingle(id) {
         method: 'GET',
     };
 
-    return fetch(`${config.apiUrl}/table/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/target/${id}`, requestOptions).then(handleResponse);
 };
 
 /**
@@ -34,7 +35,7 @@ function getList(idList) {
         method: 'GET',
     };
 
-    return fetch(`${config.apiUrl}/table/${idList}`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/target/${idList}`, requestOptions).then(handleResponse);
 };
 
 /**
@@ -47,7 +48,7 @@ function insert(targetDoc) {
         body: JSON.stringify(targetDoc)
     };
 
-    return fetch(`${config.apiUrl}/table`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/target`, requestOptions).then(handleResponse);
 };
 
 /**
@@ -60,7 +61,7 @@ function update(targetDoc) {
         body: JSON.stringify(targetDoc)
     };
 
-    return fetch(`${config.apiUrl}/table`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/target`, requestOptions).then(handleResponse);
 };
 
 /**
@@ -73,7 +74,19 @@ function remove(id) {
         body: JSON.stringify(id)
     };
 
-    return fetch(`${config.apiUrl}/table`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/target`, requestOptions).then(handleResponse);
+};
+
+/**
+ * 
+ */
+function setTarget(target) {
+    const requestOptions = {
+        method: 'POST',
+        body: JSON.stringify(target)
+    };
+
+    return fetch(`${config.apiUrl}/target`, requestOptions).then(handleResponse);
 };
 
 

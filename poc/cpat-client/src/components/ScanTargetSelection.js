@@ -1,27 +1,53 @@
-import React from 'react';
-import { Heading, Autocomplete, TextInput } from 'evergreen-ui';
+import React, { useState } from 'react';
+import { Heading, Dialog, Pane, Autocomplete, TextInput, Button } from 'evergreen-ui';
+import { targetActions } from '../state-management/target/actions';
 
-const ScanTargetSelection = () => {
+const ScanTargetSelection = (props) => {
+    const { enable, enableCallback } = props;
+
+    const [isShown, setIsShown] = useState(false);
+    const [targetEntry, setTargetEntry] = useState('');
+
+    const targetCallback = function(target) {
+        setTargetEntry(target);
+    }
+
     return (
-        <div>
-            <Heading size={500}>Select a Target</Heading>
+        <Dialog
+            isShown={enable}
+            title="Target Selection (self-managed)"
+            intent="success"
+            onCloseComplete={() => {
+                setIsShown(false);
+                enableCallback();
+            }}
+            hasFooter={false}>
 
-            <Autocomplete
-                onChange={(changedItem) => console.log(changedItem)}
-                items={['Apple', 'Apricot', 'Banana', 'Cherry', 'Cucumber']}>
-                {(props) => {
-                    const { getInputProps, getRef, inputValue } = props
-                    return (
-                    <TextInput
-                        placeholder="Fruits"
-                        value={inputValue}
-                        innerRef={getRef}
-                        {...getInputProps()}
+            {( {close} ) => (
+                <Pane style={{ display: 'flex', flexDirection: 'column' }}>
+                    <Heading size={500}>Select a Target</Heading>
+
+                    <TextInput 
+                        placeholder="" 
+                        value={targetEntry}
+                        onChange={e => setTargetEntry(e.target.value)}
                     />
-                    )
-                }}
-            </Autocomplete>
-        </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: '1em' }}>
+                        <Button onClick={close}>Cancel</Button>
+                        <Button
+                            appearance="primary"
+                            intent="success"
+                            onClick={() => {
+                                targetActions.setTarget(targetEntry);
+                                close();
+                            }}>
+                            Save
+                        </Button>
+                    </div>
+                </Pane>
+            )}
+        </Dialog>
     );
 };
 

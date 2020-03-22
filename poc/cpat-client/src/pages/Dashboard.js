@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Heading, Dialog } from 'evergreen-ui';
+import { Heading } from 'evergreen-ui';
 
 const ScanTargetSelection = React.lazy(() => import ('../components/ScanTargetSelection'));
 
@@ -19,6 +19,10 @@ const CenteredSection = styled.div`
 const Dashboard = () => {
     const [isShown, setIsShown] = useState(false);
 
+    const isShownCallback = function() {
+        if (isShown) setIsShown(false);
+    }
+
     return (
         <DashboardStyles>
             <CenteredSection
@@ -33,15 +37,7 @@ const Dashboard = () => {
                 <Heading size={700}>Must select a target first</Heading>
             </CenteredSection>
 
-            <Dialog
-                isShown={isShown}
-                title="Target Selection"
-                intent="success"
-                onCloseComplete={() => setIsShown(false)}
-                confirmLabel="Save">
-
-                <ScanTargetSelection />
-            </Dialog>
+            <ScanTargetSelection enable={isShown} enableCallback={isShownCallback} />
         </DashboardStyles>
     );
 };
