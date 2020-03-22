@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Pane, SideSheet, Position, Heading, Icon } from 'evergreen-ui';
+import { Button, Pane, SideSheet, Position, Heading, Icon, Menu } from 'evergreen-ui';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -32,24 +32,38 @@ const NavigationBar = () => {
 
                 <Pane flex="1" background="tint1" padding={16}>
                     <Heading size={500}>View current</Heading>
-                    <ul>
-                        <li><Link to="/companies" onClick={() => setIsShown(false)}>Companies</Link></li>
-                        <li><Link to="/devices" onClick={() => setIsShown(false)}>Devices</Link></li>
-                        <li><Link to="/locations" onClick={() => setIsShown(false)}>Locations</Link></li>
-                        <li><Link to="/people" onClick={() => setIsShown(false)}>People</Link></li>
-                        <li><Link to="/targets" onClick={() => setIsShown(false)}>Targets</Link></li>
-                    </ul>
+                    <Menu>
+                        <Menu.Group>
+                            <Menu.Item>
+                                <Link to="/companies" onClick={() => setIsShown(false)}>Companies</Link>
+                            </Menu.Item>
+                            <Menu.Item>
+                                <Link to="/devices" onClick={() => setIsShown(false)}>Devices</Link>
+                            </Menu.Item>
+                            <Menu.Item>
+                                <Link to="/locations" onClick={() => setIsShown(false)}>Locations</Link>
+                            </Menu.Item>
+                            <Menu.Item>
+                                <Link to="/people" onClick={() => setIsShown(false)}>People</Link>
+                            </Menu.Item>
+                            <Menu.Item>
+                                <Link to="/targets" onClick={() => setIsShown(false)}>Targets</Link>
+                            </Menu.Item>
+                        </Menu.Group>
+                    </Menu>
                 </Pane>
                 <hr />
                 <Pane flex="1" background="tint1" padding={16}>
                     <Heading size={500}>Add New sub-targets</Heading>
-                    <ul>
-                        <li><Link to="/company/create" onClick={() => setIsShown(false)}>Company</Link></li>
-                        <li><Link to="/device/create" onClick={() => setIsShown(false)}>Device</Link></li>
-                        <li><Link to="/location/create" onClick={() => setIsShown(false)}>Location</Link></li>
-                        <li><Link to="/person/create" onClick={() => setIsShown(false)}>Person</Link></li>
-                        <li><Link to="/target/create" onClick={() => setIsShown(false)}>Target</Link></li>
-                    </ul>
+                    <Menu>
+                        <Menu.Group>
+                            <Menu.Item><Link to="/company/create" onClick={() => setIsShown(false)}>Company</Link></Menu.Item>
+                            <Menu.Item><Link to="/device/create" onClick={() => setIsShown(false)}>Device</Link></Menu.Item>
+                            <Menu.Item><Link to="/location/create" onClick={() => setIsShown(false)}>Location</Link></Menu.Item>
+                            <Menu.Item><Link to="/person/create" onClick={() => setIsShown(false)}>Person</Link></Menu.Item>
+                            <Menu.Item><Link to="/target/create" onClick={() => setIsShown(false)}>Target</Link></Menu.Item>
+                        </Menu.Group>
+                    </Menu>
                 </Pane>
             </SideSheet>
             <Button appearance="minimal" onClick={() => setIsShown(true)}>

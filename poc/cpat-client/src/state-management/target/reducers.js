@@ -2,6 +2,19 @@ import { targetConstants } from './constants';
 
 export function target(state = {}, action) {
     switch(action.type) {
+        case targetConstants.SET_TARGET_REQUEST: 
+            return Object.assign({}, ...state, {
+                loading: true
+            });
+        case targetConstants.SET_TARGET_SUCCESS: 
+            return Object.assign({}, ...state, {
+                loading: false
+            });
+        case targetConstants.SET_TARGET_FAILURE: 
+            return Object.assign({}, ...state, {
+                loading: false
+            });
+
         case targetConstants.GET_TARGET_REQUEST:
             return Object.assign({}, ...state, {
                 loading: true
