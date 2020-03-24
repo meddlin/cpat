@@ -42,15 +42,15 @@ export function target(state = {}, action) {
             });
 
         case targetConstants.INSERT_TARGET_REQUEST:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: true
             });
         case targetConstants.INSERT_TARGET_SUCCESS:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: false
             });
         case targetConstants.INSERT_TARGET_FAILURE:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: false
             });
 
@@ -59,11 +59,11 @@ export function target(state = {}, action) {
                 loading: true
             });
         case targetConstants.UPDATE_TARGET_SUCCESS:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: false
             });
         case targetConstants.UPDATE_TARGET_FAILURE:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: false
             });
 

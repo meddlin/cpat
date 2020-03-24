@@ -8,10 +8,6 @@ const ScanTargetSelection = (props) => {
     const [isShown, setIsShown] = useState(false);
     const [targetEntry, setTargetEntry] = useState('');
 
-    const targetCallback = function(target) {
-        setTargetEntry(target);
-    }
-
     return (
         <Dialog
             isShown={enable}

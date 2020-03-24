@@ -3,9 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using cpat_core.Models;
 using cpat_core.DataAccess.DataControl;
+using Microsoft.AspNetCore.Cors;
 
 namespace cpat_core.Controllers
 {
+    [Produces("application/json")]
+    [EnableCors("AppPolicy")]
     [ApiController]
     [Route("[controller]")]
     public class DeviceController : ControllerBase

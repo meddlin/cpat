@@ -1,3 +1,6 @@
+/CpatCoreTests/bin/*
+/CpatCoreTests/obj/*
+
 /cockroach-test-app/.vscode/*
 /cockroach-test-app/bin/*
 /cockroach-test-app/obj/*

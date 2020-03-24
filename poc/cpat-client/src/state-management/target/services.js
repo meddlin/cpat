@@ -11,7 +11,7 @@ export const targetService = {
  * Holds configuration info for interacting with any attached APIs.
  */
 const config = {
-    apiUrl: process.env.REACT_APP_API_URL || 'https://localhost:5001'
+    apiUrl: process.env.REACT_APP_API_URL || 'https://localhost:5001/api'
 };
 
 /**
@@ -21,6 +21,7 @@ const config = {
 function getSingle(id) {
     const requestOptions = {
         method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
     };
 
     return fetch(`${config.apiUrl}/target/${id}`, requestOptions).then(handleResponse);
@@ -33,6 +34,7 @@ function getSingle(id) {
 function getList(idList) {
     const requestOptions = {
         method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
     };
 
     return fetch(`${config.apiUrl}/target/${idList}`, requestOptions).then(handleResponse);
@@ -45,10 +47,11 @@ function getList(idList) {
 function insert(targetDoc) {
     const requestOptions = {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(targetDoc)
     };
 
-    return fetch(`${config.apiUrl}/target`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/target/insert`, requestOptions).then(handleResponse);
 };
 
 /**
@@ -58,10 +61,11 @@ function insert(targetDoc) {
 function update(targetDoc) {
     const requestOptions = {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(targetDoc)
     };
 
-    return fetch(`${config.apiUrl}/target`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/target/update`, requestOptions).then(handleResponse);
 };
 
 /**
@@ -71,10 +75,11 @@ function update(targetDoc) {
 function remove(id) {
     const requestOptions = {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(id)
     };
 
-    return fetch(`${config.apiUrl}/target`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/target/remove`, requestOptions).then(handleResponse);
 };
 
 /**
@@ -83,10 +88,11 @@ function remove(id) {
 function setTarget(target) {
     const requestOptions = {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(target)
     };
 
-    return fetch(`${config.apiUrl}/target`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/target/set/${target}`, requestOptions).then(handleResponse);
 };
 
 

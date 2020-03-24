@@ -60,7 +60,7 @@ const TargetListing = () => {
             <Button 
                 appearance="minimal" 
                 intent="success"
-                onClick={() => history.push("/company/create")}>
+                onClick={() => history.push("/target/create")}>
                 Create New
             </Button>
 

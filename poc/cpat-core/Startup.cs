@@ -18,6 +18,18 @@ namespace cpat_core
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AppPolicy",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
+            services.AddRouting(r => r.SuppressCheckForUnhandledSecurityMetadata = true);
+
             services.AddControllers();
         }
 
@@ -28,6 +40,8 @@ namespace cpat_core
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("AppPolicy");
 
             app.UseHttpsRedirection();
             app.UseRouting();
