@@ -15,6 +15,19 @@ export function target(state = {}, action) {
                 loading: false
             });
 
+        case targetConstants.GET_TARGET_PAGE_REQUEST:
+            return Object.assign({}, state, {
+                loading: true
+            });
+        case targetConstants.GET_TARGET_PAGE_SUCCESS:
+            return Object.assign({}, state, {
+                loading: false
+            });
+        case targetConstants.GET_TARGET_PAGE_FAILURE:
+            return Object.assign({}, state, {
+                loading: false
+            });
+
         case targetConstants.GET_TARGET_REQUEST:
             return Object.assign({}, ...state, {
                 loading: true

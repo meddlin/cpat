@@ -1,5 +1,6 @@
 export const targetService = {
     getSingle,
+    getPage,
     getList,
     insert,
     update,
@@ -26,6 +27,18 @@ function getSingle(id) {
 
     return fetch(`${config.apiUrl}/target/${id}`, requestOptions).then(handleResponse);
 };
+
+/**
+ * 
+ */
+function getPage() {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+    };
+
+    return fetch(`${config.apiUrl}/target/page`, requestOptions).then(handleResponse);
+}
 
 /**
  * 

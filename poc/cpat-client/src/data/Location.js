@@ -1,13 +1,12 @@
 import AbstractTarget from "./AbstractTarget";
 
-class Target extends AbstractTarget {
+class Location extends AbstractTarget {
     constructor(
         id,
 
         name,
-        region,
-        collectionType,
-        selected,
+        latitude,
+        longitude,
         relations,
 
         dateCreated,
@@ -17,13 +16,9 @@ class Target extends AbstractTarget {
         super(id, dateCreated, updatedAt, lastModifiedBy);
 
         this._name = name;
-        this._region = region;
-        this._collectionType = collectionType;
-        this._selected = selected;
+        this._latitude = latitude;
+        this._longitude = longitude;
         this._relations = relations;
-        this._dateCreated = dateCreated;
-        this._updatedAt = updatedAt;
-        this._lastModifiedBy = lastModifiedBy;
     }
 
     get name() {
@@ -33,25 +28,18 @@ class Target extends AbstractTarget {
         if (value) this._name = value;
     }
 
-    get region() {
-        return this._region;
+    get latitude() {
+        return this._latitude;
     }
-    set region(value) {
-        if (value) this._region = value;
+    set latitude(value) {
+        if (value) this._latitude = value;
     }
-
-    get collectionType() {
-        return this._collectionType;
+    
+    get longitude() {
+        return this._longitude;
     }
-    set collectionType(value) {
-        if (value) this._collectionType = value;
-    }
-
-    get selected() {
-        return this._selected;
-    }
-    set selected(value) {
-        if (value !== null) this._selected = value;
+    set longitude(value) {
+        if (value) this._longitude = value;
     }
 
     get relations() {
@@ -65,9 +53,8 @@ class Target extends AbstractTarget {
         return {
             id: this._id,
             name: this._name,
-            region: this._region,
-            collectionType: this._collectionType,
-            selected: this._selected,
+            latitude: this._latitude,
+            longitude: this._longitude,
             relations: this._relations,
             dateCreated: this._dateCreated,
             updatedAt: this._updatedAt,
@@ -76,4 +63,4 @@ class Target extends AbstractTarget {
     }
 };
 
-export default Target;
+export default Location;

@@ -3,6 +3,7 @@ import { targetService } from './services';
 
 export const targetActions = {
     getTarget,
+    getTargetPage,
     getTargetList,
     insertTarget,
     updateTarget,
@@ -32,6 +33,29 @@ function getTarget(id) {
     function request(id) { return { type: targetConstants.GET_TARGET_REQUEST, id } }
     function success(result) { return { type: targetConstants.GET_TARGET_SUCCESS, result } }
     function failure(error) { return { type: targetConstants.GET_TARGET_FAILURE, error } }
+}
+
+/**
+ * 
+ */
+function getTargetPage() {
+    return dispatch => {
+        dispatch(request());
+
+        targetService.getPage()
+            .then(
+                result => {
+                    dispatch(success(result));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                }
+            )
+    }
+
+    function request(id) { return { type: targetConstants.GET_TARGET_PAGE_REQUEST } }
+    function success(result) { return { type: targetConstants.GET_TARGET_PAGE_SUCCESS, result } }
+    function failure(error) { return { type: targetConstants.GET_TARGET_PAGE_FAILURE, error } }
 }
 
 /**

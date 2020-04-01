@@ -135,7 +135,7 @@ const formikEnhancer = withFormik({
         newTarget.updatedAt = values.updatedAt || new Date();
         newTarget.lastModifiedBy = values.lastModifiedBy || new User();
 
-        props.dispatch(targetActions.insertTarget(newTarget));
+        props.dispatch(targetActions.insertTarget(newTarget.apiObject()));
         setSubmitting(false);
     }
 })(TargetCreate);

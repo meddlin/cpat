@@ -20,6 +20,7 @@ const config = {
 function getSingle(id) {
     const requestOptions = {
         method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
     };
 
     return fetch(`${config.apiUrl}/table/${id}`, requestOptions).then(handleResponse);
@@ -32,6 +33,7 @@ function getSingle(id) {
 function getList(idList) {
     const requestOptions = {
         method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
     };
 
     return fetch(`${config.apiUrl}/table/${idList}`, requestOptions).then(handleResponse);
@@ -44,6 +46,7 @@ function getList(idList) {
 function insert(locationDoc) {
     const requestOptions = {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(locationDoc)
     };
 
@@ -57,6 +60,7 @@ function insert(locationDoc) {
 function update(locationDoc) {
     const requestOptions = {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(locationDoc)
     };
 
@@ -70,6 +74,7 @@ function update(locationDoc) {
 function remove(id) {
     const requestOptions = {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(id)
     };
 
