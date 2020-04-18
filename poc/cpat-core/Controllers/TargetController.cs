@@ -1,6 +1,7 @@
 ﻿using cpat_core.DataAccess.DataControl;
 using cpat_core.Models;
 using cpat_core.Models.TargetTypes;
+using cpat_core.Models.Utility;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -46,6 +47,18 @@ namespace cpat_core.Controllers
             var query = new TargetQuery();
 
             return query.GetSingle(new System.Guid(id));
+        }
+
+        /// <summary>
+        /// Retrieve a "page" of <c>Target</c> documents.
+        /// </summary>
+        /// <param name="pageDoc"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public IEnumerable<Target> Page([FromBody] PageRequest pageDoc)
+        {
+            var query = new TargetQuery();
+            return query.GetPage(pageDoc.Page, pageDoc.PageSize, new System.DateTime());
         }
 
         /// <summary>

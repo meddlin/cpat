@@ -40,6 +40,7 @@ function getTarget(id) {
  */
 function getTargetPage() {
     return dispatch => {
+        console.log('in getTargetPage');
         dispatch(request());
 
         targetService.getPage()
@@ -53,7 +54,7 @@ function getTargetPage() {
             )
     }
 
-    function request(id) { return { type: targetConstants.GET_TARGET_PAGE_REQUEST } }
+    function request() { return { type: targetConstants.GET_TARGET_PAGE_REQUEST } }
     function success(result) { return { type: targetConstants.GET_TARGET_PAGE_SUCCESS, result } }
     function failure(error) { return { type: targetConstants.GET_TARGET_PAGE_FAILURE, error } }
 }

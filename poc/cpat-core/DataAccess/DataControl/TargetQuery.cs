@@ -56,6 +56,45 @@ namespace cpat_core.DataAccess.DataControl
             return new List<Target>();
         }
 
+        public IEnumerable<Target> GetPage(int page, int pageSize, DateTime minval)
+        {
+            var list = new List<Target>();
+            minval = minval == null ? new DateTime(year: 2000, month: 0, day: 0) : minval;
+
+            using (var conn = new NpgsqlConnection(dbAccess.connectionString))
+            {
+                using (var db = new NPoco.Database(conn))
+                {
+                    db.Connection.Open();
+
+                    // NOTE: This hard-coding a minimum date value is a temporary fix. Later on, we
+                    //      want to change this to some minimum value of the TIMESTAMP data type.
+                    list = Target.Translate(
+                        db.Fetch<TargetDto>(new NPoco.Sql(
+                            $@"select * 
+                                from target
+                                where datecreated > TIMESTAMP '2000-01-01'
+                                order by datecreated desc
+                                limit {pageSize}"
+                        ))
+                    ).ToList();
+                    //list = Target.Translate( 
+                    //    db.Fetch<TargetDto>(new NPoco.Sql(
+                    //        $@"select * 
+                    //            from target
+                    //            where datecreated > { ((minval == null) ? "min(datecreated)" : minval.ToLongDateString() ) }
+                    //            order by datecreated desc
+                    //            limit {pageSize}"
+                    //    ))
+                    //).ToList();
+                    db.Connection.Close();
+                }
+            }
+
+            return list;
+        }
+
+
         /// <summary>
         /// Insert a single <c>Target</c> object.
         /// </summary>

@@ -21,7 +21,8 @@ export function target(state = {}, action) {
             });
         case targetConstants.GET_TARGET_PAGE_SUCCESS:
             return Object.assign({}, state, {
-                loading: false
+                loading: false,
+                targets: action.result
             });
         case targetConstants.GET_TARGET_PAGE_FAILURE:
             return Object.assign({}, state, {

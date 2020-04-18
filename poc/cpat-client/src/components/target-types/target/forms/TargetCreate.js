@@ -74,7 +74,7 @@ const TargetCreate = (props) => {
                         disabled 
                         name="dateCreated"
                         label="Date Created"
-                        value={values.dateCreated || `${new Date('2020-01-30').toLocaleDateString()}`} />
+                        value={values.dateCreated || `${new Date().toLocaleDateString()}`} />
 
                     <label>Updated At:</label>
                     <TextInput 
@@ -131,7 +131,7 @@ const formikEnhancer = withFormik({
         newTarget.collectionType = values.collectionType || '';
         newTarget.selected = false;
         newTarget.relations = [];
-        newTarget.dateCreated = values.dateCreated || new Date('2020-01-30');
+        newTarget.dateCreated = values.dateCreated || new Date();
         newTarget.updatedAt = values.updatedAt || new Date();
         newTarget.lastModifiedBy = values.lastModifiedBy || new User();
 

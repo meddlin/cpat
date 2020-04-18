@@ -32,9 +32,13 @@ function getSingle(id) {
  * 
  */
 function getPage() {
+    const page = 1;
+    const pageSize = 3;
+
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({page: 1, pageSize: 3})
     };
 
     return fetch(`${config.apiUrl}/target/page`, requestOptions).then(handleResponse);
