@@ -8,7 +8,8 @@ export function target(state = {}, action) {
             });
         case targetConstants.SET_TARGET_SUCCESS: 
             return Object.assign({}, ...state, {
-                loading: false
+                loading: false,
+                targets: action.result
             });
         case targetConstants.SET_TARGET_FAILURE: 
             return Object.assign({}, ...state, {
@@ -29,16 +30,19 @@ export function target(state = {}, action) {
                 loading: false
             });
 
+
+
         case targetConstants.GET_TARGET_REQUEST:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: true
             });
         case targetConstants.GET_TARGET_SUCCESS:
-            return Object.assign({}, ...state, {
-                loading: false
+            return Object.assign({}, state, {
+                loading: false,
+                targets: action.result
             });
         case targetConstants.GET_TARGET_FAILURE:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: false
             });
         
@@ -69,7 +73,7 @@ export function target(state = {}, action) {
             });
 
         case targetConstants.UPDATE_TARGET_REQUEST:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: true
             });
         case targetConstants.UPDATE_TARGET_SUCCESS:
@@ -82,15 +86,15 @@ export function target(state = {}, action) {
             });
 
         case targetConstants.REMOVE_TARGET_REQUEST:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: true
             });
         case targetConstants.REMOVE_TARGET_SUCCESS:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: false
             });
         case targetConstants.REMOVE_TARGET_FAILURE:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: false
             });    
 

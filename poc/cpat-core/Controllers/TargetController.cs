@@ -11,7 +11,7 @@ namespace cpat_core.Controllers
 {
     [EnableCors("AppPolicy")]
     [Produces("application/json")]
-    [Route("api/Target/[action]")]
+    [Route("api/Target/[action]/{id?}")]
     [ApiController]
     public class TargetController : ControllerBase
     {
@@ -20,20 +20,6 @@ namespace cpat_core.Controllers
         public TargetController(ILogger<TargetController> logger)
         {
             _logger = logger;
-        }
-
-        /// <summary>
-        /// Retrieve a default collection of <c>Location</c>
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public IEnumerable<Target> Get()
-        {
-            return new List<Target>
-            {
-                new Target() { Name = "Alice" },
-                new Target() { Name = "Bob" }
-            };
         }
 
         /// <summary>

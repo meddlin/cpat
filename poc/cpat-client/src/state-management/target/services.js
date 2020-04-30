@@ -25,7 +25,7 @@ function getSingle(id) {
         headers: { 'Content-Type': 'application/json' },
     };
 
-    return fetch(`${config.apiUrl}/target/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/target/get/${id}`, requestOptions).then(handleResponse);
 };
 
 /**
