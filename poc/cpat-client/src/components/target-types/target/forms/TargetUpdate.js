@@ -135,14 +135,19 @@ const formikEnhancer = withFormik({
     }),
     handleSubmit: (values, { props, setSubmitting }) => {
         let newTarget = new Target();
-        newTarget.name = values.name;
-        newTarget.region = values.region;
-        newTarget.collectionType = values.collectionType;
-        newTarget.dateCreated = values.dateCreated;
-        newTarget.updatedAt = values.updatedAt;
-        newTarget.lastModifiedBy = values.lastModifiedBy;
 
-        props.dispatch(targetActions.updateTarget(newTarget.apiObject()));
+        newTarget.name = values.name; // || props.target.name;
+        newTarget.region = values.region; // || props.target.region;
+        newTarget.collectionType = values.collectionType; // || props.target.collectionType;
+        // newTarget.relations = []; //values.relations || props.target.relations;
+        // newTarget.selected = false; //values.selected === null ? props.target.selected : values.selected;
+        // newTarget.lastModifiedBy = "bob"; //values.lastModifiedBy || props.target.lastModifiedBy;
+
+        // newTarget.id = props.target.id;
+        // newTarget.dateCreated = props.target.dateCreated;
+        newTarget.updatedAt = new Date();
+
+        props.dispatch(targetActions.updateTarget(props.target.id, newTarget.apiObject()));
         setSubmitting(false);
     }
 })(TargetUpdate);

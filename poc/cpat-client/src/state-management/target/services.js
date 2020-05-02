@@ -1,3 +1,5 @@
+import { handlers } from '../../state-management/helpers/http-response-handler';
+
 export const targetService = {
     getSingle,
     getPage,
@@ -6,13 +8,6 @@ export const targetService = {
     update,
     remove,
     setTarget
-};
-
-/**
- * Holds configuration info for interacting with any attached APIs.
- */
-const config = {
-    apiUrl: process.env.REACT_APP_API_URL || 'https://localhost:5001/api'
 };
 
 /**
@@ -25,7 +20,7 @@ function getSingle(id) {
         headers: { 'Content-Type': 'application/json' },
     };
 
-    return fetch(`${config.apiUrl}/target/get/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${handlers.config.apiUrl}/target/get/${id}`, requestOptions).then(handlers.handleHttpResponse);
 };
 
 /**
@@ -41,7 +36,7 @@ function getPage() {
         body: JSON.stringify({page: 1, pageSize: 3})
     };
 
-    return fetch(`${config.apiUrl}/target/page`, requestOptions).then(handleResponse);
+    return fetch(`${handlers.config.apiUrl}/target/page`, requestOptions).then(handlers.handleHttpResponse);
 }
 
 /**
@@ -54,7 +49,7 @@ function getList(idList) {
         headers: { 'Content-Type': 'application/json' },
     };
 
-    return fetch(`${config.apiUrl}/target/${idList}`, requestOptions).then(handleResponse);
+    return fetch(`${handlers.config.apiUrl}/target/${idList}`, requestOptions).then(handlers.handleHttpResponse);
 };
 
 /**
@@ -68,21 +63,21 @@ function insert(targetDoc) {
         body: JSON.stringify(targetDoc)
     };
 
-    return fetch(`${config.apiUrl}/target/insert`, requestOptions).then(handleResponse);
+    return fetch(`${handlers.config.apiUrl}/target/insert`, requestOptions).then(handlers.handleHttpResponse);
 };
 
 /**
  * 
  * @param {*} targetDoc 
  */
-function update(targetDoc) {
+function update(docId, targetDoc) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(targetDoc)
     };
 
-    return fetch(`${config.apiUrl}/target/update`, requestOptions).then(handleResponse);
+    return fetch(`${handlers.config.apiUrl}/target/update/${docId}`, requestOptions).then(handlers.handleHttpResponse);
 };
 
 /**
@@ -96,7 +91,7 @@ function remove(id) {
         body: JSON.stringify(id)
     };
 
-    return fetch(`${config.apiUrl}/target/remove`, requestOptions).then(handleResponse);
+    return fetch(`${handlers.config.apiUrl}/target/remove`, requestOptions).then(handlers.handleHttpResponse);
 };
 
 /**
@@ -109,28 +104,5 @@ function setTarget(target) {
         body: JSON.stringify(target)
     };
 
-    return fetch(`${config.apiUrl}/target/set/${target}`, requestOptions).then(handleResponse);
+    return fetch(`${handlers.config.apiUrl}/target/set/${target}`, requestOptions).then(handlers.handleHttpResponse);
 };
-
-
-/**
- * 
- * @param {*} response 
- */
-function handleResponse(response) {
-    return response.text().then(text => {
-        const data = text && JSON.parse(text);
-        if (!response.ok) {
-            if (response.status === 401) {
-                // auto logout if 401 response returned from api
-                // authenticationService.logout();
-                Location.reload(true);
-            }
-
-            const error = (data && data.message) || response.statusText;
-            return Promise.reject(error);
-        }
-
-        return data;
-    });
-}

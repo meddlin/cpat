@@ -135,9 +135,10 @@ namespace cpat_core.DataAccess.DataControl
         /// <summary>
         /// Update a <c>TargetDto</c> object.
         /// </summary>
+        /// <param name="docId"></param>
         /// <param name="target">A <c>Target</c>. This will be translated to a <c>TargetDto</c> before the update operation.</param>
         /// <returns><c>int</c> denoting the success value of the operation.</returns>
-        public int Update(Target target)
+        public int Update(Guid docId, Target target)
         {
             int res;
             using (var conn = new NpgsqlConnection(dbAccess.connectionString))
@@ -145,7 +146,7 @@ namespace cpat_core.DataAccess.DataControl
                 using (var db = new NPoco.Database(conn))
                 {
                     db.Connection.Open();
-                    res = db.Update(TargetDto.Translate(target));
+                    res = db.Update(TargetDto.Translate(target), docId);
                     db.Connection.Close();
                 }
             }

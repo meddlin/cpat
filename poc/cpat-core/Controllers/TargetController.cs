@@ -5,6 +5,7 @@ using cpat_core.Models.Utility;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 
 namespace cpat_core.Controllers
@@ -61,13 +62,16 @@ namespace cpat_core.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="id">A <c>Guid</c> sent as <c>string</c></param>
         /// <param name="data"></param>
         /// <returns></returns>
         [HttpPost]
-        public int Update([FromBody] Target data)
+        public int Update([FromRoute] string id, [FromBody] Target data)
         {
+            Guid docId = new Guid(id);
+
             var query = new TargetQuery();
-            return query.Update(data);
+            return query.Update(docId, data);
         }
 
         /// <summary>

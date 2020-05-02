@@ -111,11 +111,11 @@ function insertTarget(targetDoc) {
  * 
  * @param {*} targetDoc 
  */
-function updateTarget(targetDoc) {
+function updateTarget(docId, targetDoc) {
     return dispatch => {
-        dispatch(request(targetDoc));
+        dispatch(request(docId, targetDoc));
 
-        targetService.update(targetDoc)
+        targetService.update(docId, targetDoc)
             .then(
                 result => {
                     dispatch(success(result));
@@ -126,7 +126,7 @@ function updateTarget(targetDoc) {
             );
     };
 
-    function request(targetDoc) { return { type: targetConstants.UPDATE_TARGET_REQUEST, targetDoc } }
+    function request(docId, targetDoc) { return { type: targetConstants.UPDATE_TARGET_REQUEST, docId, targetDoc } }
     function success(result) { return { type: targetConstants.UPDATE_TARGET_SUCCESS, result } }
     function failure(error) { return { type: targetConstants.UPDATE_TARGET_FAILURE, error } }
 }
