@@ -48,7 +48,7 @@ CREATE TABLE target(
     region STRING,
     collectiontype STRING,
     selected BOOL,
-    documentrelation STRING,
+    documentrelation JSONB,
     datecreated TIMESTAMPTZ,
     updatedat TIMESTAMPTZ,
     lastmodifiedbyuserid UUID);
@@ -65,7 +65,7 @@ CREATE TABLE target(
     region STRING,
     collectiontype STRING,
     selected BOOL,
-    documentrelation STRING,
+    documentrelation JSONB,
     updatedat TIMESTAMPTZ,
     lastmodifiedbyuserid UUID
     CONSTRAINT target_pk PRIMARY KEY(id, datecreated)
@@ -87,7 +87,7 @@ CREATE TABLE target_temp(
     region STRING,
     collectiontype STRING,
     selected BOOL,
-    documentrelation STRING,
+    documentrelation JSONB,
     datecreated TIMESTAMPTZ,
     updatedat TIMESTAMPTZ,
     lastmodifiedbyuserid UUID);
@@ -117,7 +117,7 @@ CREATE TABLE target(
     region STRING,
     collectiontype STRING,
     selected BOOL,
-    documentrelation STRING,
+    documentrelation JSONB,
     updatedat TIMESTAMPTZ,
     lastmodifiedbyuserid UUID,
     CONSTRAINT target_pk PRIMARY KEY(id, datecreated)
