@@ -1,8 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { withFormik, Form } from 'formik';
+import { withFormik, Form, FieldArray } from 'formik';
 import * as Yup from 'yup';
+import { TargetCreateFormArray } from './TargetCreateFormArray';
 import { Button, TextInput, Heading } from 'evergreen-ui';
 import styled from 'styled-components';
 import { targetActions } from '../../../../state-management/target/actions';
@@ -94,6 +95,8 @@ const TargetCreate = (props) => {
                         <Button type="submit">Create</Button>
                         <Button onClick={handleReset}>Cancel</Button>
                     </div>
+
+                    <FieldArray name="relations" component={TargetCreateFormArray} />
                 </Form>
 
                 <Button onClick={() => history.goBack()}>Back</Button>
@@ -109,12 +112,14 @@ const formikEnhancer = withFormik({
         collectionType,
         dateCreated,
         updatedAt,
-        lastModifiedBy
+        lastModifiedBy,
+        relations
     }) => {
         return {
             name: name || '',
             region: region || '',
             collectionType: collectionType || '',
+            relations: relations || [{}],
 
             dateCreated: dateCreated,
             updatedAt: updatedAt,
@@ -130,7 +135,7 @@ const formikEnhancer = withFormik({
         newTarget.region = values.region || '';
         newTarget.collectionType = values.collectionType || '';
         newTarget.selected = false;
-        newTarget.relations = [];
+        newTarget.relations = values.relations || [];
         newTarget.dateCreated = values.dateCreated || new Date();
         newTarget.updatedAt = values.updatedAt || new Date();
         newTarget.lastModifiedBy = values.lastModifiedBy || new User();

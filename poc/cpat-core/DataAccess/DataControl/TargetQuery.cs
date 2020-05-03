@@ -1,6 +1,7 @@
 ﻿using cpat_core.DataAccess.TargetTypes;
 using cpat_core.Models;
 using Npgsql;
+using NPoco;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,6 +64,14 @@ namespace cpat_core.DataAccess.DataControl
             return new List<Target>();
         }
 
+        /// <summary>
+        /// Retrieve a lsit of <c>Target</c> one page at a time. Change the value of page and pageSize to alter the amount of
+        /// <c>Target</c> returned on each query.
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="minval"></param>
+        /// <returns></returns>
         public IEnumerable<Target> GetPage(int page, int pageSize, DateTime minval)
         {
             var list = new List<Target>();
@@ -85,15 +94,7 @@ namespace cpat_core.DataAccess.DataControl
                                 limit {pageSize}"
                         ))
                     ).ToList();
-                    //list = Target.Translate( 
-                    //    db.Fetch<TargetDto>(new NPoco.Sql(
-                    //        $@"select * 
-                    //            from target
-                    //            where datecreated > { ((minval == null) ? "min(datecreated)" : minval.ToLongDateString() ) }
-                    //            order by datecreated desc
-                    //            limit {pageSize}"
-                    //    ))
-                    //).ToList();
+
                     db.Connection.Close();
                 }
             }

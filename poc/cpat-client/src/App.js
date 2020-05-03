@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { TargetListing } from './pages/TargetListing';
+import { TargetDetail } from './components/target-types/target/TargetDetail';
 
 import { CompanyCreate } from './components/target-types/company/forms/CompanyCreate';
 import { DeviceCreate } from './components/target-types/device/forms/DeviceCreate';
@@ -30,7 +31,7 @@ const CompanyDetail = React.lazy(() => import ('./components/target-types/compan
 const DeviceDetail = React.lazy(() => import ('./components/target-types/device/DeviceDetail'));
 const LocationDetail = React.lazy(() => import ('./components/target-types/location/LocationDetail'));
 const PersonDetail = React.lazy(() => import ('./components/target-types/person/PersonDetail'));
-const TargetDetail = React.lazy(() => import ('./components/target-types/target/TargetDetail'));
+// const TargetDetail = React.lazy(() => import ('./components/target-types/target/TargetDetail'));
 
 const App = () => {
 	return (
@@ -53,7 +54,7 @@ const App = () => {
 								<Route path="/device/detail" exact={true} name="dashbaord" component={DeviceDetail} />
 								<Route path="/location/detail" exact={true} name="dashbaord" component={LocationDetail} />
 								<Route path="/person/detail" exact={true} name="dashbaord" component={PersonDetail} />
-								<Route path="/target/detail" exact={true} name="dashbaord" component={TargetDetail} />
+								<Route path="/target/detail/:id" exact={true} name="dashbaord" component={TargetDetail} />
 
 								<Route path="/company/create" exact={true} name="dashbaord" component={CompanyCreate} />
 								<Route path="/device/create" exact={true} name="dashbaord" component={DeviceCreate} />

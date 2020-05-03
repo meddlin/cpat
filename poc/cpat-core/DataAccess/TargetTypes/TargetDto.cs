@@ -22,7 +22,9 @@ namespace cpat_core.DataAccess.TargetTypes
         /// <summary>
         /// An attempt at using JSONB for the <c>DocumentRelation</c> structure for each document
         /// </summary>
-        [Column("documentrelation")] public string DocumentRelationJson { get; set; } // translates to JSONB in database?
+        [Column("documentrelation")]
+        [SerializedColumn] // translates to JSONB in database
+        public List<DocumentRelation> DocumentRelation { get; set; }
 
         [Column("datecreated")] public DateTime DateCreated { get; set; }
         [Column("updatedat")] public DateTime UpdatedAt { get; set; }
@@ -44,8 +46,7 @@ namespace cpat_core.DataAccess.TargetTypes
                 CollectionType = data.CollectionType,
                 Selected = data.Selected,
 
-                //DocumentRelationJson = data.Relations,
-                DocumentRelationJson = "empty",
+                DocumentRelation = data.Relations,
 
                 DateCreated = data.DateCreated != null ? data.DateCreated : DateTime.Now,
                 UpdatedAt = data.UpdatedAt != null ? data.UpdatedAt : DateTime.Now,
