@@ -32,7 +32,11 @@ const TargetListing = (props) => {
                 <Table.Body>
                     {(targets && targets.length > 0) ? targets.map(d => (
                         <Table.Row key={d.id}>
-                            <Table.TextCell>{d.name}</Table.TextCell>
+                            {/* <Table.TextCell>{d.name}</Table.TextCell> */}
+                            <Table.Cell onClick={() => history.push(`/target/detail/${d.id}`)}>
+                                <Button appearance="minimal" intent="none">{d.name}</Button>
+                            </Table.Cell>
+
                             <Table.TextCell>{d.region}</Table.TextCell>
                             <Table.TextCell>{d.collectionType}</Table.TextCell>
                             <Table.TextCell>{d.dateCreated}</Table.TextCell>

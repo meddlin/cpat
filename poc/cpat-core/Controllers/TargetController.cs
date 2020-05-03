@@ -54,8 +54,10 @@ namespace cpat_core.Controllers
         /// </summary>
         /// <param name="data"></param>
         [HttpPost]
-        public void Insert([FromBody] Target data) // AnotherTarget
+        public void Insert([FromBody] Target data)
         {
+
+
             var query = new TargetQuery();
             query.Insert(data);
         }
