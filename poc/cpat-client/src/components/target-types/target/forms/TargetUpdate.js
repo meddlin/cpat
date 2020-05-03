@@ -28,7 +28,7 @@ const TargetUpdate = (props) => {
         handleReset,
     } = props;
 
-    const { dispatch, target, loading } = props;
+    const { dispatch, target, loading, updateResult } = props;
     let history = useHistory();
     let match = props.match; //useRouteMatch('/company/update/:id');
 
@@ -46,6 +46,10 @@ const TargetUpdate = (props) => {
                     <h1>Target Update</h1>
                     <h2>Updating: {target && target.name ? target.name : ''}</h2>
                     <h3>Target type: {target && target.collectionType ? target.collectionType : ''}</h3>
+
+                    <p>
+                        <b>update result: {(updateResult !== null) ? updateResult : ''}</b>
+                    </p>
 
                     <Form>
                         <label>Name</label>
@@ -136,18 +140,15 @@ const formikEnhancer = withFormik({
     handleSubmit: (values, { props, setSubmitting }) => {
         let newTarget = new Target();
 
-        newTarget.name = values.name; // || props.target.name;
-        newTarget.region = values.region; // || props.target.region;
-        newTarget.collectionType = values.collectionType; // || props.target.collectionType;
+        newTarget.name = values.name;
+        newTarget.region = values.region;
+        newTarget.collectionType = values.collectionType;
         // newTarget.relations = []; //values.relations || props.target.relations;
         // newTarget.selected = false; //values.selected === null ? props.target.selected : values.selected;
         // newTarget.lastModifiedBy = "bob"; //values.lastModifiedBy || props.target.lastModifiedBy;
-
-        // newTarget.id = props.target.id;
-        // newTarget.dateCreated = props.target.dateCreated;
         newTarget.updatedAt = new Date();
 
-        props.dispatch(targetActions.updateTarget(props.target.id, newTarget.apiObject()));
+        props.dispatch(targetActions.partialUpdateTarget(props.target.id, newTarget.apiObject()));
         setSubmitting(false);
     }
 })(TargetUpdate);
@@ -155,6 +156,7 @@ const formikEnhancer = withFormik({
 function mapStateToProps(state) {
     return {
         target: (state.target && state.target.targets) ? state.target.targets : {},
+        updateResult: (state.target && state.target.partialUpdateResult) ? state.target.partialUpdateResult : 0,
         loading: state.target ? state.target.loading : false
      };
 }

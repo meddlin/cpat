@@ -3,7 +3,7 @@ import { targetConstants } from './constants';
 export function target(state = {}, action) {
     switch(action.type) {
 
-        
+
 
         case targetConstants.SET_TARGET_REQUEST: 
             return Object.assign({}, ...state, {
@@ -92,6 +92,23 @@ export function target(state = {}, action) {
             return Object.assign({}, state, {
                 loading: false
             });
+
+
+        
+        case targetConstants.PARTIAL_UPDATE_TARGET_REQUEST:
+            return Object.assign({}, state, {
+                loading: true,
+            });
+        case targetConstants.PARTIAL_UPDATE_TARGET_SUCCESS:
+            return Object.assign({}, state, {
+                loading: false,
+                partialUpdateResult: action.result
+            });
+        case targetConstants.PARTIAL_UPDATE_TARGET_FAILURE:
+            return Object.assign({}, state, {
+                loading: false,
+            });
+        
 
 
         case targetConstants.REMOVE_TARGET_REQUEST:

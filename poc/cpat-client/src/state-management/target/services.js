@@ -6,6 +6,7 @@ export const targetService = {
     getList,
     insert,
     update,
+    partialUpdate,
     remove,
     setTarget
 };
@@ -79,6 +80,21 @@ function update(docId, targetDoc) {
 
     return fetch(`${handlers.config.apiUrl}/target/update/${docId}`, requestOptions).then(handlers.handleHttpResponse);
 };
+
+/**
+ * Used for partial document updates via JSON Merge Patch mechanism.
+ * @param {*} docId 
+ * @param {*} targetDoc 
+ */
+function partialUpdate(docId, targetDoc) {
+    const requestOptions = {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/merge-patch+json'},
+        body: JSON.stringify(targetDoc)
+    };
+
+    return fetch(`${handlers.config.apiUrl}/target/PartialUpdate/${docId}`, requestOptions).then(handlers.handleHttpResponse);
+}
 
 /**
  * 

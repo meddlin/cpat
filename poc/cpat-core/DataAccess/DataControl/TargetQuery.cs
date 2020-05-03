@@ -31,7 +31,14 @@ namespace cpat_core.DataAccess.DataControl
                 using (var db = new NPoco.Database(conn))
                 {
                     db.Connection.Open();
-                    target = Target.Translate(db.Fetch<TargetDto>().FirstOrDefault());
+                    target = Target.Translate( 
+                        db.Fetch<TargetDto>(new NPoco.Sql(
+                            $@"
+                                select * 
+                                from target
+                                where id  = @0
+                            ", id)).FirstOrDefault() 
+                    );
                     db.Connection.Close();
                 }
             }
@@ -147,6 +154,30 @@ namespace cpat_core.DataAccess.DataControl
                 {
                     db.Connection.Open();
                     res = db.Update(TargetDto.Translate(target), docId);
+                    db.Connection.Close();
+                }
+            }
+
+            return res;
+        }
+
+
+        /// <summary>
+        /// Partial update for <c>TargetDto</c> by only updating the specified columns.
+        /// </summary>
+        /// <param name="docId"></param>
+        /// <param name="target"></param>
+        /// <param name="ops">A <c>string</c> collection </param>
+        /// <returns></returns>
+        public int PartialUpdate(Guid docId, Target target, IEnumerable<string> ops)
+        {
+            int res;
+            using (var conn = new NpgsqlConnection(dbAccess.connectionString))
+            {
+                using (var db = new NPoco.Database(conn))
+                {
+                    db.Connection.Open();
+                    res = db.Update(TargetDto.Translate(target), docId, ops);
                     db.Connection.Close();
                 }
             }

@@ -7,6 +7,7 @@ export const targetActions = {
     getTargetList,
     insertTarget,
     updateTarget,
+    partialUpdateTarget,
     removeTarget,
     setTarget
 };
@@ -129,6 +130,30 @@ function updateTarget(docId, targetDoc) {
     function request(docId, targetDoc) { return { type: targetConstants.UPDATE_TARGET_REQUEST, docId, targetDoc } }
     function success(result) { return { type: targetConstants.UPDATE_TARGET_SUCCESS, result } }
     function failure(error) { return { type: targetConstants.UPDATE_TARGET_FAILURE, error } }
+}
+
+/**
+ * 
+ * @param {*} targetDoc 
+ */
+function partialUpdateTarget(docId, targetDoc) {
+    return dispatch => {
+        dispatch(request(docId, targetDoc));
+
+        targetService.partialUpdate(docId, targetDoc)
+            .then(
+                result => {
+                    dispatch(success(result));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                }
+            );
+    };
+
+    function request(docId, targetDoc) { return { type: targetConstants.PARTIAL_UPDATE_TARGET_REQUEST, docId, targetDoc } }
+    function success(result) { return { type: targetConstants.PARTIAL_UPDATE_TARGET_SUCCESS, result } }
+    function failure(error) { return { type: targetConstants.PARTIAL_UPDATE_TARGET_FAILURE, error } }
 }
 
 /**

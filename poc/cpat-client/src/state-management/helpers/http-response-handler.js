@@ -30,6 +30,11 @@ function handleHttpResponse(response) {
                 Location.reload(true);
             }
 
+            if (response.status === 415) {
+                console.error(`HTTP 415: ${response.statusText}`);
+                console.error(`URL: ${response.url}`);
+            }
+
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
         }

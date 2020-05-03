@@ -5,6 +5,7 @@ using cpat_core.Models.Utility;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Morcatko.AspNetCore.JsonMergePatch;
 using System;
 using System.Collections.Generic;
 
@@ -72,6 +73,32 @@ namespace cpat_core.Controllers
 
             var query = new TargetQuery();
             return query.Update(docId, data);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="patch"></param>
+        /// <returns></returns>
+        [HttpPatch]
+        [Consumes(JsonMergePatchDocument.ContentType)]
+        public int PartialUpdate([FromRoute] string id, [FromBody] JsonMergePatchDocument<Target> patch)
+        {
+            Guid docId = new Guid(id);
+
+            var ops = new List<string>();
+            patch.Operations.ForEach(op =>
+            {
+                ops.Add(op.path.TrimStart('/'));
+            });
+
+            var data = new Target();
+            patch.ApplyTo(data);
+
+            var query = new TargetQuery();
+            //return query.Update(docId, data);
+            return query.PartialUpdate(docId, data, ops);
         }
 
         /// <summary>

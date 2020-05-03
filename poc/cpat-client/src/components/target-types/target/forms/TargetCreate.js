@@ -10,7 +10,7 @@ import User from '../../../../data/User';
 import Target from '../../../../data/Target';
 
 const FormStyle = styled.div`
-    padding: 3em;    
+    padding: 3em;
 
     form {
         display: flex;
