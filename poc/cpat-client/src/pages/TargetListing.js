@@ -1,25 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { Dialog, Table, Button, Heading } from 'evergreen-ui';
-import { useHistory } from 'react-router-dom';
+import { useHistory, withRouter } from 'react-router-dom';
+import { targetActions } from '../state-management/target/actions';
 const TargetRemove = React.lazy(() => import ('../components/target-types/target/TargetRemove'));
 
-const data = [
-    {
-        id: '0',
-        name: 'ACME Inc.',
-        region: 'East',
-        collectionType: 'Company',
-
-        dateCreated: new Date().toLocaleDateString(),
-        updatedAt: new Date().toLocaleDateString(),
-        lastModifiedBy: 'User01'
-    }
-];
-
-const TargetListing = () => {
+const TargetListing = (props) => {
     const [isShown, setIsShown] = useState(false);
     const [dialogObject, setDialogObject] = useState({});
+    const { dispatch, targets } = props;
     let history = useHistory();
+
+    useEffect(() => {
+        dispatch(targetActions.getTargetPage());
+    }, []);
 
     return (
         <div>
@@ -36,7 +30,7 @@ const TargetListing = () => {
                     <Table.TextHeaderCell></Table.TextHeaderCell>
                 </Table.Head>
                 <Table.Body>
-                    {data.map(d => (
+                    {(targets && targets.length > 0) ? targets.map(d => (
                         <Table.Row key={d.id}>
                             <Table.TextCell>{d.name}</Table.TextCell>
                             <Table.TextCell>{d.region}</Table.TextCell>
@@ -53,14 +47,14 @@ const TargetListing = () => {
                                 <Button appearance="minimal" intent="danger">Remove</Button>
                             </Table.Cell>
                         </Table.Row>
-                    ))}
+                    )) : []}
                 </Table.Body>
             </Table>
 
             <Button 
                 appearance="minimal" 
                 intent="success"
-                onClick={() => history.push("/company/create")}>
+                onClick={() => history.push("/target/create")}>
                 Create New
             </Button>
 
@@ -77,4 +71,12 @@ const TargetListing = () => {
     );
 };
 
-export default TargetListing;
+function mapStateToProps(state) {
+    return {
+        targets: (state.target && Array.isArray(state.target.targets)) ? state.target.targets : [],
+        loading: state.target ? state.target.loading : false
+    };
+}
+
+const connectedTargetListing = connect(mapStateToProps)(TargetListing);
+export { connectedTargetListing as TargetListing };

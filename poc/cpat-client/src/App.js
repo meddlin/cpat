@@ -3,6 +3,8 @@ import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import { TargetListing } from './pages/TargetListing';
+
 import { CompanyCreate } from './components/target-types/company/forms/CompanyCreate';
 import { DeviceCreate } from './components/target-types/device/forms/DeviceCreate';
 import { LocationCreate } from './components/target-types/location/forms/LocationCreate';
@@ -22,7 +24,7 @@ const CompanyListing = React.lazy(() => import ('./pages/CompanyListing'));
 const DeviceListing = React.lazy(() => import ('./pages/DeviceListing'));
 const LocationListing = React.lazy(() => import ('./pages/LocationListing'));
 const PersonListing = React.lazy(() => import ('./pages/PersonListing'));
-const TargetListing = React.lazy(() => import ('./pages/TargetListing'));
+// const TargetListing = React.lazy(() => import ('./pages/TargetListing'));
 
 const CompanyDetail = React.lazy(() => import ('./components/target-types/company/CompanyDetail'));
 const DeviceDetail = React.lazy(() => import ('./components/target-types/device/DeviceDetail'));

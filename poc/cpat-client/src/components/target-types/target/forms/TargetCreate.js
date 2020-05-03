@@ -3,11 +3,14 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withFormik, Form } from 'formik';
 import * as Yup from 'yup';
+import { Button, TextInput, Heading } from 'evergreen-ui';
 import styled from 'styled-components';
 import { targetActions } from '../../../../state-management/target/actions';
+import User from '../../../../data/User';
+import Target from '../../../../data/Target';
 
 const FormStyle = styled.div`
-    padding: 3em;    
+    padding: 3em;
 
     form {
         display: flex;
@@ -37,7 +40,7 @@ const TargetCreate = (props) => {
             <FormStyle>
                 <Form>
                     <label>Name</label>
-                    <input 
+                    <TextInput 
                         name="name"
                         label="Name"
                         onChange={handleChange}
@@ -47,7 +50,7 @@ const TargetCreate = (props) => {
                     {(touched.name && errors.name) ? <div>{errors.name}</div> : ""}
 
                     <label>Region</label>
-                    <input 
+                    <TextInput 
                         name="region"
                         label="Region"
                         onChange={handleChange}
@@ -57,7 +60,7 @@ const TargetCreate = (props) => {
                     {(touched.region && errors.region) ? <div>{errors.region}</div> : ""}
 
                     <label>Collection Type</label>
-                    <input 
+                    <TextInput 
                         name="collectionType"
                         label="Collection Type"
                         onChange={handleChange}
@@ -67,31 +70,33 @@ const TargetCreate = (props) => {
                     {(touched.collectionType && errors.collectionType) ? <div>{errors.collectionType}</div> : ""}
 
                     <label>Date Created:</label>
-                    <input 
+                    <TextInput 
                         disabled 
                         name="dateCreated"
                         label="Date Created"
-                        value={`${new Date('2020-01-30').toLocaleDateString()}`} />
+                        value={values.dateCreated || `${new Date().toLocaleDateString()}`} />
 
                     <label>Updated At:</label>
-                    <input 
+                    <TextInput 
                         disabled 
                         name="updatedAt"
                         label="Updated At"
-                        value={`${new Date().toLocaleDateString()}`} />
+                        value={values.updatedAt || `${new Date().toLocaleDateString()}`} />
 
                     <label>Last Modified By:</label>
-                    <input 
+                    <TextInput 
                         disabled 
                         name="lastModifiedBy"
                         label="Last Modified By"
-                        value={`You - User 1`} />
+                        value={values.lastModifiedBy || `You - User 1`} />
+
+                    <div style={{ display: 'flex' }}>
+                        <Button type="submit">Create</Button>
+                        <Button onClick={handleReset}>Cancel</Button>
+                    </div>
                 </Form>
 
-                <button type="submit">Create</button>
-                <button onClick={handleReset}>Cancel</button>
-
-                <button onClick={() => history.goBack()}>Back</button>
+                <Button onClick={() => history.goBack()}>Back</Button>
             </FormStyle>
         </div>
     )
@@ -120,17 +125,17 @@ const formikEnhancer = withFormik({
         name: Yup.string().required('Name is required')
     }),
     handleSubmit: (values, { props, setSubmitting }) => {
-        let targetDocument = {
-            name: values.name || '',
-            region: values.region || '',
-            collectionType: values.collectionType || '',
+        let newTarget = new Target();
+        newTarget.name = values.name || '';
+        newTarget.region = values.region || '';
+        newTarget.collectionType = values.collectionType || '';
+        newTarget.selected = false;
+        newTarget.relations = [];
+        newTarget.dateCreated = values.dateCreated || new Date();
+        newTarget.updatedAt = values.updatedAt || new Date();
+        newTarget.lastModifiedBy = values.lastModifiedBy || new User();
 
-            dateCreated: values.dateCreated,
-            updatedAt: values.updatedAt,
-            lastModifiedBy: values.lastModifiedBy
-        };
-
-        props.dispatch(targetActions.insertCompany(targetDocument));
+        props.dispatch(targetActions.insertTarget(newTarget.apiObject()));
         setSubmitting(false);
     }
 })(TargetCreate);

@@ -1,17 +1,14 @@
+import { handlers } from '../../state-management/helpers/http-response-handler';
+
 export const targetService = {
     getSingle,
+    getPage,
     getList,
     insert,
     update,
+    partialUpdate,
     remove,
     setTarget
-};
-
-/**
- * Holds configuration info for interacting with any attached APIs.
- */
-const config = {
-    apiUrl: process.env.REACT_APP_API_URL || 'https://localhost:5001'
 };
 
 /**
@@ -21,10 +18,27 @@ const config = {
 function getSingle(id) {
     const requestOptions = {
         method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
     };
 
-    return fetch(`${config.apiUrl}/target/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${handlers.config.apiUrl}/target/get/${id}`, requestOptions).then(handlers.handleHttpResponse);
 };
+
+/**
+ * 
+ */
+function getPage() {
+    const page = 1;
+    const pageSize = 3;
+
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({page: 1, pageSize: 3})
+    };
+
+    return fetch(`${handlers.config.apiUrl}/target/page`, requestOptions).then(handlers.handleHttpResponse);
+}
 
 /**
  * 
@@ -33,9 +47,10 @@ function getSingle(id) {
 function getList(idList) {
     const requestOptions = {
         method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
     };
 
-    return fetch(`${config.apiUrl}/target/${idList}`, requestOptions).then(handleResponse);
+    return fetch(`${handlers.config.apiUrl}/target/${idList}`, requestOptions).then(handlers.handleHttpResponse);
 };
 
 /**
@@ -45,24 +60,41 @@ function getList(idList) {
 function insert(targetDoc) {
     const requestOptions = {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(targetDoc)
     };
 
-    return fetch(`${config.apiUrl}/target`, requestOptions).then(handleResponse);
+    return fetch(`${handlers.config.apiUrl}/target/insert`, requestOptions).then(handlers.handleHttpResponse);
 };
 
 /**
  * 
  * @param {*} targetDoc 
  */
-function update(targetDoc) {
+function update(docId, targetDoc) {
     const requestOptions = {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(targetDoc)
     };
 
-    return fetch(`${config.apiUrl}/target`, requestOptions).then(handleResponse);
+    return fetch(`${handlers.config.apiUrl}/target/update/${docId}`, requestOptions).then(handlers.handleHttpResponse);
 };
+
+/**
+ * Used for partial document updates via JSON Merge Patch mechanism.
+ * @param {*} docId 
+ * @param {*} targetDoc 
+ */
+function partialUpdate(docId, targetDoc) {
+    const requestOptions = {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/merge-patch+json'},
+        body: JSON.stringify(targetDoc)
+    };
+
+    return fetch(`${handlers.config.apiUrl}/target/PartialUpdate/${docId}`, requestOptions).then(handlers.handleHttpResponse);
+}
 
 /**
  * 
@@ -71,10 +103,11 @@ function update(targetDoc) {
 function remove(id) {
     const requestOptions = {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(id)
     };
 
-    return fetch(`${config.apiUrl}/target`, requestOptions).then(handleResponse);
+    return fetch(`${handlers.config.apiUrl}/target/remove`, requestOptions).then(handlers.handleHttpResponse);
 };
 
 /**
@@ -83,31 +116,9 @@ function remove(id) {
 function setTarget(target) {
     const requestOptions = {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(target)
     };
 
-    return fetch(`${config.apiUrl}/target`, requestOptions).then(handleResponse);
+    return fetch(`${handlers.config.apiUrl}/target/set/${target}`, requestOptions).then(handlers.handleHttpResponse);
 };
-
-
-/**
- * 
- * @param {*} response 
- */
-function handleResponse(response) {
-    return response.text().then(text => {
-        const data = text && JSON.parse(text);
-        if (!response.ok) {
-            if (response.status === 401) {
-                // auto logout if 401 response returned from api
-                // authenticationService.logout();
-                Location.reload(true);
-            }
-
-            const error = (data && data.message) || response.statusText;
-            return Promise.reject(error);
-        }
-
-        return data;
-    });
-}

@@ -4,11 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using cpat_core.DataAccess.DataControl;
 using cpat_core.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace cpat_core.Controllers
 {
+    [Produces("application/json")]
+    [EnableCors("AppPolicy")]
     [ApiController]
     [Route("[controller]")]
     public class CompanyController : ControllerBase

@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withFormik, Form } from 'formik';
 import * as Yup from 'yup';
+import { Button, TextInput, Heading } from 'evergreen-ui';
 import styled from 'styled-components';
 import { targetActions } from '../../../../state-management/target/actions';
+import Target from '../../../../data/Target';
 
 const FormStyle = styled.div`
     padding: 3em;    
@@ -20,78 +22,96 @@ const TargetUpdate = (props) => {
         values,
         touched,
         errors,
+        handleSubmit,
         handleChange,
         handleBlur,
         handleReset,
     } = props;
 
+    const { dispatch, target, loading, updateResult } = props;
     let history = useHistory();
-    let match = useRouteMatch('/company/update/:id');
-    console.log(`match: ${match && match.params ? match.params.id : ''}`);
+    let match = props.match; //useRouteMatch('/company/update/:id');
+
+    useEffect(() => {
+        dispatch(targetActions.getTarget(match.params.id));
+    }, []);
+
+    //console.log(`match: ${match && match.params ? match.params.id : ''}`); // useRouteMatch comes back undefined?
+    console.log(`match params: ${props.match.params.id}`);
 
     return (
         <div>
-            <h2>Target: Update</h2>
+            {(loading === true) ? <h3>Loading...</h3> :
+                <FormStyle>
+                    <h1>Target Update</h1>
+                    <h2>Updating: {target && target.name ? target.name : ''}</h2>
+                    <h3>Target type: {target && target.collectionType ? target.collectionType : ''}</h3>
 
-            <FormStyle>
-                <Form>
-                    <label>Name</label>
-                    <input 
-                        name="name"
-                        label="Name"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.name}
-                    />
-                    {(touched.name && errors.name) ? <div>{errors.name}</div> : ""}
+                    <p>
+                        <b>update result: {(updateResult !== null) ? updateResult : ''}</b>
+                    </p>
 
-                    <label>Region</label>
-                    <input 
-                        name="region"
-                        label="Region"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.region}
-                    />
-                    {(touched.region && errors.region) ? <div>{errors.region}</div> : ""}
+                    <Form>
+                        <label>Name</label>
+                        <TextInput 
+                            name="name"
+                            label="Name"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.name || target.name}
+                        />
+                        {(touched.name && errors.name) ? <div>{errors.name}</div> : ""}
 
-                    <label>Collection Type</label>
-                    <input 
-                        name="collectionType"
-                        label="Collection Type"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.collectionType}
-                    />
-                    {(touched.collectionType && errors.collectionType) ? <div>{errors.collectionType}</div> : ""}
+                        <label>Region</label>
+                        <TextInput 
+                            name="region"
+                            label="Region"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.region || target.region}
+                        />
+                        {(touched.region && errors.region) ? <div>{errors.region}</div> : ""}
 
-                    <label>Date Created:</label>
-                    <input 
-                        disabled 
-                        name="dateCreated"
-                        label="Date Created"
-                        value={`${new Date('2020-01-30').toLocaleDateString()}`} />
+                        <label>Collection Type</label>
+                        <TextInput 
+                            name="collectionType"
+                            label="Collection Type"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.collectionType || target.collectionType}
+                        />
+                        {(touched.collectionType && errors.collectionType) ? <div>{errors.collectionType}</div> : ""}
 
-                    <label>Updated At:</label>
-                    <input 
-                        disabled 
-                        name="updatedAt"
-                        label="Updated At"
-                        value={`${new Date().toLocaleDateString()}`} />
+                        <label>Date Created:</label>
+                        <TextInput 
+                            disabled 
+                            name="dateCreated"
+                            label="Date Created"
+                            value={target.dateCreated} />
 
-                    <label>Last Modified By:</label>
-                    <input 
-                        disabled 
-                        name="lastModifiedBy"
-                        label="Last Modified By"
-                        value={`You - User 1`} />
-                </Form>
+                        <label>Updated At:</label>
+                        <TextInput 
+                            disabled 
+                            name="updatedAt"
+                            label="Updated At"
+                            value={target.updatedAt} />
 
-                <button type="submit">Create</button>
-                <button onClick={handleReset}>Cancel</button>
+                        <label>Last Modified By:</label>
+                        <TextInput 
+                            disabled 
+                            name="lastModifiedBy"
+                            label="Last Modified By"
+                            value={target.lastModifiedBy || 'some user'} />
+                        
+                        <div style={{ display: 'flex' }}>
+                            <Button type="submit">Save Update</Button>
+                            <Button onClick={handleReset}>Cancel</Button>
+                        </div>
+                    </Form>
 
-                <button onClick={() => history.goBack()}>Back</button>
-            </FormStyle>
+                    <Button onClick={() => history.goBack()}>Back</Button>
+                </FormStyle>
+            }
         </div>
     )
 };
@@ -101,14 +121,15 @@ const formikEnhancer = withFormik({
         name, 
         region, 
         collectionType,
+        dateCreated,
         updatedAt,
-        lastModifiedBy
+        lastModifiedBy,
     }) => {
         return {
             name: name || '',
             region: region || '',
             collectionType: collectionType || '',
-
+            dateCreated: dateCreated,
             updatedAt: updatedAt,
             lastModifiedBy: lastModifiedBy
         }
@@ -117,23 +138,27 @@ const formikEnhancer = withFormik({
         name: Yup.string().required('Name is required')
     }),
     handleSubmit: (values, { props, setSubmitting }) => {
-        let targetDocument = {
-            name: values.name || '',
-            region: values.region || '',
-            collectionType: values.collectionType || '',
+        let newTarget = new Target();
 
-            updatedAt: values.updatedAt,
-            lastModifiedBy: values.lastModifiedBy
-        };
+        newTarget.name = values.name;
+        newTarget.region = values.region;
+        newTarget.collectionType = values.collectionType;
+        // newTarget.relations = []; //values.relations || props.target.relations;
+        // newTarget.selected = false; //values.selected === null ? props.target.selected : values.selected;
+        // newTarget.lastModifiedBy = "bob"; //values.lastModifiedBy || props.target.lastModifiedBy;
+        newTarget.updatedAt = new Date();
 
-        props.dispatch(targetActions.updateTarget(targetDocument));
+        props.dispatch(targetActions.partialUpdateTarget(props.target.id, newTarget.apiObject()));
         setSubmitting(false);
     }
 })(TargetUpdate);
 
 function mapStateToProps(state) {
-    const {  } = state;
-    return { };
+    return {
+        target: (state.target && state.target.targets) ? state.target.targets : {},
+        updateResult: (state.target && state.target.partialUpdateResult) ? state.target.partialUpdateResult : 0,
+        loading: state.target ? state.target.loading : false
+     };
 }
 
 const TargetUpdateConnection = connect(mapStateToProps)(formikEnhancer);

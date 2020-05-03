@@ -1,5 +1,6 @@
 ﻿using cpat_core.DataAccess.DataControl;
 using cpat_core.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace cpat_core.Controllers
 {
+    [Produces("application/json")]
+    [EnableCors("AppPolicy")]
     [ApiController]
     [Route("[controller]")]
     public class LocationController

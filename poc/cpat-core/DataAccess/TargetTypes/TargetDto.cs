@@ -35,18 +35,40 @@ namespace cpat_core.DataAccess.TargetTypes
         /// <returns></returns>
         public static TargetDto Translate(Target data)
         {
-            return new TargetDto()
+            var sampleId = Guid.NewGuid();
+
+            var sampleData = new TargetDto()
             {
-                Id = Guid.NewGuid(),
                 Name = data.Name,
                 Region = data.Region,
                 CollectionType = data.CollectionType,
                 Selected = data.Selected,
 
-                // DocumentRelationJson = data.Relations,
+                //DocumentRelationJson = data.Relations,
+                DocumentRelationJson = "empty",
+
                 DateCreated = data.DateCreated != null ? data.DateCreated : DateTime.Now,
-                UpdatedAt = data.UpdatedAt != null ? data.UpdatedAt : DateTime.Now
+                UpdatedAt = data.UpdatedAt != null ? data.UpdatedAt : DateTime.Now,
+                LastModifiedByUserId = sampleId
             };
+
+            return sampleData;
+
+            //return new TargetDto()
+            //{
+            //    Id = sampleId,
+            //    Name = data.Name,
+            //    Region = data.Region,
+            //    CollectionType = data.CollectionType,
+            //    Selected = data.Selected,
+
+            //    //DocumentRelationJson = data.Relations,
+            //    DocumentRelationJson = "empty",
+
+            //    DateCreated = data.DateCreated != null ? data.DateCreated : DateTime.Now,
+            //    UpdatedAt = data.UpdatedAt != null ? data.UpdatedAt : DateTime.Now,
+            //    LastModifiedByUserId = Guid.NewGuid()
+            //};
         }
 
         /// <summary>

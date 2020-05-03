@@ -3,9 +3,11 @@ import { targetService } from './services';
 
 export const targetActions = {
     getTarget,
+    getTargetPage,
     getTargetList,
     insertTarget,
     updateTarget,
+    partialUpdateTarget,
     removeTarget,
     setTarget
 };
@@ -32,6 +34,30 @@ function getTarget(id) {
     function request(id) { return { type: targetConstants.GET_TARGET_REQUEST, id } }
     function success(result) { return { type: targetConstants.GET_TARGET_SUCCESS, result } }
     function failure(error) { return { type: targetConstants.GET_TARGET_FAILURE, error } }
+}
+
+/**
+ * 
+ */
+function getTargetPage() {
+    return dispatch => {
+        console.log('in getTargetPage');
+        dispatch(request());
+
+        targetService.getPage()
+            .then(
+                result => {
+                    dispatch(success(result));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                }
+            )
+    }
+
+    function request() { return { type: targetConstants.GET_TARGET_PAGE_REQUEST } }
+    function success(result) { return { type: targetConstants.GET_TARGET_PAGE_SUCCESS, result } }
+    function failure(error) { return { type: targetConstants.GET_TARGET_PAGE_FAILURE, error } }
 }
 
 /**
@@ -86,11 +112,11 @@ function insertTarget(targetDoc) {
  * 
  * @param {*} targetDoc 
  */
-function updateTarget(targetDoc) {
+function updateTarget(docId, targetDoc) {
     return dispatch => {
-        dispatch(request(targetDoc));
+        dispatch(request(docId, targetDoc));
 
-        targetService.update(targetDoc)
+        targetService.update(docId, targetDoc)
             .then(
                 result => {
                     dispatch(success(result));
@@ -101,9 +127,33 @@ function updateTarget(targetDoc) {
             );
     };
 
-    function request(targetDoc) { return { type: targetConstants.UPDATE_TARGET_REQUEST, targetDoc } }
+    function request(docId, targetDoc) { return { type: targetConstants.UPDATE_TARGET_REQUEST, docId, targetDoc } }
     function success(result) { return { type: targetConstants.UPDATE_TARGET_SUCCESS, result } }
     function failure(error) { return { type: targetConstants.UPDATE_TARGET_FAILURE, error } }
+}
+
+/**
+ * 
+ * @param {*} targetDoc 
+ */
+function partialUpdateTarget(docId, targetDoc) {
+    return dispatch => {
+        dispatch(request(docId, targetDoc));
+
+        targetService.partialUpdate(docId, targetDoc)
+            .then(
+                result => {
+                    dispatch(success(result));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                }
+            );
+    };
+
+    function request(docId, targetDoc) { return { type: targetConstants.PARTIAL_UPDATE_TARGET_REQUEST, docId, targetDoc } }
+    function success(result) { return { type: targetConstants.PARTIAL_UPDATE_TARGET_SUCCESS, result } }
+    function failure(error) { return { type: targetConstants.PARTIAL_UPDATE_TARGET_FAILURE, error } }
 }
 
 /**

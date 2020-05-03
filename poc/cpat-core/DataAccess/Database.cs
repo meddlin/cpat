@@ -13,10 +13,10 @@ namespace cpat_core.DataAccess
         public Database()
         {
             var connStringBuilder = new NpgsqlConnectionStringBuilder();
-            connStringBuilder.Host = "localhost";
+            connStringBuilder.Host = "localhost"; //connStringBuilder.Host = "192.168.1.250";
             connStringBuilder.Port = 26257;
             connStringBuilder.SslMode = SslMode.Disable;
-            connStringBuilder.Username = "maxroach";
+            connStringBuilder.Username = "root"; //connStringBuilder.Username = "maxroach";
             connStringBuilder.Database = "cpat";
 
             connectionString = connStringBuilder.ConnectionString;
