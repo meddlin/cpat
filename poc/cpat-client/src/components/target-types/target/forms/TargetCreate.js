@@ -91,12 +91,12 @@ const TargetCreate = (props) => {
                         label="Last Modified By"
                         value={values.lastModifiedBy || `You - User 1`} />
 
+                    <FieldArray name="relations" component={TargetCreateFormArray} />
+
                     <div style={{ display: 'flex' }}>
                         <Button type="submit">Create</Button>
                         <Button onClick={handleReset}>Cancel</Button>
                     </div>
-
-                    <FieldArray name="relations" component={TargetCreateFormArray} />
                 </Form>
 
                 <Button onClick={() => history.goBack()}>Back</Button>
@@ -107,13 +107,13 @@ const TargetCreate = (props) => {
 
 const formikEnhancer = withFormik({
     mapPropsToValues: ({ 
-        name, 
-        region, 
+        name,
+        region,
         collectionType,
+        relations,
         dateCreated,
         updatedAt,
-        lastModifiedBy,
-        relations
+        lastModifiedBy
     }) => {
         return {
             name: name || '',

@@ -41,7 +41,6 @@ function getTarget(id) {
  */
 function getTargetPage() {
     return dispatch => {
-        console.log('in getTargetPage');
         dispatch(request());
 
         targetService.getPage()

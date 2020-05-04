@@ -3,6 +3,7 @@ import { personService } from './services';
 
 export const personActions = {
     getPerson,
+    getPersonPage,
     getPersonList,
     insertPerson,
     updatePerson,
@@ -31,6 +32,29 @@ function getPerson(id) {
     function request(id) { return { type: personConstants.GET_PERSON_REQUEST, id } }
     function success(result) { return { type: personConstants.GET_PERSON_SUCCESS, result } }
     function failure(error) { return { type: personConstants.GET_PERSON_FAILURE, error } }
+}
+
+/**
+ * 
+ */
+function getPersonPage() {
+    return dispatch => {
+        dispatch(request());
+
+        personService.getPage()
+            .then(
+                result => {
+                    dispatch(success(result));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                }
+            )
+    }
+
+    function request() { return { type: personConstants.GET_PERSON_PAGE_REQUEST } }
+    function success(result) { return { type: personConstants.GET_PERSON_PAGE_SUCCESS, result } }
+    function failure(error) { return { type: personConstants.GET_PERSON_PAGE_FAILURE, error } }
 }
 
 /**
