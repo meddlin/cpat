@@ -90,7 +90,7 @@ namespace cpat_core.Controllers
         /// <returns></returns>
         [HttpPatch]
         [Consumes(JsonMergePatchDocument.ContentType)]
-        public int PartialUpdate([FromRoute] string id, [FromBody] JsonMergePatchDocument<Target> patch)
+        public int PartialUpdate([FromRoute] string id, [FromBody] JsonMergePatchDocument<Person> patch)
         {
             Guid docId = new Guid(id);
 
