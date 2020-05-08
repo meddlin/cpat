@@ -7,6 +7,19 @@ export const PersonEmailAddressesFormArray = ({ move, swap, push, insert, remove
     <Form>
         <div>Email Addresses</div>
 
+		{/**
+		 * Inserts the initial values to the beginning of the array
+		 * - Check initial values is an Array
+		 * - Check form values is an Array
+		 * - **Only perform this 'unshift()' operation if the initial.values is "longer" than the form.values**
+		 * 		-- NOTE: Formik will re-render the form a few times. This piece is key to NOT having multiple duplicates of intial.values left in the form!
+		 */}
+		{Array.isArray(form.initialValues.emailAddresses) && Array.isArray(form.values.emailAddresses) && (form.initialValues.emailAddresses.length > form.values.emailAddresses.length) ? (
+			form.initialValues.emailAddresses.map(init => (
+				form.values.emailAddresses.unshift(init)
+			))
+		) : ''}
+
         {form.values.emailAddresses && form.values.emailAddresses.length > 0 ? (
             form.values.emailAddresses.map((r, index) => (
                 <div key={index}>

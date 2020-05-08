@@ -16,6 +16,7 @@ export function person(state = {}, action) {
                 loading: false
             });
 
+            
         
         case personConstants.GET_PERSON_PAGE_REQUEST:
             return Object.assign({}, state, {
@@ -46,6 +47,8 @@ export function person(state = {}, action) {
                 loading: false
             });
 
+
+
         case personConstants.INSERT_PERSON_REQUEST:
             return Object.assign({}, state, {
                 loading: true
@@ -59,18 +62,38 @@ export function person(state = {}, action) {
                 loading: false
             });
 
+
+
         case personConstants.UPDATE_PERSON_REQUEST:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: true
             });
         case personConstants.UPDATE_PERSON_SUCCESS:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: false
             });
         case personConstants.UPDATE_PERSON_FAILURE:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: false
             });
+
+
+
+        case personConstants.PARTIAL_UPDATE_PERSON_REQUEST:
+            return Object.assign({}, state, {
+                loading: true
+            });
+        case personConstants.PARTIAL_UPDATE_PERSON_SUCCESS:
+            return Object.assign({}, state, {
+                loading: false,
+                partialUpdateResult: action.result
+            });
+        case personConstants.PARTIAL_UPDATE_PERSON_FAILURE:
+            return Object.assign({}, state, {
+                loading: false
+            });
+
+
 
         case personConstants.REMOVE_PERSON_REQUEST:
             return Object.assign({}, ...state, {

@@ -3,13 +3,13 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withFormik, Form, FieldArray } from 'formik';
 import * as Yup from 'yup';
-import { PersonCreateFormArray } from './PersonCreateFormArray';
-import { PersonNicknamesFormArray } from './PersonNicknameFormArray';
-import { PersonPhoneNumbersFormArray } from './PersonPhoneNumbersFormArray';
-import { PersonEmailAddressesFormArray } from './PersonEmailAddressesFormArray';
-import { PersonOrganizationsFormArray } from './PersonOrganizationsFormArray';
-import { PersonEmployersFormArray } from './PersonEmployersFormArray';
-import { PersonSocialLinksFormArray } from './PersonSocialLinksFormArray';
+import { PersonDocumentRelationsFormArray } from './form-arrays/PersonDocumentRelationsFormArray';
+import { PersonNicknamesFormArray } from './form-arrays/PersonNicknameFormArray';
+import { PersonPhoneNumbersFormArray } from './form-arrays/PersonPhoneNumbersFormArray';
+import { PersonEmailAddressesFormArray } from './form-arrays/PersonEmailAddressesFormArray';
+import { PersonOrganizationsFormArray } from './form-arrays/PersonOrganizationsFormArray';
+import { PersonEmployersFormArray } from './form-arrays/PersonEmployersFormArray';
+import { PersonSocialLinksFormArray } from './form-arrays/PersonSocialLinksFormArray';
 import { Button, TextInput, Heading } from 'evergreen-ui';
 import styled from 'styled-components';
 import { personActions } from '../../../../state-management/person/actions';
@@ -107,7 +107,7 @@ const PersonCreate = (props) => {
                         value={values.lastModifiedBy || `You - User 1`} />
 
                     <div>
-                        <FieldArray name="relations" component={PersonCreateFormArray} />
+                        <FieldArray name="relations" component={PersonDocumentRelationsFormArray} />
                     </div>
 
                     <div style={{ display: 'flex' }}>

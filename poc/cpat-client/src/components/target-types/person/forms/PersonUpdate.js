@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { withFormik, Form } from 'formik';
+import { withFormik, Form, FieldArray, Field } from 'formik';
 import * as Yup from 'yup';
+import { PersonDocumentRelationsFormArray } from './form-arrays/PersonDocumentRelationsFormArray';
+import { PersonNicknamesFormArray } from './form-arrays/PersonNicknameFormArray';
+import { PersonPhoneNumbersFormArray } from './form-arrays/PersonPhoneNumbersFormArray';
+import { PersonEmailAddressesFormArray } from './form-arrays/PersonEmailAddressesFormArray';
+import { PersonOrganizationsFormArray } from './form-arrays/PersonOrganizationsFormArray';
+import { PersonEmployersFormArray } from './form-arrays/PersonEmployersFormArray';
+import { PersonSocialLinksFormArray } from './form-arrays/PersonSocialLinksFormArray';
 import styled from 'styled-components';
+import { Button, TextInput, Heading } from 'evergreen-ui';
 import { personActions } from '../../../../state-management/person/actions';
+import Person from '../../../../data/Person';
 
 const FormStyle = styled.div`
     padding: 3em;    
@@ -16,6 +25,10 @@ const FormStyle = styled.div`
 `;
 
 const PersonUpdate = (props) => {
+    let history = useHistory();
+    let match = useRouteMatch('/person/update/:id');
+    
+    // Formik values supplied via props
     const {
         values,
         touched,
@@ -25,73 +38,97 @@ const PersonUpdate = (props) => {
         handleReset,
     } = props;
 
-    let history = useHistory();
-    let match = useRouteMatch('/company/update/:id');
-    console.log(`match: ${match && match.params ? match.params.id : ''}`);
+    // Other supporting values supplied via props
+    const { dispatch, person, loading, updateResult } = props;
+
+    useEffect(() => {
+        dispatch(personActions.getPerson(match.params.id));
+    }, []);
 
     return (
         <div>
             <h2>Person: Update</h2>
 
-            <FormStyle>
-                <Form>
-                    <label>First Name</label>
-                    <input 
-                        name="firstName"
-                        label="First Name"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.firstName}
-                    />
-                    {(touched.firstName && errors.firstName) ? <div>{errors.firstName}</div> : ""}
+            {(loading === true) ? <h3>Loading...</h3> : 
+                <FormStyle>
+                    <h1>Person Update</h1>
+                    <h2>Updating: {person && person.firstName ? person.firstName : ''}</h2>
 
-                    <label>Middle Name</label>
-                    <input 
-                        name="middleName"
-                        label="Middle Name"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.middleName}
-                    />
-                    {(touched.middleName && errors.middleName) ? <div>{errors.middleName}</div> : ""}
+                    <p>
+                        <b>update result: {(updateResult !== null) ? updateResult : ''}</b>
+                    </p>
 
-                    <label>Last Name</label>
-                    <input 
-                        name="lastName"
-                        label="Last Name"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.lastName}
-                    />
-                    {(touched.lastName && errors.lastName) ? <div>{errors.lastName}</div> : ""}
+                    <Form>
+                        <label>First Name</label>
+                        <TextInput 
+                            name="firstName"
+                            label="First Name"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.firstName || person.firstName}
+                        />
+                        {(touched.firstName && errors.firstName) ? <div>{errors.firstName}</div> : ""}
 
-                    <label>Date Created:</label>
-                    <input 
-                        disabled 
-                        name="dateCreated"
-                        label="Date Created"
-                        value={`${new Date('2020-01-30').toLocaleDateString()}`} />
+                        <label>Middle Name</label>
+                        <TextInput 
+                            name="middleName"
+                            label="Middle Name"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.middleName || person.middleName}
+                        />
+                        {(touched.middleName && errors.middleName) ? <div>{errors.middleName}</div> : ""}
 
-                    <label>Updated At:</label>
-                    <input 
-                        disabled 
-                        name="updatedAt"
-                        label="Updated At"
-                        value={`${new Date().toLocaleDateString()}`} />
+                        <label>Last Name</label>
+                        <TextInput 
+                            name="lastName"
+                            label="Last Name"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.lastName || person.lastName}
+                        />
+                        {(touched.lastName && errors.lastName) ? <div>{errors.lastName}</div> : ""}
 
-                    <label>Last Modified By:</label>
-                    <input 
-                        disabled 
-                        name="lastModifiedBy"
-                        label="Last Modified By"
-                        value={`You - User 1`} />
-                </Form>
+                        <div>
+                            <FieldArray name="relations" component={PersonDocumentRelationsFormArray} />
+                            <FieldArray name="nickNames" component={PersonNicknamesFormArray} />
+                            <FieldArray name="phoneNumbers" component={PersonPhoneNumbersFormArray} />
+                            <FieldArray name="emailAddresses" component={PersonEmailAddressesFormArray} />
+                            <FieldArray name="organizations" component={PersonOrganizationsFormArray} />
+                            <FieldArray name="employers" component={PersonEmployersFormArray} />
+                            <FieldArray name="socialLinks" component={PersonSocialLinksFormArray} />
+                        </div>
 
-                <button type="submit">Create</button>
-                <button onClick={handleReset}>Cancel</button>
+                        <label>Date Created:</label>
+                        <TextInput 
+                            disabled 
+                            name="dateCreated"
+                            label="Date Created"
+                            value={person.dateCreated} />
 
-                <button onClick={() => history.goBack()}>Back</button>
-            </FormStyle>
+                        <label>Updated At:</label>
+                        <TextInput 
+                            disabled 
+                            name="updatedAt"
+                            label="Updated At"
+                            value={person.updatedAt} />
+
+                        <label>Last Modified By:</label>
+                        <TextInput 
+                            disabled 
+                            name="lastModifiedBy"
+                            label="Last Modified By"
+                            value={person.lastModifiedBy || 'some user'} />
+                        
+                        <div style={{ display: 'flex' }}>
+                            <Button type="submit">Create</Button>
+                            <Button onClick={handleReset}>Cancel</Button>
+                        </div>
+                    </Form>
+
+                    <Button onClick={() => history.goBack()}>Back</Button>
+                </FormStyle>
+            }
         </div>
     )
 };
@@ -101,39 +138,64 @@ const formikEnhancer = withFormik({
         firstName,
         middleName,
         lastName,
+        nickNames,
+        phoneNumbers,
+        emailAddresses,
+        organizations,
+        employers,
+        socialLinks,
+        relations,
         updatedAt,
-        lastModifiedBy
+        lastModifiedBy,
+
+        person
      }) => {
         return {
-            firstName: firstName || '',
-            middleName: middleName || '',
-            lastName: lastName || '',
+            firstName: firstName || person.firstName,
+            middleName: middleName || person.middleName,
+            lastName: lastName || person.lastName,
+            nickNames: (Array.isArray(nickNames) && nickNames.length > 0) || person.nickNames,
+            phoneNumbers: (Array.isArray(phoneNumbers) && phoneNumbers.length > 0) || person.phoneNumbers,
+            emailAddresses: (Array.isArray(emailAddresses) && emailAddresses.length > 0) || person.emailAddresses,
+            organizations: (Array.isArray(organizations) && organizations.length > 0) || person.organizations,
+            employers: (Array.isArray(employers) && employers.length > 0) || person.employers,
+            socialLinks: (Array.isArray(socialLinks) && socialLinks.length > 0) || person.socialLinks,
+            relations: (Array.isArray(relations) && relations.length > 0) || person.relations,
 
             updatedAt: updatedAt,
-            lastModifiedBy: lastModifiedBy
+            lastModifiedBy: lastModifiedBy || person.lastModifiedBy
         }
     },
     validationSchema: Yup.object().shape({
-        name: Yup.string().required('Name is required')
+        firstName: Yup.string().required('First name is required')
     }),
     handleSubmit: (values, { props, setSubmitting }) => {
-        let personDocument = {
-            firstName: values.firstName || '',
-            middleName: values.middleName || '',
-            lastName: values.lastName || '',
+        let updatedPerson = new Person();
+        updatedPerson.firstName = values.firstName;
+        updatedPerson.middleName = values.middleName;
+        updatedPerson.lastName = values.lastName;
+        updatedPerson.nickNames = values.nickNames;
+        updatedPerson.phoneNumbers = values.phoneNumbers;
+        updatedPerson.emailAddresses = values.emailAddresses;
+        updatedPerson.organizations = values.organizations;
+        updatedPerson.employers = values.employers;
+        updatedPerson.socialLinks = values.socialLinks;
+        updatedPerson.relations = values.relations;
+        updatedPerson.updatedAt = values.updatedAt;
+        updatedPerson.lastModifiedBy = values.lastModifiedBy;
 
-            updatedAt: values.updatedAt,
-            lastModifiedBy: values.lastModifiedBy
-        };
-
-        props.dispatch(personActions.updatePerson(personDocument));
+        props.dispatch(personActions.partialUpdatePerson(props.person.id, updatedPerson.apiObject()));
         setSubmitting(false);
     }
 })(PersonUpdate);
 
 function mapStateToProps(state) {
-    const {  } = state;
-    return { };
+    const { person } = state;
+    return {
+        person: (person && person.persons) ? person.persons : {},
+        updateResult: (person && person.partialUpdateResult) ? person.partialUpdateResult : 0,
+        loading: person ? person.loading : false
+    };
 }
 
 const PersonUpdateConnection = connect(mapStateToProps)(formikEnhancer);

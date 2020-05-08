@@ -19,6 +19,9 @@ const FormStyle = styled.div`
 `;
 
 const TargetUpdate = (props) => {
+    let history = useHistory();
+    let match = props.match; //useRouteMatch('/company/update/:id');
+
     const {
         values,
         touched,
@@ -29,9 +32,8 @@ const TargetUpdate = (props) => {
         handleReset,
     } = props;
 
+    // Other supporting values supplied via props
     const { dispatch, target, loading, updateResult } = props;
-    let history = useHistory();
-    let match = props.match; //useRouteMatch('/company/update/:id');
 
     useEffect(() => {
         dispatch(targetActions.getTarget(match.params.id));

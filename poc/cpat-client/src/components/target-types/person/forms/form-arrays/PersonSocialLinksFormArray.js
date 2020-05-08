@@ -7,6 +7,19 @@ export const PersonSocialLinksFormArray = ({ move, swap, push, insert, remove, u
     <Form>
         <div>Social Links</div>
 
+		{/**
+		 * Inserts the initial values to the beginning of the array
+		 * - Check initial values is an Array
+		 * - Check form values is an Array
+		 * - **Only perform this 'unshift()' operation if the initial.values is "longer" than the form.values**
+		 * 		-- NOTE: Formik will re-render the form a few times. This piece is key to NOT having multiple duplicates of intial.values left in the form!
+		 */}
+		{Array.isArray(form.initialValues.socialLinks) && Array.isArray(form.values.socialLinks) && (form.initialValues.socialLinks.length > form.values.socialLinks.length) ? (
+			form.initialValues.socialLinks.map(init => (
+				form.values.socialLinks.unshift(init)
+			))
+		) : ''}
+
         {form.values.socialLinks && form.values.socialLinks.length > 0 ? (
             form.values.socialLinks.map((r, index) => (
                 <div key={index}>
