@@ -31,10 +31,11 @@ namespace cpat_core
             });
             services.AddRouting(r => r.SuppressCheckForUnhandledSecurityMetadata = true);
             services.AddControllers();
-            
+
             services
                 .AddMvcCore()
-                .AddSystemTextJsonMergePatch();
+                .AddNewtonsoftJsonMergePatch();
+                //.AddSystemTextJsonMergePatch();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
