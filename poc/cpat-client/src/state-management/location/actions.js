@@ -3,9 +3,11 @@ import { locationService } from './services';
 
 export const locationActions = {
     getLocation,
+    getLocationPage,
     getLocationList,
     insertLocation,
     updateLocation,
+    partialUpdateLocation,
     removeLocation
 };
 
@@ -31,6 +33,29 @@ function getLocation(id) {
     function request(id) { return { type: locationConstants.GET_LOCATION_REQUEST, id } }
     function success(result) { return { type: locationConstants.GET_LOCATION_SUCCESS, result } }
     function failure(error) { return { type: locationConstants.GET_LOCATION_FAILURE, error } }
+}
+
+/**
+ * 
+ */
+function getLocationPage() {
+    return dispatch => {
+        dispatch(request());
+
+        locationService.getPage()
+            .then(
+                result => {
+                    dispatch(success(result));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                }
+            )
+    }
+
+    function request() { return { type: locationConstants.GET_LOCATION_PAGE_REQUEST } }
+    function success(result) { return { type: locationConstants.GET_LOCATION_PAGE_SUCCESS, result } }
+    function failure(error) { return { type: locationConstants.GET_LOCATION_PAGE_FAILURE, error } }
 }
 
 /**
@@ -103,6 +128,30 @@ function updateLocation(locationDoc) {
     function request(locationDoc) { return { type: locationConstants.UPDATE_LOCATION_REQUEST, locationDoc } }
     function success(result) { return { type: locationConstants.UPDATE_LOCATION_SUCCESS, result } }
     function failure(error) { return { type: locationConstants.UPDATE_LOCATION_FAILURE, error } }
+}
+
+/**
+ * 
+ * @param {*} locationDoc 
+ */
+function partialUpdateLocation(docId, locationDoc) {
+    return dispatch => {
+        dispatch(request(docId, locationDoc));
+
+        locationService.partialUpdate(docId, locationDoc)
+            .then(
+                result => {
+                    dispatch(success(result));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                }
+            );
+    };
+
+    function request(docId, locationDoc) { return { type: locationConstants.PARTIAL_UPDATE_LOCATION_REQUEST, docId, locationDoc } }
+    function success(result) { return { type: locationConstants.PARTIAL_UPDATE_LOCATION_SUCCESS, result } }
+    function failure(error) { return { type: locationConstants.PARTIAL_UPDATE_LOCATION_FAILURE, error } }
 }
 
 /**

@@ -1,10 +1,13 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { withFormik, Form } from 'formik';
+import { withFormik, Form, FieldArray } from 'formik';
 import * as Yup from 'yup';
+import { Button, TextInput, Heading } from 'evergreen-ui';
+import { LocationDocumentRelationFormArray } from './form-arrays/LocationDocumentRelationFormArray';
 import styled from 'styled-components';
 import { locationActions } from '../../../../state-management/location/actions';
+import Location from '../../../../data/Location';
 
 const FormStyle = styled.div`
     padding: 3em;    
@@ -37,7 +40,7 @@ const LocationCreate = (props) => {
             <FormStyle>
                 <Form>
                     <label>Name</label>
-                    <input 
+                    <TextInput 
                         name="name"
                         label="Name"
                         onChange={handleChange}
@@ -47,7 +50,7 @@ const LocationCreate = (props) => {
                     {(touched.name && errors.name) ? <div>{errors.name}</div> : ""}
 
                     <label>Latitude</label>
-                    <input 
+                    <TextInput 
                         name="latitude"
                         label="Latitude"
                         onChange={handleChange}
@@ -57,7 +60,7 @@ const LocationCreate = (props) => {
                     {(touched.latitude && errors.latitude) ? <div>{errors.latitude}</div> : ""}
 
                     <label>Longitude</label>
-                    <input 
+                    <TextInput 
                         name="longitude"
                         label="Longitude"
                         onChange={handleChange}
@@ -66,32 +69,34 @@ const LocationCreate = (props) => {
                     />
                     {(touched.longitude && errors.longitude) ? <div>{errors.longitude}</div> : ""}
 
+                    <FieldArray name="documentRelation" component={LocationDocumentRelationFormArray} />
+
                     <label>Date Created:</label>
-                    <input 
+                    <TextInput 
                         disabled 
                         name="dateCreated"
                         label="Date Created"
                         value={`${new Date('2020-01-30').toLocaleDateString()}`} />
 
                     <label>Updated At:</label>
-                    <input 
+                    <TextInput 
                         disabled 
                         name="updatedAt"
                         label="Updated At"
                         value={`${new Date().toLocaleDateString()}`} />
 
                     <label>Last Modified By:</label>
-                    <input 
+                    <TextInput 
                         disabled 
                         name="lastModifiedBy"
                         label="Last Modified By"
                         value={`You - User 1`} />
+
+                    <Button type="submit">Create</Button>
+                    <Button onClick={handleReset}>Cancel</Button>
                 </Form>
 
-                <button type="submit">Create</button>
-                <button onClick={handleReset}>Cancel</button>
-
-                <button onClick={() => history.goBack()}>Back</button>
+                <Button onClick={() => history.goBack()}>Back</Button>
             </FormStyle>
         </div>
     )
@@ -102,6 +107,7 @@ const formikEnhancer = withFormik({
         name, 
         latitude, 
         longitude,
+        documentRelation,
         dateCreated,
         updatedAt,
         lastModifiedBy
@@ -110,7 +116,7 @@ const formikEnhancer = withFormik({
             name: name || '',
             latitude: latitude || '',
             longitude: longitude || '',
-
+            documentRelation: documentRelation || [{}],
             dateCreated: dateCreated,
             updatedAt: updatedAt,
             lastModifiedBy: lastModifiedBy
@@ -120,17 +126,16 @@ const formikEnhancer = withFormik({
         name: Yup.string().required('Name is required')
     }),
     handleSubmit: (values, { props, setSubmitting }) => {
-        let locationDocument = {
-            name: values.name || '',
-            latitude: values.latitude || '',
-            longitude: values.longitude || '',
+        let newLocation = new Location();
+        newLocation.name = values.name || '';
+        newLocation.latitude = values.latitude || '';
+        newLocation.longitude = values.longitude || '';
+        newLocation.documentRelation = values.documentRelation || [{}];
+        newLocation.dateCreated = values.dateCreated || new Date();
+        newLocation.updatedAt = values.updatedAt || new Date();
+        newLocation.lastModifiedBy = values.lastModifiedBy;
 
-            dateCreated: values.dateCreated,
-            updatedAt: values.updatedAt,
-            lastModifiedBy: values.lastModifiedBy
-        };
-
-        props.dispatch(locationActions.insertCompany(locationDocument));
+        props.dispatch(locationActions.insertLocation(newLocation.apiObject()));
         setSubmitting(false);
     }
 })(LocationCreate);

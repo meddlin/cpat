@@ -7,6 +7,7 @@ import { TargetListing } from './pages/TargetListing';
 import { PersonListing } from './pages/PersonListing';
 import { TargetDetail } from './components/target-types/target/TargetDetail';
 import { PersonDetail } from './components/target-types/person/PersonDetail';
+import { LocationListing } from './pages/LocationListing';
 
 import { CompanyCreate } from './components/target-types/company/forms/CompanyCreate';
 import { DeviceCreate } from './components/target-types/device/forms/DeviceCreate';
@@ -25,7 +26,7 @@ const NavigationBar = React.lazy(() => import ('./components/NavigationBar'));
 
 const CompanyListing = React.lazy(() => import ('./pages/CompanyListing'));
 const DeviceListing = React.lazy(() => import ('./pages/DeviceListing'));
-const LocationListing = React.lazy(() => import ('./pages/LocationListing'));
+// const LocationListing = React.lazy(() => import ('./pages/LocationListing'));
 // const PersonListing = React.lazy(() => import ('./pages/PersonListing'));
 // const TargetListing = React.lazy(() => import ('./pages/TargetListing'));
 

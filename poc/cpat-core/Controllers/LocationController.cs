@@ -1,19 +1,22 @@
 ﻿using cpat_core.DataAccess.DataControl;
 using cpat_core.Models;
+using cpat_core.Models.Utility;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Morcatko.AspNetCore.JsonMergePatch;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace cpat_core.Controllers
 {
-    [Produces("application/json")]
     [EnableCors("AppPolicy")]
+    [Produces("application/json")]
+    [Route("api/Location/[action]/{id?}")]
     [ApiController]
-    [Route("[controller]")]
     public class LocationController
     {
         private readonly ILogger<LocationController> _logger;
@@ -28,13 +31,22 @@ namespace cpat_core.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IEnumerable<Location> Get()
+        public Location Get([FromRoute] string id)
         {
-            return new List<Location>
-            {
-                new Location() { Name = "A", Latitude = "12.3123", Longitude = "1923.123" },
-                new Location() { Name = "B", Latitude = "12.3123", Longitude = "1923.123" }
-            };
+            var query = new LocationQuery();
+            return query.GetSingle(new System.Guid(id));
+        }
+
+        /// <summary>
+        /// Retrieve a "page" of <c>Location</c> documents.
+        /// </summary>
+        /// <param name="pageDoc"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public IEnumerable<Location> Page([FromBody] PageRequest pageDoc)
+        {
+            var query = new LocationQuery();
+            return query.GetPage(pageDoc.Page, pageDoc.PageSize, new System.DateTime());
         }
 
         /// <summary>
@@ -69,6 +81,32 @@ namespace cpat_core.Controllers
         {
             var query = new LocationQuery();
             return query.Update(data);
+        }
+
+        /// <summary>
+        /// Perform a sparse/partial update on a <c>Location</c> document
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="patch"></param>
+        /// <returns></returns>
+        [HttpPatch]
+        [Consumes(JsonMergePatchDocument.ContentType)]
+        public int PartialUpdate([FromRoute] string id, [FromBody] JsonMergePatchDocument<Location> patch)
+        {
+            Guid docId = new Guid(id);
+
+            var ops = new List<string>();
+            patch.Operations.ForEach(op =>
+            {
+                ops.Add(op.path.TrimStart('/'));
+            });
+
+            var data = new Location();
+            patch.ApplyTo(data);
+
+            var query = new LocationQuery();
+            //return query.Update(docId, data);
+            return query.PartialUpdate(docId, data, ops);
         }
 
         /// <summary>
