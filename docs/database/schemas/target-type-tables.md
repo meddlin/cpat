@@ -44,7 +44,7 @@ CREATE TABLE location(
     id UUID NOT NULL DEFAULT gen_random_uuid(),
     datecreated TIMESTAMPTZ,
 
-    firstname STRING,
+    name STRING,
     latitude STRING,
     longitude STRING,
 
