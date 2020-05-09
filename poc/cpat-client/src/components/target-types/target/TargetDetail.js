@@ -55,13 +55,13 @@ const TargetDetail = (props) => {
                         </Table.Head>
                         <Table.Body>
                             {(target && 
-                                Array.isArray(target.relations) && 
-                                target.relations.length > 0) ? target.relations.map(d => (
+                                Array.isArray(target.documentRelation) && 
+                                target.documentRelation.length > 0) ? target.documentRelation.map(d => (
                                 <Table.Row key={d.documentId}>
                                     <Table.Cell>{d.collectionName}</Table.Cell>
                                     <Table.Cell>{d.documentId}</Table.Cell>
                                 </Table.Row>
-                            )) : <Table.Row>No relations to show.</Table.Row>}
+                            )) : <Table.Row>No documentRelation to show.</Table.Row>}
                         </Table.Body>
                     </Table>
 

@@ -29,7 +29,7 @@ namespace cpat_core.Models
         /// n-number of other pieces of information.
         /// </summary>
         /// <value></value>
-        public List<DocumentRelation> Relations { get; set; }
+        public List<DocumentRelation> DocumentRelation { get; set; }
 
         /// <summary>
         /// Converts a <c>PersonDto</c> object to a <c>PersonDto</c> object.
@@ -51,7 +51,7 @@ namespace cpat_core.Models
                 Employers = data.Employers,
                 SocialLinks = data.SocialLinks,
 
-                Relations = data.DocumentRelation,
+                DocumentRelation = data.DocumentRelation,
 
                 DateCreated = data.DateCreated,
                 UpdatedAt = data.UpdatedAt,

@@ -107,7 +107,7 @@ const PersonCreate = (props) => {
                         value={values.lastModifiedBy || `You - User 1`} />
 
                     <div>
-                        <FieldArray name="relations" component={PersonDocumentRelationsFormArray} />
+                        <FieldArray name="documentRelation" component={PersonDocumentRelationsFormArray} />
                     </div>
 
                     <div style={{ display: 'flex' }}>
@@ -133,7 +133,7 @@ const formikEnhancer = withFormik({
         organizations,
         employers,
         socialLinks,
-        relations,
+        documentRelation,
         dateCreated,
         updatedAt,
         lastModifiedBy
@@ -148,7 +148,7 @@ const formikEnhancer = withFormik({
             organizations: organizations || [],
             employers: employers || [],
             socialLinks: socialLinks || [],
-            relations: relations || [{}],
+            documentRelation: documentRelation || [{}],
 
             dateCreated: dateCreated,
             updatedAt: updatedAt,
@@ -171,7 +171,7 @@ const formikEnhancer = withFormik({
         newPerson.employers = values.employers || [];
         newPerson.socialLinks = values.socialLinks || [];
 
-        newPerson.relations = values.relations || [];
+        newPerson.documentRelation = values.documentRelation || [];
         newPerson.dateCreated = values.dateCreated;
         newPerson.updatedAt = values.updatedAt;
         newPerson.lastModifiedBy = values.lastModifiedBy;

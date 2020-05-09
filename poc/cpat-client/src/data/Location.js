@@ -7,7 +7,7 @@ class Location extends AbstractTarget {
         name,
         latitude,
         longitude,
-        relations,
+        documentRelation,
 
         dateCreated,
         updatedAt,
@@ -18,7 +18,7 @@ class Location extends AbstractTarget {
         this._name = name;
         this._latitude = latitude;
         this._longitude = longitude;
-        this._relations = relations;
+        this._documentRelation = documentRelation;
     }
 
     get name() {
@@ -42,11 +42,11 @@ class Location extends AbstractTarget {
         if (value) this._longitude = value;
     }
 
-    get relations() {
-        return this._relations;
+    get documentRelation() {
+        return this._documentRelation;
     }
-    set relations(value) {
-        if (value) this._relations = value;
+    set documentRelation(value) {
+        if (value) this._documentRelation = value;
     }
 
     apiObject() {
@@ -55,7 +55,7 @@ class Location extends AbstractTarget {
             name: this._name,
             latitude: this._latitude,
             longitude: this._longitude,
-            relations: this._relations,
+            documentRelation: this._documentRelation,
             dateCreated: this._dateCreated,
             updatedAt: this._updatedAt,
             lastModifiedBy: this._lastModifiedBy,

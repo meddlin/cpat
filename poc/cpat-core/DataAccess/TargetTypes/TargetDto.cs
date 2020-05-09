@@ -46,7 +46,7 @@ namespace cpat_core.DataAccess.TargetTypes
                 CollectionType = data.CollectionType,
                 Selected = data.Selected,
 
-                DocumentRelation = data.Relations,
+                DocumentRelation = data.DocumentRelation,
 
                 DateCreated = data.DateCreated != null ? data.DateCreated : DateTime.Now,
                 UpdatedAt = data.UpdatedAt != null ? data.UpdatedAt : DateTime.Now,

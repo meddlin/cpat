@@ -90,7 +90,7 @@ const PersonUpdate = (props) => {
                         {(touched.lastName && errors.lastName) ? <div>{errors.lastName}</div> : ""}
 
                         <div>
-                            <FieldArray name="relations" component={PersonDocumentRelationsFormArray} />
+                            <FieldArray name="documentRelation" component={PersonDocumentRelationsFormArray} />
                             <FieldArray name="nickNames" component={PersonNicknamesFormArray} />
                             <FieldArray name="phoneNumbers" component={PersonPhoneNumbersFormArray} />
                             <FieldArray name="emailAddresses" component={PersonEmailAddressesFormArray} />
@@ -144,7 +144,7 @@ const formikEnhancer = withFormik({
         organizations,
         employers,
         socialLinks,
-        relations,
+        documentRelation,
         updatedAt,
         lastModifiedBy,
 
@@ -160,7 +160,7 @@ const formikEnhancer = withFormik({
             organizations: (Array.isArray(organizations) && organizations.length > 0) || person.organizations,
             employers: (Array.isArray(employers) && employers.length > 0) || person.employers,
             socialLinks: (Array.isArray(socialLinks) && socialLinks.length > 0) || person.socialLinks,
-            relations: (Array.isArray(relations) && relations.length > 0) || person.relations,
+            documentRelation: (Array.isArray(documentRelation) && documentRelation.length > 0) || person.documentRelation,
 
             updatedAt: updatedAt,
             lastModifiedBy: lastModifiedBy || person.lastModifiedBy
@@ -180,7 +180,7 @@ const formikEnhancer = withFormik({
         updatedPerson.organizations = values.organizations;
         updatedPerson.employers = values.employers;
         updatedPerson.socialLinks = values.socialLinks;
-        updatedPerson.relations = values.relations;
+        updatedPerson.documentRelation = values.documentRelation;
         updatedPerson.updatedAt = values.updatedAt;
         updatedPerson.lastModifiedBy = values.lastModifiedBy;
 

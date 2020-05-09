@@ -82,7 +82,7 @@ const TargetUpdate = (props) => {
                         />
                         {(touched.collectionType && errors.collectionType) ? <div>{errors.collectionType}</div> : ""}
 
-                        <FieldArray name="relations" component={TargetCreateFormArray} />
+                        <FieldArray name="documentRelation" component={TargetCreateFormArray} />
 
                         <label>Date Created:</label>
                         <TextInput 
@@ -126,7 +126,7 @@ const formikEnhancer = withFormik({
         dateCreated,
         updatedAt,
         lastModifiedBy,
-        relations,
+        documentRelation,
 
         target
     }) => {
@@ -137,7 +137,7 @@ const formikEnhancer = withFormik({
             dateCreated: dateCreated || target.dateCreated,
             updatedAt: updatedAt || target.updatedAt,
             lastModifiedBy: lastModifiedBy || target.lastModifiedBy,
-            relations: (Array.isArray(relations) && relations.length > 0) || target.relations
+            documentRelation: (Array.isArray(documentRelation) && documentRelation.length > 0) || target.documentRelation
         }
     },
     validationSchema: Yup.object().shape({
@@ -149,7 +149,7 @@ const formikEnhancer = withFormik({
         newTarget.name = values.name;
         newTarget.region = values.region;
         newTarget.collectionType = values.collectionType;
-        newTarget.relations = values.relations; //values.relations || props.target.relations;
+        newTarget.documentRelation = values.documentRelation; //values.documentRelation || props.target.documentRelation;
         // newTarget.selected = false; //values.selected === null ? props.target.selected : values.selected;
         // newTarget.lastModifiedBy = "bob"; //values.lastModifiedBy || props.target.lastModifiedBy;
         newTarget.updatedAt = new Date();

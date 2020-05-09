@@ -8,7 +8,7 @@ class Target extends AbstractTarget {
         region,
         collectionType,
         selected,
-        relations,
+        documentRelation,
 
         dateCreated,
         updatedAt,
@@ -20,7 +20,7 @@ class Target extends AbstractTarget {
         this._region = region;
         this._collectionType = collectionType;
         this._selected = selected;
-        this._relations = relations;
+        this._documentRelation = documentRelation;
         this._dateCreated = dateCreated;
         this._updatedAt = updatedAt;
         this._lastModifiedBy = lastModifiedBy;
@@ -54,11 +54,11 @@ class Target extends AbstractTarget {
         if (value !== null) this._selected = value;
     }
 
-    get relations() {
-        return this._relations;
+    get documentRelation() {
+        return this._documentRelation;
     }
-    set relations(value) {
-        if (value) this._relations = value;
+    set documentRelation(value) {
+        if (value) this._documentRelation = value;
     }
 
     apiObject() {
@@ -68,7 +68,7 @@ class Target extends AbstractTarget {
             region: this._region,
             collectionType: this._collectionType,
             selected: this._selected,
-            relations: this._relations,
+            documentRelation: this._documentRelation,
             dateCreated: this._dateCreated,
             updatedAt: this._updatedAt,
             lastModifiedBy: this._lastModifiedBy,

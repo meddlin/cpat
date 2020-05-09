@@ -91,7 +91,7 @@ const TargetCreate = (props) => {
                         label="Last Modified By"
                         value={values.lastModifiedBy || `You - User 1`} />
 
-                    <FieldArray name="relations" component={TargetCreateFormArray} />
+                    <FieldArray name="documentRelation" component={TargetCreateFormArray} />
 
                     <div style={{ display: 'flex' }}>
                         <Button type="submit">Create</Button>
@@ -110,7 +110,7 @@ const formikEnhancer = withFormik({
         name,
         region,
         collectionType,
-        relations,
+        documentRelation,
         dateCreated,
         updatedAt,
         lastModifiedBy
@@ -119,8 +119,7 @@ const formikEnhancer = withFormik({
             name: name || '',
             region: region || '',
             collectionType: collectionType || '',
-            relations: relations || [{}],
-
+            documentRelation: documentRelation || [{}],
             dateCreated: dateCreated,
             updatedAt: updatedAt,
             lastModifiedBy: lastModifiedBy
@@ -135,7 +134,7 @@ const formikEnhancer = withFormik({
         newTarget.region = values.region || '';
         newTarget.collectionType = values.collectionType || '';
         newTarget.selected = false;
-        newTarget.relations = values.relations || [];
+        newTarget.documentRelation = values.documentRelation || [];
         newTarget.dateCreated = values.dateCreated || new Date();
         newTarget.updatedAt = values.updatedAt || new Date();
         newTarget.lastModifiedBy = values.lastModifiedBy || new User();

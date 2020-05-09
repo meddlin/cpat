@@ -28,7 +28,7 @@ namespace cpat_core.Models
         /// n-number of other pieces of information.
         /// </summary>
         /// <value></value>
-        public List<DocumentRelation> Relations { get; set; }
+        public List<DocumentRelation> DocumentRelation { get; set; }
 
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace cpat_core.Models
                 Region = data.Region,
                 CollectionType = data.CollectionType,
                 Selected = data.Selected,
-                Relations = data.DocumentRelation,
+                DocumentRelation = data.DocumentRelation,
                 DateCreated = data.DateCreated,
                 UpdatedAt = data.UpdatedAt,
                 //LastModifiedBy = data.LastModifiedByUserId

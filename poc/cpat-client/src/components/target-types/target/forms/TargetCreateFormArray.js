@@ -15,20 +15,20 @@ export const TargetCreateFormArray = ({ move, swap, push, insert, remove, unshif
 		 * - **Only perform this 'unshift()' operation if the initial.values is "longer" than the form.values**
 		 * 		-- NOTE: Formik will re-render the form a few times. This piece is key to NOT having multiple duplicates of intial.values left in the form!
 		 */}
-		{Array.isArray(form.initialValues.relations) && Array.isArray(form.values.relations) && (form.initialValues.relations.length > form.values.relations.length) ? (
-			form.initialValues.relations.map((init, idx) => (
-				form.values.relations.unshift(init)
+		{Array.isArray(form.initialValues.documentRelation) && Array.isArray(form.values.documentRelation) && (form.initialValues.documentRelation.length > form.values.documentRelation.length) ? (
+			form.initialValues.documentRelation.map((init, idx) => (
+				form.values.documentRelation.unshift(init)
 			))
 		) : ''}
 
-        {form.values.relations && form.values.relations.length > 0 ? (
-            form.values.relations.map((r, index) => (
+        {form.values.documentRelation && form.values.documentRelation.length > 0 ? (
+            form.values.documentRelation.map((r, index) => (
                 <div key={index}>
                     <div>
 						<div>
                             <label>Relation Collection Name</label>
 							<TextInput 
-								name={`relations.${index}.collectionName`} 
+								name={`documentRelation.${index}.collectionName`} 
 								label="Relation Collection Name"
 								onChange={form.handleChange}
 								value={r.collectionName} />
@@ -36,7 +36,7 @@ export const TargetCreateFormArray = ({ move, swap, push, insert, remove, unshif
 						<div>
                             <label>Relation Document Id</label>
 							<TextInput 
-								name={`relations.${index}.documentId`} 
+								name={`documentRelation.${index}.documentId`} 
 								label="Relation Document Id"
 								onChange={form.handleChange}
                                 value={r.documentId} />

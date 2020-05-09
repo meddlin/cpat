@@ -52,7 +52,7 @@ const PersonDetail = (props) => {
                                             <Table.Cell>{d.name}</Table.Cell>
                                             <Table.Cell>{d.metaInfo}</Table.Cell>
                                         </Table.Row>
-                                    )) : <Table.Row>No relations to show.</Table.Row>}
+                                    )) : <Table.Row>No documentRelation to show.</Table.Row>}
                                 </Table.Body>
                             </Table>
                         ) : <span>No nick names to display.</span>}
@@ -72,13 +72,13 @@ const PersonDetail = (props) => {
                         </Table.Head>
                         <Table.Body>
                             {(person && 
-                                Array.isArray(person.relations) && 
-                                person.relations.length > 0) ? person.relations.map(d => (
+                                Array.isArray(person.documentRelation) && 
+                                person.documentRelation.length > 0) ? person.documentRelation.map(d => (
                                 <Table.Row key={d.documentId}>
                                     <Table.Cell>{d.collectionName}</Table.Cell>
                                     <Table.Cell>{d.documentId}</Table.Cell>
                                 </Table.Row>
-                            )) : <Table.Row>No relations to show.</Table.Row>}
+                            )) : <Table.Row>No documentRelation to show.</Table.Row>}
                         </Table.Body>
                     </Table>
                 </div>

@@ -72,7 +72,7 @@ namespace cpat_core.DataAccess.TargetTypes
                 Employers = data.Employers,
                 SocialLinks = data.SocialLinks,
 
-                DocumentRelation = data.Relations,
+                DocumentRelation = data.DocumentRelation,
                 DateCreated = data.DateCreated,
                 UpdatedAt = data.UpdatedAt
             };
