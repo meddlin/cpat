@@ -4,7 +4,7 @@ import { Button, TextInput, Heading } from 'evergreen-ui';
 import styled from 'styled-components';
 // import { v4 as uuidv4 } from 'uuid';
 
-export const TargetCreateFormArray = ({ move, swap, push, insert, remove, unshift, pop, form }) => (
+export const TargetDocumentRelationFormArray = ({ move, swap, push, insert, remove, unshift, pop, form }) => (
     <Form>
         <div className="ms-fontSize-16">Relations</div>
 
