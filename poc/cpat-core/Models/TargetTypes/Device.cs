@@ -21,7 +21,7 @@ namespace cpat_core.Models
         /// n-number of other pieces of information.
         /// </summary>
         /// <value></value>
-        public IEnumerable<DocumentRelation> Relations { get; set; }
+        public List<DocumentRelation> DocumentRelation { get; set; }
 
         /// <summary>
         /// Converts a <c>DeviceDto</c> object to a <c>Device</c> object.
@@ -35,7 +35,7 @@ namespace cpat_core.Models
                 Name = data.Name,
                 //Organizations = data.Organizations,
 
-                //Relations = data.DocumentRelationJson,
+                DocumentRelation = data.DocumentRelation,
 
                 DateCreated = data.DateCreated,
                 UpdatedAt = data.UpdatedAt,

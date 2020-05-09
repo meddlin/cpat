@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { withFormik, Form } from 'formik';
+import { withFormik, Form, FieldArray } from 'formik';
 import * as Yup from 'yup';
+import { TargetCreateFormArray } from './TargetCreateFormArray';
 import { Button, TextInput, Heading } from 'evergreen-ui';
 import styled from 'styled-components';
 import { targetActions } from '../../../../state-management/target/actions';
@@ -18,6 +19,9 @@ const FormStyle = styled.div`
 `;
 
 const TargetUpdate = (props) => {
+    let history = useHistory();
+    let match = props.match; //useRouteMatch('/company/update/:id');
+
     const {
         values,
         touched,
@@ -28,16 +32,12 @@ const TargetUpdate = (props) => {
         handleReset,
     } = props;
 
+    // Other supporting values supplied via props
     const { dispatch, target, loading, updateResult } = props;
-    let history = useHistory();
-    let match = props.match; //useRouteMatch('/company/update/:id');
 
     useEffect(() => {
         dispatch(targetActions.getTarget(match.params.id));
     }, []);
-
-    //console.log(`match: ${match && match.params ? match.params.id : ''}`); // useRouteMatch comes back undefined?
-    console.log(`match params: ${props.match.params.id}`);
 
     return (
         <div>
@@ -82,6 +82,8 @@ const TargetUpdate = (props) => {
                         />
                         {(touched.collectionType && errors.collectionType) ? <div>{errors.collectionType}</div> : ""}
 
+                        <FieldArray name="documentRelation" component={TargetCreateFormArray} />
+
                         <label>Date Created:</label>
                         <TextInput 
                             disabled 
@@ -124,14 +126,18 @@ const formikEnhancer = withFormik({
         dateCreated,
         updatedAt,
         lastModifiedBy,
+        documentRelation,
+
+        target
     }) => {
         return {
-            name: name || '',
-            region: region || '',
-            collectionType: collectionType || '',
-            dateCreated: dateCreated,
-            updatedAt: updatedAt,
-            lastModifiedBy: lastModifiedBy
+            name: name || target.name,
+            region: region || target.region,
+            collectionType: collectionType || target.collectionType,
+            dateCreated: dateCreated || target.dateCreated,
+            updatedAt: updatedAt || target.updatedAt,
+            lastModifiedBy: lastModifiedBy || target.lastModifiedBy,
+            documentRelation: (Array.isArray(documentRelation) && documentRelation.length > 0) || target.documentRelation
         }
     },
     validationSchema: Yup.object().shape({
@@ -143,7 +149,7 @@ const formikEnhancer = withFormik({
         newTarget.name = values.name;
         newTarget.region = values.region;
         newTarget.collectionType = values.collectionType;
-        // newTarget.relations = []; //values.relations || props.target.relations;
+        newTarget.documentRelation = values.documentRelation; //values.documentRelation || props.target.documentRelation;
         // newTarget.selected = false; //values.selected === null ? props.target.selected : values.selected;
         // newTarget.lastModifiedBy = "bob"; //values.lastModifiedBy || props.target.lastModifiedBy;
         newTarget.updatedAt = new Date();

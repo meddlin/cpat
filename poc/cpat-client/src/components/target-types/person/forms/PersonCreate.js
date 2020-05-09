@@ -1,10 +1,20 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { withFormik, Form } from 'formik';
+import { withFormik, Form, FieldArray } from 'formik';
 import * as Yup from 'yup';
+import { PersonDocumentRelationsFormArray } from './form-arrays/PersonDocumentRelationsFormArray';
+import { PersonNicknamesFormArray } from './form-arrays/PersonNicknameFormArray';
+import { PersonPhoneNumbersFormArray } from './form-arrays/PersonPhoneNumbersFormArray';
+import { PersonEmailAddressesFormArray } from './form-arrays/PersonEmailAddressesFormArray';
+import { PersonOrganizationsFormArray } from './form-arrays/PersonOrganizationsFormArray';
+import { PersonEmployersFormArray } from './form-arrays/PersonEmployersFormArray';
+import { PersonSocialLinksFormArray } from './form-arrays/PersonSocialLinksFormArray';
+import { Button, TextInput, Heading } from 'evergreen-ui';
 import styled from 'styled-components';
 import { personActions } from '../../../../state-management/person/actions';
+import Person from '../../../../data/Person';
+import User from '../../../../data/User';
 
 const FormStyle = styled.div`
     padding: 3em;    
@@ -37,7 +47,7 @@ const PersonCreate = (props) => {
             <FormStyle>
                 <Form>
                     <label>First Name</label>
-                    <input 
+                    <TextInput 
                         name="firstName"
                         label="First Name"
                         onChange={handleChange}
@@ -47,7 +57,7 @@ const PersonCreate = (props) => {
                     {(touched.firstName && errors.firstName) ? <div>{errors.firstName}</div> : ""}
 
                     <label>Middle Name</label>
-                    <input 
+                    <TextInput 
                         name="middleName"
                         label="Middle Name"
                         onChange={handleChange}
@@ -57,7 +67,7 @@ const PersonCreate = (props) => {
                     {(touched.middleName && errors.middleName) ? <div>{errors.middleName}</div> : ""}
 
                     <label>Last Name</label>
-                    <input 
+                    <TextInput 
                         name="lastName"
                         label="Last Name"
                         onChange={handleChange}
@@ -66,32 +76,47 @@ const PersonCreate = (props) => {
                     />
                     {(touched.lastName && errors.lastName) ? <div>{errors.lastName}</div> : ""}
 
+                    <div>
+                        <FieldArray name="nickNames" component={PersonNicknamesFormArray} />
+                        <FieldArray name="phoneNumbers" component={PersonPhoneNumbersFormArray} />
+                        <FieldArray name="emailAddresses" component={PersonEmailAddressesFormArray} />
+                        <FieldArray name="organizations" component={PersonOrganizationsFormArray} />
+                        <FieldArray name="employers" component={PersonEmployersFormArray} />
+                        <FieldArray name="socialLinks" component={PersonSocialLinksFormArray} />
+                    </div>
+
                     <label>Date Created:</label>
-                    <input 
+                    <TextInput 
                         disabled 
                         name="dateCreated"
                         label="Date Created"
-                        value={`${new Date('2020-01-30').toLocaleDateString()}`} />
+                        value={values.dateCreated || `${new Date('2020-01-30').toLocaleDateString()}`} />
 
                     <label>Updated At:</label>
-                    <input 
+                    <TextInput 
                         disabled 
                         name="updatedAt"
                         label="Updated At"
-                        value={`${new Date().toLocaleDateString()}`} />
+                        value={values.updatedAt || `${new Date().toLocaleDateString()}`} />
 
                     <label>Last Modified By:</label>
-                    <input 
+                    <TextInput 
                         disabled 
                         name="lastModifiedBy"
                         label="Last Modified By"
-                        value={`You - User 1`} />
+                        value={values.lastModifiedBy || `You - User 1`} />
+
+                    <div>
+                        <FieldArray name="documentRelation" component={PersonDocumentRelationsFormArray} />
+                    </div>
+
+                    <div style={{ display: 'flex' }}>
+                        <Button type="submit">Create</Button>
+                        <Button onClick={handleReset}>Cancel</Button>
+                    </div>
                 </Form>
 
-                <button type="submit">Create</button>
-                <button onClick={handleReset}>Cancel</button>
-
-                <button onClick={() => history.goBack()}>Back</button>
+                <Button onClick={() => history.goBack()}>Back</Button>
             </FormStyle>
         </div>
     )
@@ -102,6 +127,13 @@ const formikEnhancer = withFormik({
         firstName,
         middleName,
         lastName,
+        nickNames,
+        phoneNumbers,
+        emailAddresses,
+        organizations,
+        employers,
+        socialLinks,
+        documentRelation,
         dateCreated,
         updatedAt,
         lastModifiedBy
@@ -110,27 +142,41 @@ const formikEnhancer = withFormik({
             firstName: firstName || '',
             middleName: middleName || '',
             lastName: lastName || '',
+            nickNames: nickNames || [],
+            phoneNumbers: phoneNumbers || [],
+            emailAddresses: emailAddresses || [],
+            organizations: organizations || [],
+            employers: employers || [],
+            socialLinks: socialLinks || [],
+            documentRelation: documentRelation || [{}],
 
             dateCreated: dateCreated,
             updatedAt: updatedAt,
-            lastModifiedBy: lastModifiedBy
+            //lastModifiedBy: lastModifiedBy || new User()
         }
     },
     validationSchema: Yup.object().shape({
-        name: Yup.string().required('Name is required')
+        // NOTE: Having a code error in this part (i.e. typo in variable name) can prevent form from submitting.
+        firstName: Yup.string().required('First Name is required')
     }),
     handleSubmit: (values, { props, setSubmitting }) => {
-        let personDocument = {
-            firstName: values.firstName || '',
-            middleName: values.middleName || '',
-            lastName: values.lastName || '',
+        let newPerson = new Person();
+        newPerson.firstName = values.firstName || '';
+        newPerson.middleName = values.middleName || '';
+        newPerson.lastName = values.lastName || '';
+        newPerson.nickNames = values.nickNames || [];
+        newPerson.phoneNumbers = values.phoneNumbers || [];
+        newPerson.emailAddresses = values.emailAddresses || [];
+        newPerson.organizations = values.organizations || [];
+        newPerson.employers = values.employers || [];
+        newPerson.socialLinks = values.socialLinks || [];
 
-            dateCreated: values.dateCreated,
-            updatedAt: values.updatedAt,
-            lastModifiedBy: values.lastModifiedBy
-        };
+        newPerson.documentRelation = values.documentRelation || [];
+        newPerson.dateCreated = values.dateCreated;
+        newPerson.updatedAt = values.updatedAt;
+        newPerson.lastModifiedBy = values.lastModifiedBy;
 
-        props.dispatch(personActions.insertCompany(personDocument));
+        props.dispatch(personActions.insertPerson(newPerson.apiObject()));
         setSubmitting(false);
     }
 })(PersonCreate);

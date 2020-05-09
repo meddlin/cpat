@@ -12,6 +12,7 @@ namespace cpat_core.DataAccess.DataControl
     public class TargetQuery
     {
         private Database dbAccess;
+        private const string _TABLE_NAME_ = "target";
 
         public TargetQuery()
         {
@@ -36,7 +37,7 @@ namespace cpat_core.DataAccess.DataControl
                         db.Fetch<TargetDto>(new NPoco.Sql(
                             $@"
                                 select * 
-                                from target
+                                from {_TABLE_NAME_}
                                 where id  = @0
                             ", id)).FirstOrDefault() 
                     );
@@ -88,7 +89,7 @@ namespace cpat_core.DataAccess.DataControl
                     list = Target.Translate(
                         db.Fetch<TargetDto>(new NPoco.Sql(
                             $@"select * 
-                                from target
+                                from {_TABLE_NAME_}
                                 where datecreated > TIMESTAMP '2000-01-01'
                                 order by datecreated desc
                                 limit {pageSize}"

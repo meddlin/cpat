@@ -4,7 +4,9 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { TargetListing } from './pages/TargetListing';
+import { PersonListing } from './pages/PersonListing';
 import { TargetDetail } from './components/target-types/target/TargetDetail';
+import { PersonDetail } from './components/target-types/person/PersonDetail';
 
 import { CompanyCreate } from './components/target-types/company/forms/CompanyCreate';
 import { DeviceCreate } from './components/target-types/device/forms/DeviceCreate';
@@ -24,13 +26,13 @@ const NavigationBar = React.lazy(() => import ('./components/NavigationBar'));
 const CompanyListing = React.lazy(() => import ('./pages/CompanyListing'));
 const DeviceListing = React.lazy(() => import ('./pages/DeviceListing'));
 const LocationListing = React.lazy(() => import ('./pages/LocationListing'));
-const PersonListing = React.lazy(() => import ('./pages/PersonListing'));
+// const PersonListing = React.lazy(() => import ('./pages/PersonListing'));
 // const TargetListing = React.lazy(() => import ('./pages/TargetListing'));
 
 const CompanyDetail = React.lazy(() => import ('./components/target-types/company/CompanyDetail'));
 const DeviceDetail = React.lazy(() => import ('./components/target-types/device/DeviceDetail'));
 const LocationDetail = React.lazy(() => import ('./components/target-types/location/LocationDetail'));
-const PersonDetail = React.lazy(() => import ('./components/target-types/person/PersonDetail'));
+// const PersonDetail = React.lazy(() => import ('./components/target-types/person/PersonDetail'));
 // const TargetDetail = React.lazy(() => import ('./components/target-types/target/TargetDetail'));
 
 const App = () => {
@@ -50,10 +52,10 @@ const App = () => {
 								<Route path="/people" exact={true} name="dashbaord" component={PersonListing} />
 								<Route path="/targets" exact={true} name="dashbaord" component={TargetListing} />
 								
-								<Route path="/company/detail" exact={true} name="dashbaord" component={CompanyDetail} />
-								<Route path="/device/detail" exact={true} name="dashbaord" component={DeviceDetail} />
-								<Route path="/location/detail" exact={true} name="dashbaord" component={LocationDetail} />
-								<Route path="/person/detail" exact={true} name="dashbaord" component={PersonDetail} />
+								<Route path="/company/detail/:id" exact={true} name="dashbaord" component={CompanyDetail} />
+								<Route path="/device/detail/:id" exact={true} name="dashbaord" component={DeviceDetail} />
+								<Route path="/location/detail/:id" exact={true} name="dashbaord" component={LocationDetail} />
+								<Route path="/person/detail/:id" exact={true} name="dashbaord" component={PersonDetail} />
 								<Route path="/target/detail/:id" exact={true} name="dashbaord" component={TargetDetail} />
 
 								<Route path="/company/create" exact={true} name="dashbaord" component={CompanyCreate} />

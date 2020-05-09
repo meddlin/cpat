@@ -4,7 +4,7 @@ import { Button, TextInput, Heading } from 'evergreen-ui';
 import styled from 'styled-components';
 // import { v4 as uuidv4 } from 'uuid';
 
-export const TargetCreateFormArray = ({ move, swap, push, insert, remove, unshift, pop, form }) => (
+export const PersonDocumentRelationsFormArray = ({ move, swap, push, insert, remove, unshift, pop, form }) => (
     <Form>
         <div className="ms-fontSize-16">Relations</div>
 
@@ -16,7 +16,7 @@ export const TargetCreateFormArray = ({ move, swap, push, insert, remove, unshif
 		 * 		-- NOTE: Formik will re-render the form a few times. This piece is key to NOT having multiple duplicates of intial.values left in the form!
 		 */}
 		{Array.isArray(form.initialValues.documentRelation) && Array.isArray(form.values.documentRelation) && (form.initialValues.documentRelation.length > form.values.documentRelation.length) ? (
-			form.initialValues.documentRelation.map((init, idx) => (
+			form.initialValues.documentRelation.map(init => (
 				form.values.documentRelation.unshift(init)
 			))
 		) : ''}

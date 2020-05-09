@@ -13,7 +13,7 @@ class Person extends AbstractTarget {
         organizations,
         employers,
         socialLinks,
-        relations,
+        documentRelation,
 
         dateCreated,
         updatedAt,
@@ -30,7 +30,7 @@ class Person extends AbstractTarget {
         this._organizations = organizations;
         this._employers = employers;
         this._socialLinks = socialLinks;
-        this._relations = relations;
+        this._documentRelation = documentRelation;
     }
 
     get firstName() {
@@ -96,11 +96,11 @@ class Person extends AbstractTarget {
         if (value) this._socialLinks = value;
     }
 
-    get relations() {
-        return this._relations;
+    get documentRelation() {
+        return this._documentRelation;
     }
-    set relations(value) {
-        if (value) this._relations = value;
+    set documentRelation(value) {
+        if (value) this._documentRelation = value;
     }
 
     apiObject() {
@@ -115,7 +115,7 @@ class Person extends AbstractTarget {
             organizations: this._organizations,
             employers: this._employers,
             socialLinks: this._socialLinks,
-            relations: this._relations,
+            documentRelation: this._documentRelation,
             dateCreated: this._dateCreated,
             updatedAt: this._updatedAt,
             lastModifiedBy: this._lastModifiedBy,

@@ -8,7 +8,7 @@ class Company extends AbstractTarget {
         id,
 
         name,
-        relations,
+        documentRelation,
 
         dateCreated,
         updatedAt,
@@ -17,7 +17,7 @@ class Company extends AbstractTarget {
         super(id, dateCreated, updatedAt, lastModifiedBy);
 
         this._name = name;
-        this._relations = relations;
+        this._documentRelation = documentRelation;
     };
 
     /**
@@ -36,18 +36,18 @@ class Company extends AbstractTarget {
         if (value) this._name = value;
     }
 
-    get relations() {
-        return this._relations;
+    get documentRelation() {
+        return this._documentRelation;
     }
-    set relations(value) {
-        if (value) this._relations = value;
+    set documentRelation(value) {
+        if (value) this._documentRelation = value;
     }
 
     apiObject() {
         return {
             id: this._id,
             name: this._name,
-            relations: this._relations,
+            documentRelation: this._documentRelation,
             dateCreated: this._dateCreated,
             updatedAt: this._updatedAt,
             lastModifiedBy: this._lastModifiedBy,

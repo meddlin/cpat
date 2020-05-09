@@ -3,9 +3,11 @@ import { personService } from './services';
 
 export const personActions = {
     getPerson,
+    getPersonPage,
     getPersonList,
     insertPerson,
     updatePerson,
+    partialUpdatePerson,
     removePerson
 };
 
@@ -31,6 +33,29 @@ function getPerson(id) {
     function request(id) { return { type: personConstants.GET_PERSON_REQUEST, id } }
     function success(result) { return { type: personConstants.GET_PERSON_SUCCESS, result } }
     function failure(error) { return { type: personConstants.GET_PERSON_FAILURE, error } }
+}
+
+/**
+ * 
+ */
+function getPersonPage() {
+    return dispatch => {
+        dispatch(request());
+
+        personService.getPage()
+            .then(
+                result => {
+                    dispatch(success(result));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                }
+            )
+    }
+
+    function request() { return { type: personConstants.GET_PERSON_PAGE_REQUEST } }
+    function success(result) { return { type: personConstants.GET_PERSON_PAGE_SUCCESS, result } }
+    function failure(error) { return { type: personConstants.GET_PERSON_PAGE_FAILURE, error } }
 }
 
 /**
@@ -103,6 +128,30 @@ function updatePerson(personDoc) {
     function request(personDoc) { return { type: personConstants.UPDATE_PERSON_REQUEST, personDoc } }
     function success(result) { return { type: personConstants.UPDATE_PERSON_SUCCESS, result } }
     function failure(error) { return { type: personConstants.UPDATE_PERSON_FAILURE, error } }
+}
+
+/**
+ * 
+ * @param {*} personDoc 
+ */
+function partialUpdatePerson(docId, personDoc) {
+    return dispatch => {
+        dispatch(request(docId, personDoc));
+
+        personService.partialUpdate(docId, personDoc)
+            .then(
+                result => {
+                    dispatch(success(result));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                }
+            );
+    };
+
+    function request(docId, personDoc) { return { type: personConstants.PARTIAL_UPDATE_PERSON_REQUEST, docId, personDoc } }
+    function success(result) { return { type: personConstants.PARTIAL_UPDATE_PERSON_SUCCESS, result } }
+    function failure(error) { return { type: personConstants.PARTIAL_UPDATE_PERSON_FAILURE, error } }
 }
 
 /**
