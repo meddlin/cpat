@@ -20,7 +20,7 @@ function getSingle(id) {
         headers: { 'Content-Type': 'application/json' },
     };
 
-    return fetch(`${handlers.config.apiUrl}/table/${id}`, requestOptions).then(handlers.handleHttpResponse);
+    return fetch(`${handlers.config.apiUrl}/location/get/${id}`, requestOptions).then(handlers.handleHttpResponse);
 };
 
 /**
@@ -78,7 +78,7 @@ function update(locationDoc) {
         body: JSON.stringify(locationDoc)
     };
 
-    return fetch(`${handlers.config.apiUrl}/table`, requestOptions).then(handlers.handleHttpResponse);
+    return fetch(`${handlers.config.apiUrl}/location/update`, requestOptions).then(handlers.handleHttpResponse);
 };
 
 /**
@@ -107,5 +107,5 @@ function remove(id) {
         body: JSON.stringify(id)
     };
 
-    return fetch(`${handlers.config.apiUrl}/table`, requestOptions).then(handlers.handleHttpResponse);
+    return fetch(`${handlers.config.apiUrl}/location/remove`, requestOptions).then(handlers.handleHttpResponse);
 };

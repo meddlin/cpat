@@ -6,15 +6,16 @@ export function location(state = {}, action) {
 
 
         case locationConstants.GET_LOCATION_REQUEST:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: true
             });
         case locationConstants.GET_LOCATION_SUCCESS:
-            return Object.assign({}, ...state, {
-                loading: false
+            return Object.assign({}, state, {
+                loading: false,
+                location: action.result
             });
         case locationConstants.GET_LOCATION_FAILURE:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: false
             });
 
