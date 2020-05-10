@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { validations } from '../../../../../data/form-helpers/formArray-property-validation';
 // import { v4 as uuidv4 } from 'uuid';
 
-export const TargetDocumentRelationFormArray = ({ move, swap, push, insert, remove, unshift, pop, form }) => (
+export const DeviceDocumentRelationFormArray = ({ move, swap, push, insert, remove, unshift, pop, form }) => (
     <Form>
         <div className="ms-fontSize-16">Relations</div>
 
@@ -16,7 +16,7 @@ export const TargetDocumentRelationFormArray = ({ move, swap, push, insert, remo
 		 * - **Only perform this 'unshift()' operation if the initial.values is "longer" than the form.values**
 		 * 		-- NOTE: Formik will re-render the form a few times. This piece is key to NOT having multiple duplicates of intial.values left in the form!
 		 */}
-		 {validations.emptyFormValues(form.initialValues.documentRelation, form.values.documentRelation) || 
+		{validations.emptyFormValues(form.initialValues.documentRelation, form.values.documentRelation) || 
 			validations.initialLongerThanValues(form.initialValues.documentRelation, form.values.documentRelation) ? (
 						form.initialValues.documentRelation.map((init, idx) => (
 							form.values.documentRelation.unshift(init)
