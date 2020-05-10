@@ -16,7 +16,7 @@ export const TargetDocumentRelationFormArray = ({ move, swap, push, insert, remo
 		 * - **Only perform this 'unshift()' operation if the initial.values is "longer" than the form.values**
 		 * 		-- NOTE: Formik will re-render the form a few times. This piece is key to NOT having multiple duplicates of intial.values left in the form!
 		 */}
-		 {validations.emptyFormValues(form.initialValues.documentRelation, form.values.documentRelation) || 
+		{validations.emptyFormValues(form.initialValues.documentRelation, form.values.documentRelation) || 
 			validations.initialLongerThanValues(form.initialValues.documentRelation, form.values.documentRelation) ? (
 						form.initialValues.documentRelation.map((init, idx) => (
 							form.values.documentRelation.unshift(init)
