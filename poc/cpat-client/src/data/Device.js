@@ -1,6 +1,6 @@
 import AbstractTarget from "./AbstractTarget";
 
-class Company extends AbstractTarget {
+class Device extends AbstractTarget {
     constructor(
         id,
 
@@ -53,4 +53,4 @@ class Company extends AbstractTarget {
     }
 };
 
-export default Company;
+export default Device;

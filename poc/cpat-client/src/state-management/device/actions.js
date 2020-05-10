@@ -4,8 +4,10 @@ import { deviceService } from './services';
 export const deviceActions = {
     getDevice,
     getDeviceList,
+    getDevicePage,
     insertDevice,
     updateDevice,
+    partialUpdateDevice,
     removeDevice
 };
 
@@ -31,6 +33,29 @@ function getDevice(id) {
     function request(id) { return { type: deviceConstants.GET_DEVICE_REQUEST, id } }
     function success(result) { return { type: deviceConstants.GET_DEVICE_SUCCESS, result } }
     function failure(error) { return { type: deviceConstants.GET_DEVICE_FAILURE, error } }
+}
+
+/**
+ * 
+ */
+function getDevicePage() {
+    return dispatch => {
+        dispatch(request());
+
+        deviceService.getPage()
+            .then(
+                result => {
+                    dispatch(success(result));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                }
+            )
+    }
+
+    function request() { return { type: deviceConstants.GET_DEVICE_PAGE_REQUEST } }
+    function success(result) { return { type: deviceConstants.GET_DEVICE_PAGE_SUCCESS, result } }
+    function failure(error) { return { type: deviceConstants.GET_DEVICE_PAGE_FAILURE, error } }
 }
 
 /**
@@ -103,6 +128,30 @@ function updateDevice(deviceDoc) {
     function request(deviceDoc) { return { type: deviceConstants.UPDATE_DEVICE_REQUEST, deviceDoc } }
     function success(result) { return { type: deviceConstants.UPDATE_DEVICE_SUCCESS, result } }
     function failure(error) { return { type: deviceConstants.UPDATE_DEVICE_FAILURE, error } }
+}
+
+/**
+ * 
+ * @param {*} deviceDoc 
+ */
+function partialUpdateDevice(docId, deviceDoc) {
+    return dispatch => {
+        dispatch(request(docId, deviceDoc));
+
+        deviceService.partialUpdate(docId, deviceDoc)
+            .then(
+                result => {
+                    dispatch(success(result));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                }
+            );
+    };
+
+    function request(docId, deviceDoc) { return { type: deviceConstants.PARTIAL_UPDATE_TARGET_REQUEST, docId, deviceDoc } }
+    function success(result) { return { type: deviceConstants.PARTIAL_UPDATE_TARGET_SUCCESS, result } }
+    function failure(error) { return { type: deviceConstants.PARTIAL_UPDATE_TARGET_FAILURE, error } }
 }
 
 /**

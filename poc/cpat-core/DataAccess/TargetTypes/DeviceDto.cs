@@ -1,4 +1,5 @@
 ﻿using cpat_core.Models;
+using cpat_core.Models.Utility;
 using NPoco;
 using System;
 using System.Collections.Generic;
@@ -12,12 +13,17 @@ namespace cpat_core.DataAccess.TargetTypes
         [Column("id")] public Guid Id { get; set; }
 
         [Column("name")] public string Name { get; set; }
-        [Column("organizations")] public string Organizations { get; set; } // translates to JSONB in database?
+
+        [Column("organizations")] 
+        [SerializedColumn]
+        public List<Organization> Organizations { get; set; } // translates to JSONB in database?
 
         /// <summary>
         /// An attempt at using JSONB for the <c>DocumentRelation</c> structure for each document
         /// </summary>
-        [Column("documentrelation")] public List<DocumentRelation> DocumentRelation { get; set; } // translates to JSONB in database?
+        [Column("documentrelation")]
+        [SerializedColumn]
+        public List<DocumentRelation> DocumentRelation { get; set; } // translates to JSONB in database?
 
         [Column("datecreated")] public DateTime DateCreated { get; set; }
         [Column("updatedat")] public DateTime UpdatedAt { get; set; }
@@ -32,9 +38,8 @@ namespace cpat_core.DataAccess.TargetTypes
         {
             return new DeviceDto()
             {
-                Id = Guid.NewGuid(),
                 Name = data.Name,
-                // Organizations = data.Organizations,
+                Organizations = data.Organizations,
                 DocumentRelation = data.DocumentRelation,
                 DateCreated = data.DateCreated != null ? data.DateCreated : DateTime.Now,
                 UpdatedAt = data.UpdatedAt != null ? data.UpdatedAt : DateTime.Now

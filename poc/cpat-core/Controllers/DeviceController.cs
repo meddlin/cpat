@@ -4,13 +4,16 @@ using Microsoft.Extensions.Logging;
 using cpat_core.Models;
 using cpat_core.DataAccess.DataControl;
 using Microsoft.AspNetCore.Cors;
+using cpat_core.Models.Utility;
+using Morcatko.AspNetCore.JsonMergePatch;
+using System;
 
 namespace cpat_core.Controllers
 {
-    [Produces("application/json")]
     [EnableCors("AppPolicy")]
+    [Produces("application/json")]
+    [Route("api/Device/[action]/{id?}")]
     [ApiController]
-    [Route("[controller]")]
     public class DeviceController : ControllerBase
     {
         private readonly ILogger<DeviceController> _logger;
@@ -25,15 +28,22 @@ namespace cpat_core.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IEnumerable<Device> Get()
+        public Device Get([FromRoute] string id)
         {
-            // var q = new DeviceQuery();
-            // q.GetSingle(id);
+            var query = new DeviceQuery();
+            return query.GetSingle(new Guid(id));
+        }
 
-            return new List<Device>() { 
-                new Device() { Name = "Phone" }, 
-                new Device() { Name = "PC" } 
-            };
+        /// <summary>
+        /// Retrieve a "page" of <c>Device</c> documents.
+        /// </summary>
+        /// <param name="pageDoc"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public IEnumerable<Device> Page([FromBody] PageRequest pageDoc)
+        {
+            var query = new DeviceQuery();
+            return query.GetPage(pageDoc.Page, pageDoc.PageSize, new System.DateTime());
         }
 
         /// <summary>
@@ -68,6 +78,31 @@ namespace cpat_core.Controllers
         {
             var q = new DeviceQuery();
             return q.Update(data);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="patch"></param>
+        /// <returns></returns>
+        [HttpPatch]
+        [Consumes(JsonMergePatchDocument.ContentType)]
+        public int PartialUpdate([FromRoute] string id, [FromBody] JsonMergePatchDocument<Device> patch)
+        {
+            Guid docId = new Guid(id);
+
+            var ops = new List<string>();
+            patch.Operations.ForEach(op =>
+            {
+                ops.Add(op.path.TrimStart('/'));
+            });
+
+            var data = new Device();
+            patch.ApplyTo(data);
+
+            var query = new DeviceQuery();
+            return query.PartialUpdate(docId, data, ops);
         }
 
         /// <summary>

@@ -5,11 +5,15 @@ import { connect } from 'react-redux';
 
 import { TargetListing } from './pages/TargetListing';
 import { PersonListing } from './pages/PersonListing';
+import { LocationListing } from './pages/LocationListing';
+import { DeviceListing } from './pages/DeviceListing';
+// import { CompanyListing } from './pages/CompanyListing';
+
 import { TargetDetail } from './components/target-types/target/TargetDetail';
 import { PersonDetail } from './components/target-types/person/PersonDetail';
-
-import { LocationListing } from './pages/LocationListing';
 import { LocationDetail } from './components/target-types/location/LocationDetail';
+import { DeviceDetail } from './components/target-types/device/DeviceDetail';
+// import { CompanyDetail } from './components/target-types/company/CompanyDetail';
 
 import { CompanyCreate } from './components/target-types/company/forms/CompanyCreate';
 import { DeviceCreate } from './components/target-types/device/forms/DeviceCreate';
@@ -27,16 +31,7 @@ const Dashboard = React.lazy(() => import ('./pages/Dashboard'));
 const NavigationBar = React.lazy(() => import ('./components/NavigationBar'));
 
 const CompanyListing = React.lazy(() => import ('./pages/CompanyListing'));
-const DeviceListing = React.lazy(() => import ('./pages/DeviceListing'));
-// const LocationListing = React.lazy(() => import ('./pages/LocationListing'));
-// const PersonListing = React.lazy(() => import ('./pages/PersonListing'));
-// const TargetListing = React.lazy(() => import ('./pages/TargetListing'));
-
 const CompanyDetail = React.lazy(() => import ('./components/target-types/company/CompanyDetail'));
-const DeviceDetail = React.lazy(() => import ('./components/target-types/device/DeviceDetail'));
-// const LocationDetail = React.lazy(() => import ('./components/target-types/location/LocationDetail'));
-// const PersonDetail = React.lazy(() => import ('./components/target-types/person/PersonDetail'));
-// const TargetDetail = React.lazy(() => import ('./components/target-types/target/TargetDetail'));
 
 const App = () => {
 	return (
