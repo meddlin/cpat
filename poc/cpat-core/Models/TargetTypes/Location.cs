@@ -30,6 +30,7 @@ namespace cpat_core.Models
         {
             return new Location()
             {
+                Id = data.Id,
                 Name = data.Name,
                 Latitude = data.Latitude,
                 Longitude = data.Longitude,

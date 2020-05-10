@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withFormik, Form, FieldArray } from 'formik';
 import * as Yup from 'yup';
-import { TargetCreateFormArray } from './TargetCreateFormArray';
+import { TargetDocumentRelationFormArray } from './form-arrays/TargetDocumentRelationFormArray';
 import { Button, TextInput, Heading } from 'evergreen-ui';
 import styled from 'styled-components';
 import { targetActions } from '../../../../state-management/target/actions';
@@ -91,7 +91,7 @@ const TargetCreate = (props) => {
                         label="Last Modified By"
                         value={values.lastModifiedBy || `You - User 1`} />
 
-                    <FieldArray name="documentRelation" component={TargetCreateFormArray} />
+                    <FieldArray name="documentRelation" component={TargetDocumentRelationFormArray} />
 
                     <div style={{ display: 'flex' }}>
                         <Button type="submit">Create</Button>

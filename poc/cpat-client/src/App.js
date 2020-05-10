@@ -8,6 +8,9 @@ import { PersonListing } from './pages/PersonListing';
 import { TargetDetail } from './components/target-types/target/TargetDetail';
 import { PersonDetail } from './components/target-types/person/PersonDetail';
 
+import { LocationListing } from './pages/LocationListing';
+import { LocationDetail } from './components/target-types/location/LocationDetail';
+
 import { CompanyCreate } from './components/target-types/company/forms/CompanyCreate';
 import { DeviceCreate } from './components/target-types/device/forms/DeviceCreate';
 import { LocationCreate } from './components/target-types/location/forms/LocationCreate';
@@ -25,13 +28,13 @@ const NavigationBar = React.lazy(() => import ('./components/NavigationBar'));
 
 const CompanyListing = React.lazy(() => import ('./pages/CompanyListing'));
 const DeviceListing = React.lazy(() => import ('./pages/DeviceListing'));
-const LocationListing = React.lazy(() => import ('./pages/LocationListing'));
+// const LocationListing = React.lazy(() => import ('./pages/LocationListing'));
 // const PersonListing = React.lazy(() => import ('./pages/PersonListing'));
 // const TargetListing = React.lazy(() => import ('./pages/TargetListing'));
 
 const CompanyDetail = React.lazy(() => import ('./components/target-types/company/CompanyDetail'));
 const DeviceDetail = React.lazy(() => import ('./components/target-types/device/DeviceDetail'));
-const LocationDetail = React.lazy(() => import ('./components/target-types/location/LocationDetail'));
+// const LocationDetail = React.lazy(() => import ('./components/target-types/location/LocationDetail'));
 // const PersonDetail = React.lazy(() => import ('./components/target-types/person/PersonDetail'));
 // const TargetDetail = React.lazy(() => import ('./components/target-types/target/TargetDetail'));
 

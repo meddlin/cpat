@@ -3,14 +3,14 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withFormik, Form, FieldArray } from 'formik';
 import * as Yup from 'yup';
-import { TargetCreateFormArray } from './TargetCreateFormArray';
+import { TargetDocumentRelationFormArray } from './form-arrays/TargetDocumentRelationFormArray';
 import { Button, TextInput, Heading } from 'evergreen-ui';
 import styled from 'styled-components';
 import { targetActions } from '../../../../state-management/target/actions';
 import Target from '../../../../data/Target';
 
 const FormStyle = styled.div`
-    padding: 3em;    
+    padding: 3em;
 
     form {
         display: flex;
@@ -82,7 +82,7 @@ const TargetUpdate = (props) => {
                         />
                         {(touched.collectionType && errors.collectionType) ? <div>{errors.collectionType}</div> : ""}
 
-                        <FieldArray name="documentRelation" component={TargetCreateFormArray} />
+                        <FieldArray name="documentRelation" component={TargetDocumentRelationFormArray} />
 
                         <label>Date Created:</label>
                         <TextInput 

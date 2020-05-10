@@ -18,7 +18,9 @@ namespace cpat_core.DataAccess.TargetTypes
         /// <summary>
         /// An attempt at using JSONB for the <c>DocumentRelation</c> structure for each document
         /// </summary>
-        [Column("documentrelation")] public List<DocumentRelation> DocumentRelation { get; set; } // translates to JSONB in database?
+        [Column("documentrelation")] 
+        [SerializedColumn]
+        public List<DocumentRelation> DocumentRelation { get; set; } // translates to JSONB in database?
 
         [Column("datecreated")] public DateTime DateCreated { get; set; }
         [Column("updatedat")] public DateTime UpdatedAt { get; set; }
@@ -33,10 +35,12 @@ namespace cpat_core.DataAccess.TargetTypes
         {
             return new LocationDto()
             {
-                Id = Guid.NewGuid(),
+                //Id = Guid.NewGuid(),
                 Name = data.Name,
-                // Organizations = data.Organizations,
-                // DocumentRelationJson = data.Relations,
+                Latitude = data.Latitude,
+                Longitude = data.Longitude,
+
+                DocumentRelation = data.DocumentRelation,
                 DateCreated = data.DateCreated != null ? data.DateCreated : DateTime.Now,
                 UpdatedAt = data.UpdatedAt != null ? data.UpdatedAt : DateTime.Now
             };
