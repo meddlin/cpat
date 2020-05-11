@@ -138,7 +138,7 @@ const formikEnhancer = withFormik({
 function mapStateToProps(state) {
     const {  } = state;
     return {
-        device: (state.device && state.device.devices) ? state.device.devices : {},
+        device: (state.device && state.device.device) ? state.device.device : {},
         updateResult: (state.device && state.device.partialUpdateResult) ? state.device.partialUpdateResult : 0,
         loading: state.device ? state.device.loading : false
     };
