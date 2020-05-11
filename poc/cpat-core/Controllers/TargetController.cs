@@ -56,8 +56,6 @@ namespace cpat_core.Controllers
         [HttpPost]
         public void Insert([FromBody] Target data)
         {
-
-
             var query = new TargetQuery();
             query.Insert(data);
         }
@@ -99,7 +97,6 @@ namespace cpat_core.Controllers
             patch.ApplyTo(data);
 
             var query = new TargetQuery();
-            //return query.Update(docId, data);
             return query.PartialUpdate(docId, data, ops);
         }
 

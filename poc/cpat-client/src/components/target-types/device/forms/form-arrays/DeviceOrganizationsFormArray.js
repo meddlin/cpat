@@ -1,12 +1,13 @@
 import React from 'react';
-import { withFormik, Form, FieldArray } from 'formik';
+import { withFormik, Form } from 'formik';
 import { Button, TextInput, Heading } from 'evergreen-ui';
-import { validations } from '../../../../../data/form-helpers/formArray-property-validation';
 import styled from 'styled-components';
+import { validations } from '../../../../../data/form-helpers/formArray-property-validation';
+// import { v4 as uuidv4 } from 'uuid';
 
-export const PersonOrganizationsFormArray = ({ move, swap, push, insert, remove, unshift, pop, form })  => (
-    <Form>
-        <div>Organizations</div>
+export const DeviceOrganizationsFormArray = ({ move, swap, push, insert, remove, unshift, pop, form }) => (
+	<Form>
+        <div className="ms-fontSize-16">Organizations</div>
 
 		{/**
 		 * Inserts the initial values to the beginning of the array
@@ -15,11 +16,6 @@ export const PersonOrganizationsFormArray = ({ move, swap, push, insert, remove,
 		 * - **Only perform this 'unshift()' operation if the initial.values is "longer" than the form.values**
 		 * 		-- NOTE: Formik will re-render the form a few times. This piece is key to NOT having multiple duplicates of intial.values left in the form!
 		 */}
-		{/* {Array.isArray(form.initialValues.organizations) && Array.isArray(form.values.organizations) && (form.initialValues.organizations.length > form.values.organizations.length) ? (
-			form.initialValues.organizations.map(init => (
-				form.values.organizations.unshift(init)
-			))
-		) : ''} */}
 		{validations.emptyFormValues(form.initialValues.organizations, form.values.organizations) || 
 			validations.initialLongerThanValues(form.initialValues.organizations, form.values.organizations) ? (
 						form.initialValues.organizations.map((init, idx) => (
@@ -32,20 +28,20 @@ export const PersonOrganizationsFormArray = ({ move, swap, push, insert, remove,
                 <div key={index}>
                     <div>
 						<div>
-                            <label>Name</label>
+                            <label>Organization Name</label>
 							<TextInput 
 								name={`organizations.${index}.name`} 
-								label="Name"
+								label="Organization Name"
 								onChange={form.handleChange}
 								value={r.name} />
 						</div>
-                        <div>
-                            <label>Meta Info</label>
+						<div>
+                            <label>Organization MetaInfo</label>
 							<TextInput 
 								name={`organizations.${index}.metaInfo`} 
-								label="Meta Info"
+								label="Organization Metainfo"
 								onChange={form.handleChange}
-								value={r.metaInfo} />
+                                value={r.metaInfo} />
 						</div>
 						<div>
 							<Button 
@@ -59,7 +55,7 @@ export const PersonOrganizationsFormArray = ({ move, swap, push, insert, remove,
                 </div>
             ))
         ) : (
-            <Button type="button" onClick={() => push({name: "", metaInfo: ""})}>Add an Organization</Button>
+            <Button type="button" onClick={() => push({name: '', metaInfo: ''})}>Add an Organization</Button>
         )}
     </Form>
 );

@@ -117,7 +117,6 @@ namespace cpat_core.DataAccess.DataControl
                     var dto = TargetDto.Translate(target);
 
                     db.Connection.Open();
-                    //var res = db.Insert<TargetDto>("target", "id", dto); 
                     db.Save<TargetDto>(TargetDto.Translate(target));
                     db.Connection.Close();
                 }

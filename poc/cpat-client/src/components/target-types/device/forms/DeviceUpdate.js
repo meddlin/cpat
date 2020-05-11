@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { withFormik, Form } from 'formik';
+import { withFormik, Form, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import styled from 'styled-components';
+import { Button, TextInput, Heading } from 'evergreen-ui';
+import { DeviceDocumentRelationFormArray } from './form-arrays/DeviceDocumentRelationFormArray';
+import { DeviceOrganizationsFormArray } from './form-arrays/DeviceOrganizationsFormArray';
 import { deviceActions } from '../../../../state-management/device/actions';
+import Device from '../../../../data/Device';
 
 const FormStyle = styled.div`
     padding: 3em;    
@@ -16,6 +20,9 @@ const FormStyle = styled.div`
 `;
 
 const DeviceUpdate = (props) => {
+    let history = useHistory();
+    let match = props.match; //useRouteMatch('/company/update/:id');
+
     const {
         values,
         touched,
@@ -25,52 +32,70 @@ const DeviceUpdate = (props) => {
         handleReset,
     } = props;
 
-    let history = useHistory();
-    let match = useRouteMatch('/company/update/:id');
-    console.log(`match: ${match && match.params ? match.params.id : ''}`);
+    // Other supporting values supplied via props
+    const { dispatch, device, loading, updateResult } = props;
+
+    useEffect(() => {
+        dispatch(deviceActions.getDevice(match.params.id));
+    }, []);
 
     return (
         <div>
             <h2>Device: Update</h2>
+            <h2>Updating: {device && device.name ? device.name : ''}</h2>
 
-            <FormStyle>
-                <Form>
-                    <label>Name</label>
-                    <input 
-                        name="name"
-                        label="Name"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.name}
-                    />
-                    {(touched.name && errors.name) ? <div>{errors.name}</div> : ""}
+            <p>
+                <b>update result: {(updateResult !== null) ? updateResult : ''}</b>
+            </p>
 
-                    <label>Date Created:</label>
-                    <input 
-                        disabled 
+            {loading === true ? <h3>Loading...</h3> : 
+                <div>
+                    <FormStyle>
+                        <Form>
+                            <label>Name</label>
+                            <TextInput 
+                                name="name"
+                                label="Name"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.name || device.name}
+                            />
+                            {(touched.name && errors.name) ? <div>{errors.name}</div> : ""}
 
-                        value={`${new Date('2020-01-30').toLocaleDateString()}`} />
+                            <FieldArray name="organizations" component={DeviceOrganizationsFormArray} />
+                            <FieldArray name="documentRelation" component={DeviceDocumentRelationFormArray} />
 
-                    <label>Updated At:</label>
-                    <input 
-                        disabled 
-                        name="updatedAt"
-                        label="Updated At"
-                        value={`${new Date().toLocaleDateString()}`} />
+                            <label>Date Created:</label>
+                            <TextInput 
+                                disabled 
+                                name="dateCreated"
+                                label="Date Created"
+                                value={device.dateCreated} />
 
-                    <label>Last Modified By:</label>
-                    <input 
-                        disabled 
-                        name="lastModifiedBy"
-                        label="Last Modified By"
-                        value={`You - User 1`} />
-                </Form>
+                            <label>Updated At:</label>
+                            <TextInput 
+                                disabled 
+                                name="updatedAt"
+                                label="Updated At"
+                                value={device.updatedAt} />
 
-                <button type="submit">Create</button>
-                <button onClick={handleReset}>Cancel</button>
+                            <label>Last Modified By:</label>
+                            <TextInput 
+                                disabled 
+                                name="lastModifiedBy"
+                                label="Last Modified By"
+                                value={device.lastModifiedBy || `some user`} />
 
-                <button onClick={() => history.goBack()}>Back</button>
-            </FormStyle>
+                            <div style={{ display: 'flex' }}>
+                                <Button type="submit">Save Update</Button>
+                                <Button onClick={handleReset}>Cancel</Button>
+                            </div>
+                        </Form>
+
+                        <Button onClick={() => history.goBack()}>Back</Button>
+                    </FormStyle>
+                </div>
+            }
         </div>
     )
 };
@@ -78,35 +103,45 @@ const DeviceUpdate = (props) => {
 const formikEnhancer = withFormik({
     mapPropsToValues: ({ 
         name,
+        organizations,
+        documentRelation,
         updatedAt,
-        lastModifiedBy
+        lastModifiedBy,
+
+        device
     }) => {
         return {
-            name: name || '',
-
-            updatedAt: updatedAt,
-            lastModifiedBy: lastModifiedBy
+            name: name || device.name,
+            organizations: (Array.isArray(organizations) && organizations.length > 0) || device.organizations,
+            documentRelation: (Array.isArray(documentRelation) && documentRelation.length > 0) || device.documentRelation,
+            updatedAt: updatedAt || device.updatedAt,
+            lastModifiedBy: lastModifiedBy || device.lastModifiedBy
         }
     },
     validationSchema: Yup.object().shape({
         name: Yup.string().required('Name is required')
     }),
     handleSubmit: (values, { props, setSubmitting }) => {
-        let deviceDocument = {
-            name: values.name || '',
+        let newDevice = new Device();
+        newDevice.name = values.name;
+        newDevice.organizations = values.organizations;
+        newDevice.documentRelation = values.documentRelation;
+        newDevice.dateCreated = values.dateCreated;
+        newDevice.updatedAt = values.updatedAt;
+        newDevice.lastModifiedBy = values.lastModifiedBy;
 
-            updatedAt: values.updatedAt,
-            lastModifiedBy: values.lastModifiedBy
-        };
-
-        props.dispatch(deviceActions.updateDevice(deviceDocument));
+        props.dispatch(deviceActions.partialUpdateDevice(props.device.id, newDevice.apiObject()));
         setSubmitting(false);
     }
 })(DeviceUpdate);
 
 function mapStateToProps(state) {
     const {  } = state;
-    return { };
+    return {
+        device: (state.device && state.device.device) ? state.device.device : {},
+        updateResult: (state.device && state.device.partialUpdateResult) ? state.device.partialUpdateResult : 0,
+        loading: state.device ? state.device.loading : false
+    };
 }
 
 const DeviceUpdateConnection = connect(mapStateToProps)(formikEnhancer);

@@ -1,5 +1,6 @@
 using cpat_core.DataAccess.TargetTypes;
 using cpat_core.Models.TargetTypes;
+using cpat_core.Models.Utility;
 using System;
 using System.Collections.Generic;
 
@@ -14,7 +15,7 @@ namespace cpat_core.Models
     public class Device : AbstractTarget
     {
         public string Name { get; set; }
-        public List<string> Organizations { get; set; }
+        public List<Organization> Organizations { get; set; }
 
         /// <summary>
         /// A list of <c>DocumentRelation</c> objects connecting one <c>Device</c> to
@@ -32,9 +33,9 @@ namespace cpat_core.Models
         {
             return new Device()
             {
+                Id = data.Id,
                 Name = data.Name,
-                //Organizations = data.Organizations,
-
+                Organizations = data.Organizations,
                 DocumentRelation = data.DocumentRelation,
 
                 DateCreated = data.DateCreated,

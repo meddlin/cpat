@@ -1,6 +1,7 @@
 import React from 'react';
 import { withFormik, Form, FieldArray } from 'formik';
 import { Button, TextInput, Heading } from 'evergreen-ui';
+import { validations } from '../../../../../data/form-helpers/formArray-property-validation';
 import styled from 'styled-components';
 
 export const PersonEmployersFormArray = ({ move, swap, push, insert, remove, unshift, pop, form })  => (
@@ -14,10 +15,16 @@ export const PersonEmployersFormArray = ({ move, swap, push, insert, remove, uns
 		 * - **Only perform this 'unshift()' operation if the initial.values is "longer" than the form.values**
 		 * 		-- NOTE: Formik will re-render the form a few times. This piece is key to NOT having multiple duplicates of intial.values left in the form!
 		 */}
-		{Array.isArray(form.initialValues.employers) && Array.isArray(form.values.employers) && (form.initialValues.employers.length > form.values.employers.length) ? (
+		{/* {Array.isArray(form.initialValues.employers) && Array.isArray(form.values.employers) && (form.initialValues.employers.length > form.values.employers.length) ? (
 			form.initialValues.employers.map(init => (
 				form.values.employers.unshift(init)
 			))
+		) : ''} */}
+		{validations.emptyFormValues(form.initialValues.employers, form.values.employers) || 
+			validations.initialLongerThanValues(form.initialValues.employers, form.values.employers) ? (
+						form.initialValues.employers.map((init, idx) => (
+							form.values.employers.unshift(init)
+						))
 		) : ''}
 
         {form.values.employers && form.values.employers.length > 0 ? (

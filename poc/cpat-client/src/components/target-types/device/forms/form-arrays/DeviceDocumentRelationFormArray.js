@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { validations } from '../../../../../data/form-helpers/formArray-property-validation';
 // import { v4 as uuidv4 } from 'uuid';
 
-export const PersonDocumentRelationsFormArray = ({ move, swap, push, insert, remove, unshift, pop, form }) => (
+export const DeviceDocumentRelationFormArray = ({ move, swap, push, insert, remove, unshift, pop, form }) => (
     <Form>
         <div className="ms-fontSize-16">Relations</div>
 
