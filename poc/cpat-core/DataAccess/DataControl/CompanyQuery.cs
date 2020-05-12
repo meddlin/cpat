@@ -10,6 +10,7 @@ namespace cpat_core.DataAccess.DataControl
     public class CompanyQuery
     {
         private Database dbAccess;
+        private const string _TABLE_NAME_ = "company";
 
         public CompanyQuery()
         {
@@ -30,7 +31,14 @@ namespace cpat_core.DataAccess.DataControl
                 using (var db = new NPoco.Database(conn))
                 {
                     db.Connection.Open();
-                    company = Company.Translate(db.Fetch<CompanyDto>().FirstOrDefault());
+                    company = Company.Translate(
+                        db.Fetch<CompanyDto>(new NPoco.Sql(
+                            $@"
+                                select * 
+                                from {_TABLE_NAME_}
+                                where id  = @0
+                            ", id)).FirstOrDefault()
+                    );
                     db.Connection.Close();
                 }
             }
@@ -53,6 +61,44 @@ namespace cpat_core.DataAccess.DataControl
             //}
 
             return new List<Company>();
+        }
+
+        /// <summary>
+        /// Retrieve a lsit of <c>Company</c> one page at a time. Change the value of page and pageSize to alter the amount of
+        /// <c>Company</c> returned on each query.
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="minval"></param>
+        /// <returns></returns>
+        public IEnumerable<Company> GetPage(int page, int pageSize, DateTime minval)
+        {
+            var list = new List<Company>();
+            minval = minval == null ? new DateTime(year: 2000, month: 0, day: 0) : minval;
+
+            using (var conn = new NpgsqlConnection(dbAccess.connectionString))
+            {
+                using (var db = new NPoco.Database(conn))
+                {
+                    db.Connection.Open();
+
+                    // NOTE: This hard-coding a minimum date value is a temporary fix. Later on, we
+                    //      want to change this to some minimum value of the TIMESTAMP data type.
+                    list = Company.Translate(
+                        db.Fetch<CompanyDto>(new NPoco.Sql(
+                            $@"select * 
+                                from {_TABLE_NAME_}
+                                where datecreated > TIMESTAMP '2000-01-01'
+                                order by datecreated desc
+                                limit {pageSize}"
+                        ))
+                    ).ToList();
+
+                    db.Connection.Close();
+                }
+            }
+
+            return list;
         }
 
         /// <summary>
@@ -104,6 +150,29 @@ namespace cpat_core.DataAccess.DataControl
                 {
                     db.Connection.Open();
                     res = db.Update(CompanyDto.Translate(company));
+                    db.Connection.Close();
+                }
+            }
+
+            return res;
+        }
+
+        /// <summary>
+        /// Partial update for <c>CompanyDto</c> by only updating the specified columns.
+        /// </summary>
+        /// <param name="docId"></param>
+        /// <param name="company"></param>
+        /// <param name="ops">A <c>string</c> collection </param>
+        /// <returns></returns>
+        public int PartialUpdate(Guid docId, Company company, IEnumerable<string> ops)
+        {
+            int res;
+            using (var conn = new NpgsqlConnection(dbAccess.connectionString))
+            {
+                using (var db = new NPoco.Database(conn))
+                {
+                    db.Connection.Open();
+                    res = db.Update(CompanyDto.Translate(company), docId, ops);
                     db.Connection.Close();
                 }
             }
