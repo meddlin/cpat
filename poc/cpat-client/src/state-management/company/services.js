@@ -2,9 +2,11 @@ import { handlers } from '../../state-management/helpers/http-response-handler';
 
 export const companyService = {
     getSingle,
+    getPage,
     getList,
     insert,
     update,
+    partialUpdate,
     remove
 };
 
@@ -18,8 +20,24 @@ function getSingle(id) {
         headers: { 'Content-Type': 'application/json' },
     };
 
-    return fetch(`${handlers.config.apiUrl}/table/${id}`, requestOptions).then(handlers.handleHttpResponse);
+    return fetch(`${handlers.config.apiUrl}/company/get/${id}`, requestOptions).then(handlers.handleHttpResponse);
 };
+
+/**
+ * 
+ */
+function getPage() {
+    const page = 1;
+    const pageSize = 3;
+
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({page: 1, pageSize: 3})
+    };
+
+    return fetch(`${handlers.config.apiUrl}/company/page`, requestOptions).then(handlers.handleHttpResponse);
+}
 
 /**
  * 
@@ -31,7 +49,7 @@ function getList(idList) {
         headers: { 'Content-Type': 'application/json' },
     };
 
-    return fetch(`${handlers.config.apiUrl}/table/${idList}`, requestOptions).then(handlers.handleHttpResponse);
+    return fetch(`${handlers.config.apiUrl}/company/${idList}`, requestOptions).then(handlers.handleHttpResponse);
 };
 
 /**
@@ -45,7 +63,7 @@ function insert(companyDoc) {
         body: JSON.stringify(companyDoc)
     };
 
-    return fetch(`${handlers.config.apiUrl}/table`, requestOptions).then(handlers.handleHttpResponse);
+    return fetch(`${handlers.config.apiUrl}/company/insert`, requestOptions).then(handlers.handleHttpResponse);
 };
 
 /**
@@ -59,8 +77,23 @@ function update(companyDoc) {
         body: JSON.stringify(companyDoc)
     };
 
-    return fetch(`${handlers.config.apiUrl}/table`, requestOptions).then(handlers.handleHttpResponse);
+    return fetch(`${handlers.config.apiUrl}/company`, requestOptions).then(handlers.handleHttpResponse);
 };
+
+/**
+ * Used for partial document updates via JSON Merge Patch mechanism.
+ * @param {*} docId 
+ * @param {*} companyDoc 
+ */
+function partialUpdate(docId, companyDoc) {
+    const requestOptions = {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/merge-patch+json'},
+        body: JSON.stringify(companyDoc)
+    };
+
+    return fetch(`${handlers.config.apiUrl}/company/PartialUpdate/${docId}`, requestOptions).then(handlers.handleHttpResponse);
+}
 
 /**
  * 
@@ -73,5 +106,5 @@ function remove(id) {
         body: JSON.stringify(id)
     };
 
-    return fetch(`${handlers.config.apiUrl}/table`, requestOptions).then(handlers.handleHttpResponse);
+    return fetch(`${handlers.config.apiUrl}/company`, requestOptions).then(handlers.handleHttpResponse);
 };

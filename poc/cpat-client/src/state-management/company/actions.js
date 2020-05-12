@@ -3,9 +3,11 @@ import { companyService } from './services';
 
 export const companyActions = {
     getCompany,
+    getCompanyPage,
     getCompanyList,
     insertCompany,
     updateCompany,
+    partialUpdateCompany,
     removeCompany
 };
 
@@ -31,6 +33,29 @@ function getCompany(id) {
     function request(id) { return { type: companyConstants.GET_COMPANY_REQUEST, id } }
     function success(result) { return { type: companyConstants.GET_COMPANY_SUCCESS, result } }
     function failure(error) { return { type: companyConstants.GET_COMPANY_FAILURE, error } }
+}
+
+/**
+ * 
+ */
+function getCompanyPage() {
+    return dispatch => {
+        dispatch(request());
+
+        companyService.getPage()
+            .then(
+                result => {
+                    dispatch(success(result));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                }
+            )
+    }
+
+    function request() { return { type: companyConstants.GET_COMPANY_PAGE_REQUEST } }
+    function success(result) { return { type: companyConstants.GET_COMPANY_PAGE_SUCCESS, result } }
+    function failure(error) { return { type: companyConstants.GET_COMPANY_PAGE_FAILURE, error } }
 }
 
 /**
@@ -103,6 +128,30 @@ function updateCompany(companyDoc) {
     function request(companyDoc) { return { type: companyConstants.UPDATE_COMPANY_REQUEST, companyDoc } }
     function success(result) { return { type: companyConstants.UPDATE_COMPANY_SUCCESS, result } }
     function failure(error) { return { type: companyConstants.UPDATE_COMPANY_FAILURE, error } }
+}
+
+/**
+ * 
+ * @param {*} companyDoc 
+ */
+function partialUpdateCompany(docId, companyDoc) {
+    return dispatch => {
+        dispatch(request(docId, companyDoc));
+
+        companyService.partialUpdate(docId, companyDoc)
+            .then(
+                result => {
+                    dispatch(success(result));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                }
+            );
+    };
+
+    function request(docId, companyDoc) { return { type: companyConstants.PARTIAL_UPDATE_COMPANY_REQUEST, docId, companyDoc } }
+    function success(result) { return { type: companyConstants.PARTIAL_UPDATE_COMPANY_SUCCESS, result } }
+    function failure(error) { return { type: companyConstants.PARTIAL_UPDATE_COMPANY_FAILURE, error } }
 }
 
 /**
