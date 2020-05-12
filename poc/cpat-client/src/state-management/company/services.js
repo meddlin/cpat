@@ -77,7 +77,7 @@ function update(companyDoc) {
         body: JSON.stringify(companyDoc)
     };
 
-    return fetch(`${handlers.config.apiUrl}/company`, requestOptions).then(handlers.handleHttpResponse);
+    return fetch(`${handlers.config.apiUrl}/company/update`, requestOptions).then(handlers.handleHttpResponse);
 };
 
 /**
