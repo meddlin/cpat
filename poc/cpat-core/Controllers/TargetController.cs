@@ -33,7 +33,6 @@ namespace cpat_core.Controllers
         public Target Get([FromRoute] string id)
         {
             var query = new TargetQuery();
-
             return query.GetSingle(new System.Guid(id));
         }
 

@@ -1,11 +1,14 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { withFormik, Form } from 'formik';
+import { withFormik, Form, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import { Button, TextInput, Heading } from 'evergreen-ui';
+import { CompanyDocumentRelationFormArray } from './form-arrays/CompanyDocumentRelationFormArray';
 import styled from 'styled-components';
+import User from '../../../../data/User';
 import { companyActions } from '../../../../state-management/company/actions';
+import Company from '../../../../data/Company';
 
 const FormStyle = styled.div`
     padding: 3em;    
@@ -49,14 +52,14 @@ const CompanyCreate = (props) => {
                         disabled 
                         name="dateCreated"
                         label="Date Created"
-                        value={`${new Date('2020-01-30').toLocaleDateString()}`} />
+                        value={values.dateCreated || `${new Date('2020-01-30').toLocaleDateString()}`} />
 
                     <label>Updated At:</label>
                     <TextInput 
                         disabled 
                         name="updatedAt"
                         label="Updated At"
-                        value={`${new Date().toLocaleDateString()}`} />
+                        value={values.updatedAt || `${new Date().toLocaleDateString()}`} />
 
                     <label>Last Modified By:</label>
                     <TextInput 
@@ -64,10 +67,12 @@ const CompanyCreate = (props) => {
                         name="lastModifiedBy"
                         label="Last Modified By"
                         value={`You - User 1`} />
-                </Form>
+                    
+                    <FieldArray name="documentRelation" component={CompanyDocumentRelationFormArray} />
 
-                <Button type="submit">Create</Button>
-                <Button onClick={handleReset}>Cancel</Button>
+                    <Button type="submit">Create</Button>
+                    <Button onClick={handleReset}>Cancel</Button>
+                </Form>
 
                 <Button onClick={() => history.goBack()}>Back</Button>
             </FormStyle>
@@ -78,13 +83,14 @@ const CompanyCreate = (props) => {
 const formikEnhancer = withFormik({
     mapPropsToValues: ({ 
         name,
+        documentRelation,
         dateCreated,
         updatedAt,
         lastModifiedBy
     }) => {
         return {
             name: name || '',
-
+            documentRelation: documentRelation || [{}],
             dateCreated: dateCreated,
             updatedAt: updatedAt,
             lastModifiedBy: lastModifiedBy
@@ -94,15 +100,14 @@ const formikEnhancer = withFormik({
         name: Yup.string().required('Name is required')
     }),
     handleSubmit: (values, { props, setSubmitting }) => {
-        let companyDocument = {
-            name: values.name || '',
+        let newCompany = new Company();
+        newCompany.name = values.name || '';
+        newCompany.documentRelation = values.documentRelation || [];
+        newCompany.dateCreated = values.dateCreated || new Date();
+        newCompany.updatedAt = values.updatedAt || new Date();
+        newCompany.lastModifiedBy = values.lastModifiedBy || new User();
 
-            dateCreated: values.dateCreated,
-            updatedAt: values.updatedAt,
-            lastModifiedBy: values.lastModifiedBy
-        };
-
-        props.dispatch(companyActions.insertCompany(companyDocument));
+        props.dispatch(companyActions.insertCompany(newCompany.apiObject()));
         setSubmitting(false);
     }
 })(CompanyCreate);

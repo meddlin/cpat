@@ -26,7 +26,7 @@ CREATE TABLE device(
     datecreated TIMESTAMPTZ,
 
     name STRING,
-    organizations STRING[],
+    organizations JSONB,
 
     documentrelation JSONB,
     updatedat TIMESTAMPTZ,

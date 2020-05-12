@@ -1,80 +1,85 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { Dialog, Table, Button, Heading } from 'evergreen-ui';
 import { useHistory } from 'react-router-dom';
-const CompanyRemove = React.lazy(() => import ('../components/target-types/company/CompanyRemove'));
+import { companyActions } from '../state-management/company/actions';
 
-const data = [
-    {
-        id: '0',
-        name: 'ACME Inc.',
-        dateCreated: new Date().toLocaleDateString(),
-        updatedAt: new Date().toLocaleDateString(),
-        lastModifiedBy: 'User01'
-    },
-    {
-        id: '1',
-        name: 'ACME Corp.',
-        dateCreated: new Date().toLocaleDateString(),
-        updatedAt: new Date().toLocaleDateString(),
-        lastModifiedBy: 'User01'
-    },
-];
+const CompanyRemove = React.lazy(() => import('../components/target-types/company/CompanyRemove'));
 
-const CompanyListing = () => {
+const CompanyListing = (props) => {
     const [isShown, setIsShown] = useState(false);
     const [dialogObject, setDialogObject] = useState({});
+    const { dispatch, loading, companies } = props;
     let history = useHistory();
+
+    useEffect(() => {
+        dispatch(companyActions.getCompanyPage());
+    }, []);
 
     return (
         <div>
-            <Heading size={700}>CompanyListing</Heading>
+            <Heading size={700}>Company Listing</Heading>
 
-            <Table>
-                <Table.Head>
-                    <Table.TextHeaderCell>Name</Table.TextHeaderCell>
-                    <Table.TextHeaderCell>Date Created</Table.TextHeaderCell>
-                    <Table.TextHeaderCell>Last Modified By</Table.TextHeaderCell>
-                    <Table.TextHeaderCell></Table.TextHeaderCell>
-                    <Table.TextHeaderCell></Table.TextHeaderCell>
-                </Table.Head>
-                <Table.Body>
-                    {data.map(d => (
-                        <Table.Row key={d.id}>
-                            <Table.TextCell>{d.name}</Table.TextCell>
-                            <Table.TextCell>{d.dateCreated}</Table.TextCell>
-                            <Table.TextCell>{d.lastModifiedBy}</Table.TextCell>
-                            <Table.Cell onClick={() => history.push(`/company/update/${d.id}`)}>
-                                <Button appearance="minimal" intent="none">Update</Button>
-                            </Table.Cell>
-                            <Table.Cell onClick={() => {
-                                setDialogObject(d);
-                                setIsShown(true);
-                            }}>
-                                <Button appearance="minimal" intent="danger">Remove</Button>
-                            </Table.Cell>
-                        </Table.Row>
-                    ))}
-                </Table.Body>
-            </Table>
+            {loading === true ? <h3>Loading...</h3> :
+                <div>
+                    <Table>
+                        <Table.Head>
+                            <Table.TextHeaderCell>Name</Table.TextHeaderCell>
+                            <Table.TextHeaderCell>Date Created</Table.TextHeaderCell>
+                            <Table.TextHeaderCell>Last Modified By</Table.TextHeaderCell>
+                            <Table.TextHeaderCell></Table.TextHeaderCell>
+                            <Table.TextHeaderCell></Table.TextHeaderCell>
+                        </Table.Head>
+                        <Table.Body>
+                            {(companies && companies.length > 0) ? companies.map(d => (
+                                <Table.Row key={d.id}>
+                                    <Table.Cell onClick={() => history.push(`/company/detail/${d.id}`)}>
+                                        <Button appearance="minimal" intent="none">{d.name}</Button>
+                                    </Table.Cell>
+                                    <Table.TextCell>{d.dateCreated}</Table.TextCell>
+                                    <Table.TextCell>{d.lastModifiedBy}</Table.TextCell>
+                                    <Table.Cell onClick={() => history.push(`/company/update/${d.id}`)}>
+                                        <Button appearance="minimal" intent="none">Update</Button>
+                                    </Table.Cell>
+                                    <Table.Cell onClick={() => {
+                                        setDialogObject(d);
+                                        setIsShown(true);
+                                    }}>
+                                        <Button appearance="minimal" intent="danger">Remove</Button>
+                                    </Table.Cell>
+                                </Table.Row>
+                            )) : []}
+                        </Table.Body>
+                    </Table>
 
-            <Button 
-                appearance="minimal" 
-                intent="success"
-                onClick={() => history.push("/company/create")}>
-                Create New
-            </Button>
+                    <Button 
+                        appearance="minimal" 
+                        intent="success"
+                        onClick={() => history.push("/company/create")}>
+                        Create New
+                    </Button>
 
-            <Dialog
-                isShown={isShown}
-                title="Danger intent"
-                intent="danger"
-                onCloseComplete={() => setIsShown(false)}
-                confirmLabel="Delete">
+                    <Dialog
+                        isShown={isShown}
+                        title="Danger intent"
+                        intent="danger"
+                        onCloseComplete={() => setIsShown(false)}
+                        confirmLabel="Delete">
 
-                <CompanyRemove data={dialogObject} />
-            </Dialog>
+                        <CompanyRemove data={dialogObject} />
+                    </Dialog>
+                </div>
+            }
         </div>
     );
 };
 
-export default CompanyListing;
+function mapStateToProps(state) {
+    return {
+        companies: (state.company && Array.isArray(state.company.companies)) ? state.company.companies : [],
+        loading: state.company ? state.company.loading : false
+    };
+}
+
+const connectedCompanyListing = connect(mapStateToProps)(CompanyListing);
+export { connectedCompanyListing as CompanyListing };

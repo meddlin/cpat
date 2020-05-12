@@ -25,10 +25,9 @@ namespace cpat_core.Models
         {
             return new Company()
             {
+                Id = data.Id,
                 Name = data.Name,
-
                 DocumentRelation = data.DocumentRelation,
-
                 DateCreated = data.DateCreated,
                 UpdatedAt = data.UpdatedAt,
                 //LastModifiedBy = data.LastModifiedByUserId
