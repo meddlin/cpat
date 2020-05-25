@@ -1,3 +1,4 @@
+using cpat_core.DataAccess.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,9 +25,11 @@ namespace cpat_core
                 options.AddPolicy("AppPolicy",
                     builder =>
                     {
-                        builder.AllowAnyOrigin()
-                            .AllowAnyHeader()
-                            .AllowAnyMethod();
+                        builder.AllowAnyHeader()
+                                .AllowAnyMethod()
+                                .WithOrigins("http://localhost:3000")
+                                .AllowCredentials();
+
                     });
             });
             services.AddRouting(r => r.SuppressCheckForUnhandledSecurityMetadata = true);
@@ -35,7 +38,8 @@ namespace cpat_core
             services
                 .AddMvcCore()
                 .AddNewtonsoftJsonMergePatch();
-                //.AddSystemTextJsonMergePatch();
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +59,7 @@ namespace cpat_core
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/chatHub");
             });
         }
     }
