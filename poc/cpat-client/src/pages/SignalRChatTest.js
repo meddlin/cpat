@@ -9,6 +9,7 @@ const SignalRChatTest = (props) => {
     const [targets, setTargets] = useState([]);
     const [changefeedResult, setChangefeedResult] = useState([]);
     const [signalRConnection, setSignalRConnection] = useState({});
+    const [mongoTestResult, setMongoTestResult] = useState([]);
 
     useEffect(() => {
         let connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:5001/chatHub").build();
@@ -36,6 +37,10 @@ const SignalRChatTest = (props) => {
 
         connection.on("AttemptedChangefeed", function(received) {
             setChangefeedResult(changefeedResult => [...changefeedResult, ...received]);
+        });
+
+        connection.on("MongoTest", function(received) {
+            setMongoTestResult(mongoTestResult => [...mongoTestResult, ...received]);
         });
 
         setSignalRConnection(connection);
@@ -104,6 +109,23 @@ const SignalRChatTest = (props) => {
 
                 <ul>
                     {changefeedResult && changefeedResult.length > 0 ? changefeedResult.map((c, idx) => {
+                        return (<li key={idx}>{c}</li>)
+                    }) : 'No changefeed data yet'}
+                </ul>
+            </div>
+
+            <h2>Mongo Test Changefeed</h2>
+            <div>
+                <button type="submit" onClick={() => {
+                    signalRConnection
+                        .invoke("MongoTest")
+                        .catch(function(err) {
+                            return console.error(`Mongo Test Error: ${err.toString()}`)
+                        })
+                }}>Try Changefeed</button>
+
+                <ul>
+                    {mongoTestResult && mongoTestResult.length > 0 ? mongoTestResult.map((c, idx) => {
                         return (<li key={idx}>{c}</li>)
                     }) : 'No changefeed data yet'}
                 </ul>

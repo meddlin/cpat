@@ -112,5 +112,12 @@ namespace cpat_core.DataAccess.Hubs
 
             await Clients.All.SendAsync("AttemptedChangefeed", $"attempt: {Guid.NewGuid().ToString()}");
         }
+    
+        public async Task MongoTest()
+        {
+            var db = new Database(type: "mongo");
+
+            await Clients.All.SendAsync("MongoTest", "result");
+        }
     }
 }

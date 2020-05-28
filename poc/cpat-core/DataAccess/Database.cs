@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MongoDB.Driver;
+using MongoDB.Bson;
+using cpat_core.Models;
 
 namespace cpat_core.DataAccess
 {
@@ -20,23 +23,91 @@ namespace cpat_core.DataAccess
             connStringBuilder.Database = "cpat";
 
             connectionString = connStringBuilder.ConnectionString;
+        }
 
-            //using (var conn = new NpgsqlConnection(connectionString))
-            //{
-            //    conn.Open();
-            //    // create a new table
-            //    new NpgsqlCommand("create table if not exists accounts (id serial primary key, balance int)", conn).ExecuteNonQuery();
+        public Database(string type)
+        {
+            if (type == "mongo")
+            {
+                MongoClient mongoDbClient = new MongoClient("mongodb://192.168.1.44:30001");
+                var dbList = mongoDbClient.ListDatabases().ToList();
 
-            //    // insert two rows into the table
-            //    using (var cmd = new NpgsqlCommand())
-            //    {
-            //        cmd.Connection = conn;
-            //        cmd.CommandText = "upsert into accounts(balance) values(@val1)";
-            //        //cmd.Parameters.AddWithValue("id1", value);
-            //        cmd.Parameters.AddWithValue("val1", 10);
-            //        cmd.ExecuteNonQuery();
-            //    }
-            //}
+                foreach( var db in dbList)
+                {
+                    Console.WriteLine(db);
+                }
+
+                //var exampleDocRel = new List<DocumentRelation>();
+                //exampleDocRel.Add(
+                //                new DocumentRelation()
+                //                {
+                //                    CollectionName = "test",
+                //                    DocumentId = Guid.NewGuid().ToString()
+                //                }
+                //            );
+
+                var database = mongoDbClient.GetDatabase("cpat_data");
+                IMongoCollection<MongoModels.TargetDto> targets = database.GetCollection<MongoModels.TargetDto>("target");
+                for(int i = 0; i < 10; i++)
+                {
+                    targets.InsertOne(new MongoModels.TargetDto()
+                    {
+                        Id = new ObjectId(),
+                        Name = $"TestTarget-{Guid.NewGuid().ToString()}",
+                        Region = "US",
+                        CollectionType = "Target",
+                        Selected = false,
+                        //DocumentRelation = exampleDocRel,
+                        DateCreated = DateTime.Now,
+                        UpdatedAt = DateTime.Now,
+                        LastModifiedByUserId = new ObjectId()
+                    });
+                }
+
+
+                var targetColl = mongoDbClient.GetDatabase("cpat_data").GetCollection<MongoModels.TargetDto>("target");
+
+                var cursor = targetColl.Watch();
+                ChangeStreamDocument<MongoModels.TargetDto> next;
+                while (cursor.MoveNext() && cursor.Current.Count() == 0) 
+                {
+                }
+                next = cursor.Current.First();
+                cursor.Dispose();
+            }
+        }
+
+        public Database(bool forLivefeed)
+        {
+            if (forLivefeed)
+            {
+                var conn = new NpgsqlConnection("Server=localhost;Port=26257;Database=cpat;User Id=root;");
+                //var conn = new NpgsqlConnection("postgres://root@localhost:26257/cpat");
+                connectionString = conn.ConnectionString;
+            }
+        }
+
+
+
+        public void TryToParseRangefeedConnection()
+        {
+            using (var conn = new NpgsqlConnection(connectionString))
+            {
+                conn.Open();
+
+                using (var cmd = new NpgsqlCommand("EXPERIMENTAL CHANGEFEED FOR target;"))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        cmd.ExecuteNonQuery();
+
+                        while (reader.Read())
+                        {
+                            Console.Write($"reader...: {reader.NextResult()}");
+                        }
+                    }
+                }
+            }
         }
     }
 }
