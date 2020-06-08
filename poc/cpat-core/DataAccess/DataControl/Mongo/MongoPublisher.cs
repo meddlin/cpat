@@ -17,13 +17,22 @@ namespace cpat_core.DataAccess.DataControl.Mongo
         private Task t { get; }
         private CancellationTokenSource tokenSource = new CancellationTokenSource();
         private CancellationToken cancelToken;
+        public Guid RegistrationId { get; private set; }
+        private IChangeStreamCursor<ChangeStreamDocument<TargetDto>> cursor;
 
         public event EventHandler<TargetMessageEventArgs> MessageEmitted;
 
         public MongoPublisher(IMongoCollection<TargetDto> targets, PipelineDefinition<ChangeStreamDocument<TargetDto>, ChangeStreamDocument<TargetDto>> pipeline, ChangeStreamOptions options)
         {
+            cancelToken = tokenSource.Token;
             action = () => { StartChangeStream(targets); };
-            t = new Task(action);
+            t = new Task(action, cancelToken);
+        }
+
+        public Guid Register()
+        {
+            RegistrationId = Guid.NewGuid();
+            return RegistrationId;
         }
 
         /// <summary>
@@ -34,7 +43,7 @@ namespace cpat_core.DataAccess.DataControl.Mongo
         internal void StartChangeStream(IMongoCollection<TargetDto> targets)
         {
             // IChangeStreamCursor<ChangeStreamDocument<TargetDto>> cursor = targets.Watch(pipeline, options);
-            IChangeStreamCursor<ChangeStreamDocument<TargetDto>> cursor = targets.Watch();
+            cursor = targets.Watch();
             ChangeStreamDocument<TargetDto> nextDoc;
 
             while(true)
@@ -48,8 +57,15 @@ namespace cpat_core.DataAccess.DataControl.Mongo
             }
         }
 
-        internal void StopChangeStream(IChangeStreamCursor<ChangeStreamDocument<TargetDto>> cursor)
+        /// <summary>
+        /// Stop publishing changestream and cleanup <c>Task</c>.
+        /// </summary>
+        internal void StopChangeStream()
         {
+            // TODO : Stop task
+            tokenSource.Cancel();
+
+            // Dispose cursor
             cursor.Dispose();
         }
 
