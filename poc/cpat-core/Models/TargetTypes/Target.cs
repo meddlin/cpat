@@ -66,7 +66,7 @@ namespace cpat_core.Models
                 Region = data.Region,
                 CollectionType = data.CollectionType,
                 Selected = data.Selected,
-                // DocumentRelation = data.DocumentRelation,
+                DocumentRelation = data.DocumentRelation,
                 DateCreated = data.DateCreated,
                 UpdatedAt = data.UpdatedAt,
                 //LastModifiedBy = data.LastModifiedByUserId

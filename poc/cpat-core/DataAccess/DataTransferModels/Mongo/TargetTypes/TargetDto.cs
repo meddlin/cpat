@@ -20,9 +20,8 @@ namespace cpat_core.DataAccess.DataTransferModels.Mongo.TargetTypes
         [BsonElement("collectionType")] public string CollectionType { get; set; }
         [BsonElement("selected")] public bool Selected { get; set; }
 
-        //[BsonElement("documentRelation")]
-        //[BsonRepresentation(MongoDB.Bson.BsonType.Array)]
-        //public List<DocumentRelation> DocumentRelation { get; set; }
+        [BsonElement("documentRelation")]
+        public List<DocumentRelation> DocumentRelation { get; set; }
 
         [BsonElement("dateCreated")] public DateTime DateCreated { get; set; }
         [BsonElement("updatedAt")] public DateTime UpdatedAt { get; set; }

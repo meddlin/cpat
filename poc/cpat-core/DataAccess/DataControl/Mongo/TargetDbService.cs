@@ -116,7 +116,7 @@ namespace cpat_core.DataAccess.DataControl.Mongo
                 Region = target.Region,
                 CollectionType = target.CollectionType,
                 Selected = target.Selected,
-                // DocumentRelation = target.DocumentRelation,
+                DocumentRelation = target.DocumentRelation,
                 DateCreated = DateTime.Now,
                 UpdatedAt = DateTime.Now
                 // LastModifiedByUserId = target.LastModifiedBy
@@ -135,7 +135,7 @@ namespace cpat_core.DataAccess.DataControl.Mongo
                 Region = t.Region,
                 CollectionType = t.CollectionType,
                 Selected = t.Selected,
-                // DocumentRelation = target.DocumentRelation,
+                DocumentRelation = t.DocumentRelation,
                 DateCreated = DateTime.Now,
                 UpdatedAt = DateTime.Now
                 // LastModifiedByUserId = target.LastModifiedBy
