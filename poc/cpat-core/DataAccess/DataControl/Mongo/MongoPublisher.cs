@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace cpat_core.DataAccess.DataControl.Mongo
 {
+    /// <summary>
+    /// Handles listening to MongoDB change streams and publishes data back to database services.
+    /// </summary>
     public class MongoPublisher
     {
         public Action action;
@@ -23,18 +26,20 @@ namespace cpat_core.DataAccess.DataControl.Mongo
             t = new Task(action);
         }
 
+        /// <summary>
+        /// Start the <c>Task</c> for the <c>MongoPublisher</c>.
+        /// </summary>
         public void Kickoff() => t.Start();
 
         internal void StartChangeStream(IMongoCollection<TargetDto> targets)
         {
             // IChangeStreamCursor<ChangeStreamDocument<TargetDto>> cursor = targets.Watch(pipeline, options);
             IChangeStreamCursor<ChangeStreamDocument<TargetDto>> cursor = targets.Watch();
-
             ChangeStreamDocument<TargetDto> nextDoc;
 
-            // while (cursor.MoveNext() && cursor.Current.Count() == 0) { }
             while(true)
             {
+                // if there is a new batch of documents in the cursor
                 if (!(cursor.MoveNext() && cursor.Current.Count() == 0))
                 {
                     nextDoc = cursor.Current.First();
@@ -62,8 +67,11 @@ namespace cpat_core.DataAccess.DataControl.Mongo
 
 
         /// <summary>
-        /// 
+        /// Custom <c>EventArgs</c> container for <c>MongoPublisher</c>.
         /// </summary>
+        /// <remarks>
+        /// Data sent from <c>MongoPublisher</c> to other classes is contained here.
+        /// </remarks>
         public class TargetMessageEventArgs : EventArgs
         {
             public string MessageInfo { get; set; }

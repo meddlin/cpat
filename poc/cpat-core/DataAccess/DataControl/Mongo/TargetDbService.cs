@@ -18,11 +18,10 @@ namespace cpat_core.DataAccess.DataControl.Mongo
 {
     public class TargetDbService
     {
-        //public Mongo.Database.Database dbAccess;
         private readonly IMongoCollection<TargetDto> _targets;
         private readonly IHubContext<TargetHub> _hubContext;
         
-        private List<Task> publisherList = new List<Task>();
+        private List<MongoPublisher> publisherList = new List<MongoPublisher>();
         
 
         public TargetDbService(IConfiguration config, IHubContext<TargetHub> hubContext)
@@ -33,48 +32,59 @@ namespace cpat_core.DataAccess.DataControl.Mongo
 
             _hubContext = hubContext;
         }
-        
-
-        //public static void DelegateMongoWatch(IMongoCollection<TargetDto> targets, PipelineDefinition<ChangeStreamDocument<TargetDto>, ChangeStreamDocument<TargetDto>> pipeline, ChangeStreamOptions options)
-        //{
-        //    // IChangeStreamCursor<ChangeStreamDocument<TargetDto>> cursor = targets.Watch(pipeline, options);
-        //    IChangeStreamCursor<ChangeStreamDocument<TargetDto>> cursor = targets.Watch();
-
-        //    ChangeStreamDocument<TargetDto> nextDoc;
-
-        //    while (cursor.MoveNext() && cursor.Current.Count() == 0) { }
-        //    nextDoc = cursor.Current.First();
-
-        //    cursor.Dispose();
-        //}
 
         internal void EmitMessage(object sender, TargetMessageEventArgs e)
         {
             Console.WriteLine($"back in TargetDbServer: {e.MessageInfo}");
 
             Task.Run(async () => await SendMessage(e.DocumentData));
-            // task.RunSynchronously();
         }
 
+        /// <summary>
+        /// Send data to connected clients via SignalR.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public async Task SendMessage(TargetDto data)
         {
             await _hubContext.Clients.All.SendAsync("Receive-TargetById", data);
         }
 
-        public void Subscribe(PipelineDefinition<ChangeStreamDocument<TargetDto>, ChangeStreamDocument<TargetDto>> pipeline, ChangeStreamOptions options)
+        /// <summary>
+        /// Setup a <c>MongoPublisher</c>, start a <c>Task</c> for change data capture, and setup a listener
+        /// to push results back to clients.
+        /// </summary>
+        /// <param name="pipeline"></param>
+        /// <param name="options"></param>
+        public Guid Subscribe(PipelineDefinition<ChangeStreamDocument<TargetDto>, ChangeStreamDocument<TargetDto>> pipeline, ChangeStreamOptions options)
         {
             // Setup publisher
             var mp = new MongoPublisher(_targets, pipeline, options);
             mp.MessageEmitted += EmitMessage;
 
+            // Register MongoPublisher in collection
+            var regId = mp.Register();
+            publisherList.Add(mp);
+
             // Start publisher
             mp.Kickoff();
+
+            return regId;
         }
 
-        public void Unsubscribe() // pass in 'id' associated with a MongoPublisher
+        /// <summary>
+        /// Stop 
+        /// </summary>
+        /// <param name="publisherId"></param>
+        public void Unsubscribe(string publisherId) // pass in 'id' associated with a MongoPublisher
         {
             // get associated MongoPublisher from publisherList
-            // mp.StopChangeStream(); // issue a "stop stream" on the obtained MongoPublisher
+            var mp = publisherList.Where(m => m.RegistrationId == Guid.Parse(publisherId)).FirstOrDefault();
+
+            // issue a "stop stream" on the obtained MongoPublisher
+            mp.StopChangeStream();
+
+            publisherList.Remove(mp);
         }
 
         /// <summary>
