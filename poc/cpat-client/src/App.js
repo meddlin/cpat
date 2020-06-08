@@ -27,8 +27,12 @@ import { LocationUpdate } from './components/target-types/location/forms/Locatio
 import { PersonUpdate } from './components/target-types/person/forms/PersonUpdate';
 import { TargetUpdate } from './components/target-types/target/forms/TargetUpdate';
 
+import SignalRChatTest from './pages/SignalRChatTest';
+
 const Dashboard = React.lazy(() => import ('./pages/Dashboard'));
 const NavigationBar = React.lazy(() => import ('./components/NavigationBar'));
+
+
 
 // const CompanyListing = React.lazy(() => import ('./pages/CompanyListing'));
 // const CompanyDetail = React.lazy(() => import ('./components/target-types/company/CompanyDetail'));
@@ -43,6 +47,8 @@ const App = () => {
 						<div style={{ padding: '10px' }}>
 							<Switch>
 								<Route path="/" exact={true} name="dashbaord" component={Dashboard} />
+
+								<Route path="/signalr" exact={true} name="signalr" component={SignalRChatTest} />
 								
 								<Route path="/companies" exact={true} name="dashbaord" component={CompanyListing} />
 								<Route path="/devices" exact={true} name="dashbaord" component={DeviceListing} />

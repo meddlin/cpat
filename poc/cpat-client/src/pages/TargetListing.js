@@ -3,21 +3,72 @@ import { connect } from 'react-redux';
 import { Dialog, Table, Button, Heading } from 'evergreen-ui';
 import { useHistory, withRouter } from 'react-router-dom';
 import { targetActions } from '../state-management/target/actions';
+import * as signalR from '@microsoft/signalr';
 const TargetRemove = React.lazy(() => import ('../components/target-types/target/TargetRemove'));
 
 const TargetListing = (props) => {
     const [isShown, setIsShown] = useState(false);
     const [dialogObject, setDialogObject] = useState({});
+    const [signalRConnection, setSignalRConnection] = useState({});
+    const [subdTargets, setSubdTargets] = useState([]);
+
     const { dispatch, loading, targets } = props;
     let history = useHistory();
 
     useEffect(() => {
         dispatch(targetActions.getTargetPage());
+
+        let connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:5001/targetHub").build();
+        connection
+            .start()
+                .then(a => {
+                    console.log('connected?');
+                    if (a) console.log(`a: ${a}`)
+                    // if (connection.connectionId) {
+                    //     connection.invoke("sendConnectionId", connection.connectionId)
+                    // }
+                })
+                .catch(err => {
+                    if (err) console.log(`err: ${err}`)
+                })
+
+        connection.on("Receive-TargetById", function(newTargetDoc) {
+            setSubdTargets(subdTargets => [...subdTargets, newTargetDoc])
+        });
+
+        setSignalRConnection(connection);
     }, []);
 
     return (
         <div>
             <Heading size={700}>TargetListing</Heading>
+
+            <Button
+                appearance="minimal"
+                intent="success"
+                onClick={() => {
+                    signalRConnection
+                        .invoke("SubscribeById", "test")
+                        .catch(function(err) {
+                            return console.error(`Mongo Subd Error: ${err.toString()}`)
+                        })
+                }}>
+                Subscribe
+            </Button>
+
+            <ul>
+                {subdTargets && subdTargets.length > 0 ? subdTargets.map(t => {
+                    return (
+                            <li key={t.id}>
+                                <div>id: {t.id}</div>
+                                <div>{t && t.name ? t.name : ''}</div>
+                                <div>{t && t.region ? t.region : ''}</div>
+                                <div>{t && t.dateCreated ? t.dateCreated : ''}</div>
+                                <div>{t && t.updatedAt ? t.updatedAt : ''}</div>
+                            </li>
+                    )
+                }) : 'No sub data yet.'}
+            </ul>
 
             {(loading === true) ? <h3>Loading...</h3> : 
                 <div>

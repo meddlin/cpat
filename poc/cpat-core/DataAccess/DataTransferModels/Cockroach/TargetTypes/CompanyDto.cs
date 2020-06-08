@@ -3,7 +3,7 @@ using NPoco;
 using System;
 using System.Collections.Generic;
 
-namespace cpat_core.DataAccess.TargetTypes
+namespace cpat_core.DataAccess.DataTransferModels.Cockroach.TargetTypes
 {
     [TableName("company")]
     [PrimaryKey("id")]

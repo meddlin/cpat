@@ -1,24 +1,27 @@
 ﻿using cpat_core.Models;
+using cpat_core.Models.Utility;
 using NPoco;
 using System;
 using System.Collections.Generic;
 
-namespace cpat_core.DataAccess.TargetTypes
+namespace cpat_core.DataAccess.DataTransferModels.Cockroach.TargetTypes
 {
-    [TableName("location")]
+    [TableName("device")]
     [PrimaryKey("id")]
-    public class LocationDto
+    public class DeviceDto
     {
         [Column("id")] public Guid Id { get; set; }
 
         [Column("name")] public string Name { get; set; }
-        [Column("latitude")] public string Latitude { get; set; }
-        [Column("longitude")] public string Longitude { get; set; }
+
+        [Column("organizations")] 
+        [SerializedColumn]
+        public List<Organization> Organizations { get; set; } // translates to JSONB in database?
 
         /// <summary>
         /// An attempt at using JSONB for the <c>DocumentRelation</c> structure for each document
         /// </summary>
-        [Column("documentrelation")] 
+        [Column("documentrelation")]
         [SerializedColumn]
         public List<DocumentRelation> DocumentRelation { get; set; } // translates to JSONB in database?
 
@@ -27,19 +30,16 @@ namespace cpat_core.DataAccess.TargetTypes
         [Column("lastmodifiedbyuserid")] public Guid LastModifiedByUserId { get; set; }
 
         /// <summary>
-        /// Converts a <c>Location</c> object to a <c>LocationDto</c> object.
+        /// Converts a <c>Device</c> object to a <c>DeviceDto</c> object.
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static LocationDto Translate(Location data)
+        public static DeviceDto Translate(Device data)
         {
-            return new LocationDto()
+            return new DeviceDto()
             {
-                //Id = Guid.NewGuid(),
                 Name = data.Name,
-                Latitude = data.Latitude,
-                Longitude = data.Longitude,
-
+                Organizations = data.Organizations,
                 DocumentRelation = data.DocumentRelation,
                 DateCreated = data.DateCreated != null ? data.DateCreated : DateTime.Now,
                 UpdatedAt = data.UpdatedAt != null ? data.UpdatedAt : DateTime.Now
@@ -47,16 +47,16 @@ namespace cpat_core.DataAccess.TargetTypes
         }
 
         /// <summary>
-        /// Converts a collection of <c>Location</c> to a collection of <c>LocationDto</c>.
+        /// Converts a collection of <c>Device</c> to a collection of <c>DeviceDto</c>.
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static IEnumerable<LocationDto> Translate(List<Location> data)
+        public static IEnumerable<DeviceDto> Translate(List<Device> data)
         {
-            var dtoList = new List<LocationDto>();
+            var dtoList = new List<DeviceDto>();
             data.ForEach(d =>
             {
-                dtoList.Add(LocationDto.Translate(d));
+                dtoList.Add(DeviceDto.Translate(d));
             });
 
             return dtoList;

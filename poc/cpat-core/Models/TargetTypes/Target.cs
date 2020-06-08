@@ -1,4 +1,4 @@
-using cpat_core.DataAccess.TargetTypes;
+using cpat_core.DataAccess.DataTransferModels;
 using cpat_core.Models.TargetTypes;
 using System;
 using System.Collections.Generic;
@@ -34,9 +34,9 @@ namespace cpat_core.Models
         /// <summary>
         /// Translates <c>TargetDto</c> object to <c>Target</c> object.
         /// </summary>
-        /// <param name="data"></param>
+        /// <param name="data">A <c>TargetDto</c> object mapped to CockroachDB.</param>
         /// <returns></returns>
-        public static Target Translate(TargetDto data)
+        public static Target Translate(DataAccess.DataTransferModels.Cockroach.TargetTypes.TargetDto data)
         {
             return new Target()
             {
@@ -52,7 +52,28 @@ namespace cpat_core.Models
             };
         }
 
-        public static IEnumerable<Target> Translate(List<TargetDto> data)
+        /// <summary>
+        /// Translates <c>TargetDto</c> object to <c>Target</c> object.
+        /// </summary>
+        /// <param name="data">A <c>TargetDto</c> object mapped to MongoDB.</param>
+        /// <returns></returns>
+        public static Target Translate(DataAccess.DataTransferModels.Mongo.TargetTypes.TargetDto data)
+        {
+            return new Target()
+            {
+                Id = data.Id,
+                Name = data.Name,
+                Region = data.Region,
+                CollectionType = data.CollectionType,
+                Selected = data.Selected,
+                DocumentRelation = data.DocumentRelation,
+                DateCreated = data.DateCreated,
+                UpdatedAt = data.UpdatedAt,
+                //LastModifiedBy = data.LastModifiedByUserId
+            };
+        }
+
+        public static IEnumerable<Target> Translate(List<DataAccess.DataTransferModels.Cockroach.TargetTypes.TargetDto> data)
         {
             var targetList = new List<Target>();
             data.ForEach(d =>
