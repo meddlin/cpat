@@ -2,7 +2,7 @@
  * Holds configuration info for interacting with any attached APIs.
  */
 const config = {
-    apiUrl: process.env.REACT_APP_API_URL || 'https://localhost:5001/api'
+    apiUrl: process.env.REACT_APP_API_URL || 'https://localhost:5001/api/mongo'
 };
 
 /**
