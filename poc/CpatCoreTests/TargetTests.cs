@@ -1,4 +1,4 @@
-using cpat_core.DataAccess.TargetTypes;
+using cpat_core.DataAccess.DataTransferModels.Cockroach.TargetTypes;
 using cpat_core.Models;
 using Xunit;
 

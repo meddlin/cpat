@@ -6,14 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace cpat_core.DataAccess.MongoModels
+namespace cpat_core.DataAccess.DataTransferModels.Mongo.TargetTypes
 {
     
     public class TargetDto
     {
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.String)]
-        public ObjectId Id { get; set; }
+        public Guid Id { get; set; }
 
         [BsonElement("name")] public string Name { get; set; }
         [BsonElement("region")] public string Region { get; set; }
@@ -29,6 +29,6 @@ namespace cpat_core.DataAccess.MongoModels
 
         [BsonRepresentation(MongoDB.Bson.BsonType.String)]
         [BsonElement("lastModifiedUserId")] 
-        public ObjectId LastModifiedByUserId { get; set; }
+        public Guid LastModifiedByUserId { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using cpat_core.Models;
+using cpat_core.DataAccess.DataTransferModels.Mongo.TargetTypes;
 
 namespace cpat_core.DataAccess
 {
@@ -37,22 +38,13 @@ namespace cpat_core.DataAccess
                     Console.WriteLine(db);
                 }
 
-                //var exampleDocRel = new List<DocumentRelation>();
-                //exampleDocRel.Add(
-                //                new DocumentRelation()
-                //                {
-                //                    CollectionName = "test",
-                //                    DocumentId = Guid.NewGuid().ToString()
-                //                }
-                //            );
-
                 var database = mongoDbClient.GetDatabase("cpat_data");
-                IMongoCollection<MongoModels.TargetDto> targets = database.GetCollection<MongoModels.TargetDto>("target");
+                IMongoCollection<TargetDto> targets = database.GetCollection<TargetDto>("target");
                 for(int i = 0; i < 10; i++)
                 {
-                    targets.InsertOne(new MongoModels.TargetDto()
+                    targets.InsertOne(new TargetDto()
                     {
-                        Id = new ObjectId(),
+                        Id = Guid.NewGuid(),
                         Name = $"TestTarget-{Guid.NewGuid().ToString()}",
                         Region = "US",
                         CollectionType = "Target",
@@ -60,15 +52,14 @@ namespace cpat_core.DataAccess
                         //DocumentRelation = exampleDocRel,
                         DateCreated = DateTime.Now,
                         UpdatedAt = DateTime.Now,
-                        LastModifiedByUserId = new ObjectId()
+                        LastModifiedByUserId = Guid.NewGuid()
                     });
                 }
 
-
-                var targetColl = mongoDbClient.GetDatabase("cpat_data").GetCollection<MongoModels.TargetDto>("target");
+                var targetColl = mongoDbClient.GetDatabase("cpat_data").GetCollection<TargetDto>("target");
 
                 var cursor = targetColl.Watch();
-                ChangeStreamDocument<MongoModels.TargetDto> next;
+                ChangeStreamDocument<TargetDto> next;
                 while (cursor.MoveNext() && cursor.Current.Count() == 0) 
                 {
                 }
@@ -77,37 +68,6 @@ namespace cpat_core.DataAccess
             }
         }
 
-        public Database(bool forLivefeed)
-        {
-            if (forLivefeed)
-            {
-                var conn = new NpgsqlConnection("Server=localhost;Port=26257;Database=cpat;User Id=root;");
-                //var conn = new NpgsqlConnection("postgres://root@localhost:26257/cpat");
-                connectionString = conn.ConnectionString;
-            }
-        }
 
-
-
-        public void TryToParseRangefeedConnection()
-        {
-            using (var conn = new NpgsqlConnection(connectionString))
-            {
-                conn.Open();
-
-                using (var cmd = new NpgsqlCommand("EXPERIMENTAL CHANGEFEED FOR target;"))
-                {
-                    using (var reader = cmd.ExecuteReader())
-                    {
-                        cmd.ExecuteNonQuery();
-
-                        while (reader.Read())
-                        {
-                            Console.Write($"reader...: {reader.NextResult()}");
-                        }
-                    }
-                }
-            }
-        }
     }
 }

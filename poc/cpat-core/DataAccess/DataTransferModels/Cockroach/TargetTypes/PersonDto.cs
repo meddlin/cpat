@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace cpat_core.DataAccess.TargetTypes
+namespace cpat_core.DataAccess.DataTransferModels.Cockroach.TargetTypes
 {
     [TableName("person")]
     [PrimaryKey("id")]

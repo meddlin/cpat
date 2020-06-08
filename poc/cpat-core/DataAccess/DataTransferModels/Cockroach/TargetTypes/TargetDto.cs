@@ -1,62 +1,72 @@
 ﻿using cpat_core.Models;
-using cpat_core.Models.Utility;
 using NPoco;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace cpat_core.DataAccess.TargetTypes
+namespace cpat_core.DataAccess.DataTransferModels.Cockroach.TargetTypes
 {
-    [TableName("device")]
+    [TableName("target")]
     [PrimaryKey("id")]
-    public class DeviceDto
+    public class TargetDto
     {
         [Column("id")] public Guid Id { get; set; }
 
         [Column("name")] public string Name { get; set; }
-
-        [Column("organizations")] 
-        [SerializedColumn]
-        public List<Organization> Organizations { get; set; } // translates to JSONB in database?
+        [Column("region")] public string Region { get; set; }
+        [Column("collectiontype")] public string CollectionType { get; set; }
+        
+        [Column("selected")] public bool Selected { get; set; }
 
         /// <summary>
         /// An attempt at using JSONB for the <c>DocumentRelation</c> structure for each document
         /// </summary>
         [Column("documentrelation")]
         [SerializedColumn]
-        public List<DocumentRelation> DocumentRelation { get; set; } // translates to JSONB in database?
+        public List<DocumentRelation> DocumentRelation { get; set; }
 
         [Column("datecreated")] public DateTime DateCreated { get; set; }
         [Column("updatedat")] public DateTime UpdatedAt { get; set; }
         [Column("lastmodifiedbyuserid")] public Guid LastModifiedByUserId { get; set; }
 
         /// <summary>
-        /// Converts a <c>Device</c> object to a <c>DeviceDto</c> object.
+        /// Converts a <c>Target</c> object to a <c>TargetDto</c> object.
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static DeviceDto Translate(Device data)
+        public static TargetDto Translate(Target data)
         {
-            return new DeviceDto()
+            var sampleId = Guid.NewGuid();
+
+            var sampleData = new TargetDto()
             {
                 Name = data.Name,
-                Organizations = data.Organizations,
+                Region = data.Region,
+                CollectionType = data.CollectionType,
+                Selected = data.Selected,
+
                 DocumentRelation = data.DocumentRelation,
+
                 DateCreated = data.DateCreated != null ? data.DateCreated : DateTime.Now,
-                UpdatedAt = data.UpdatedAt != null ? data.UpdatedAt : DateTime.Now
+                UpdatedAt = data.UpdatedAt != null ? data.UpdatedAt : DateTime.Now,
+                LastModifiedByUserId = sampleId
             };
+
+            return sampleData;
         }
 
         /// <summary>
-        /// Converts a collection of <c>Device</c> to a collection of <c>DeviceDto</c>.
+        /// Converts a collection of <c>Target</c> to a collection of <c>TargetDto</c>.
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static IEnumerable<DeviceDto> Translate(List<Device> data)
+        public static IEnumerable<TargetDto> Translate(List<Target> data)
         {
-            var dtoList = new List<DeviceDto>();
+            var dtoList = new List<TargetDto>();
             data.ForEach(d =>
             {
-                dtoList.Add(DeviceDto.Translate(d));
+                dtoList.Add(TargetDto.Translate(d));
             });
 
             return dtoList;
