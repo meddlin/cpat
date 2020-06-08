@@ -1,4 +1,6 @@
+using cpat_core.DataAccess.DataControl.Mongo;
 using cpat_core.DataAccess.Hubs;
+using cpat_core.DataAccess.Hubs.Mongo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +36,11 @@ namespace cpat_core
             });
             services.AddRouting(r => r.SuppressCheckForUnhandledSecurityMetadata = true);
             services.AddControllers();
+            services.AddScoped<TargetDbService>();
+
+            // Configure strongly typed settings objects
+            //var appSettingsSection = Configuration.GetSection("ConnectionStrings");
+            //services.Configure<AppSettings>(appSettingsSection);
 
             services
                 .AddMvcCore()
@@ -60,6 +67,7 @@ namespace cpat_core
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<ChatHub>("/chatHub");
+                endpoints.MapHub<TargetHub>("/targetHub");
             });
         }
     }
