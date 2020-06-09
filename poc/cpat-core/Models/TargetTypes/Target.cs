@@ -73,7 +73,30 @@ namespace cpat_core.Models
             };
         }
 
+        /// <summary>
+        /// Converts a collection of <c>Cockroach.TargetTypes.TargetDto</c> to a collection of <c>Target</c>.
+        /// </summary>
+        /// <see cref="DataAccess.DataTransferModels.Cockroach.TargetTypes.TargetDto"/>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public static IEnumerable<Target> Translate(List<DataAccess.DataTransferModels.Cockroach.TargetTypes.TargetDto> data)
+        {
+            var targetList = new List<Target>();
+            data.ForEach(d =>
+            {
+                targetList.Add(Target.Translate(d));
+            });
+
+            return targetList;
+        }
+
+        /// <summary>
+        /// Converts a collection of <c>Mongo.TargetTypes.TargetDto</c> to a collection of <c>Target</c>.
+        /// </summary>
+        /// <see cref="DataAccess.DataTransferModels.Mongo.TargetTypes.TargetDto"/>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static IEnumerable<Target> Translate(List<DataAccess.DataTransferModels.Mongo.TargetTypes.TargetDto> data)
         {
             var targetList = new List<Target>();
             data.ForEach(d =>

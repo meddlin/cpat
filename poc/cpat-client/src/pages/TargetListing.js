@@ -4,7 +4,7 @@ import { Dialog, Table, Button, Heading } from 'evergreen-ui';
 import { useHistory, withRouter } from 'react-router-dom';
 import { targetActions } from '../state-management/target/actions';
 import * as signalR from '@microsoft/signalr';
-const TargetRemove = React.lazy(() => import ('../components/target-types/target/TargetRemove'));
+import { TargetRemove } from '../components/target-types/target/TargetRemove';
 
 const TargetListing = (props) => {
     const [isShown, setIsShown] = useState(false);

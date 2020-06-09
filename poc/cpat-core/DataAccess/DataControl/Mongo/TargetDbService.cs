@@ -101,9 +101,28 @@ namespace cpat_core.DataAccess.DataControl.Mongo
             return target;
         }
 
+        /// <summary>
+        /// Retrieve a lsit of <c>Target</c> one page at a time. Change the value of page and pageSize to alter the amount of
+        /// <c>Target</c> returned on each query.
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="minval"></param>
+        /// <returns></returns>
         public IEnumerable<Target> GetPage(int page, int pageSize, DateTime minval)
         {
-            return new List<Target>();
+            minval = minval == null ? new DateTime(year: 2000, month: 0, day: 0) : minval;
+            int skipVal = (page == 1) ? 0 : ((page - 1) * pageSize);
+
+            List<TargetDto> data = _targets
+                .Find<TargetDto>(t => t.DateCreated > minval)
+                .SortByDescending<TargetDto, TargetDto>(t => t.DateCreated)
+                .Skip(skipVal)
+                .Limit(pageSize)
+                .ToList<TargetDto>();
+            List<Target> list = Target.Translate(data).ToList();
+
+            return list;
         }
 
         public void Insert(Target target)
@@ -146,26 +165,67 @@ namespace cpat_core.DataAccess.DataControl.Mongo
 
         public int Update(Guid docId, Target target)
         {
-            int res = 0;
-            return res;
+            var updateDef = Builders<TargetDto>
+                .Update
+                    .Set(t => t.Name, target.Name)
+                    .Set(t => t.Region, target.Region)
+                    .Set(t => t.CollectionType, target.CollectionType)
+                    .Set(t => t.Selected, target.Selected)
+                    .Set(t => t.DocumentRelation, target.DocumentRelation)
+                    .Set(t => t.UpdatedAt, DateTime.Now);
+                    //.Set(t => t.LastModifiedByUserId, target.LastModifiedBy)
+
+            UpdateResult result = _targets.UpdateOne<TargetDto>(t => t.Id == docId, updateDef);
+
+            return result.IsAcknowledged ? 1 : 0;
         }
 
         public int PartialUpdate(Guid docId, Target target, IEnumerable<string> ops)
         {
-            int res = 0;
-            return res;
+            // TODO : Figure out how to properly implement a partial update
+            // Ref: https://stackoverflow.com/questions/10290621/how-do-i-partially-update-an-object-in-mongodb-so-the-new-object-will-overlay
+            var updateDef = Builders<TargetDto>
+                .Update
+                    .Set(t => t.Name, target.Name)
+                    .Set(t => t.Region, target.Region)
+                    .Set(t => t.CollectionType, target.CollectionType)
+                    .Set(t => t.Selected, target.Selected)
+                    .Set(t => t.DocumentRelation, target.DocumentRelation)
+                    .Set(t => t.UpdatedAt, DateTime.Now);
+            //.Set(t => t.LastModifiedByUserId, target.LastModifiedBy)
+
+            UpdateResult result = _targets.UpdateOne<TargetDto>(t => t.Id == docId, updateDef);
+
+            return result.IsAcknowledged ? 1 : 0;
         }
 
-        public int Remove(Target target)
+        /// <summary>
+        /// Deletes a <c>TargetDto</c> object.
+        /// </summary>
+        /// <param name="docId"></param>
+        /// <returns></returns>
+        public int Remove(Guid docId)
         {
-            int res = 0;
-            return res;
+            DeleteResult result = _targets.DeleteOne<TargetDto>(t => t.Id == docId);
+            return result.IsAcknowledged ? 1 : 0;
         }
 
-        public int SetTarget(string target)
+        /// <summary>
+        /// Updates a <c>TargetDto</c> object as the configured "chosen" Target.
+        /// </summary>
+        /// <param name="docId"></param>
+        /// <returns></returns>
+        public int SetTarget(Guid docId)
         {
-            int res = 0;
-            return res;
+            var updateDef = Builders<TargetDto>
+                .Update
+                    .Set(t => t.Selected, true)
+                    .Set(t => t.UpdatedAt, DateTime.Now);
+                //.Set(t => t.LastModifiedByUserId, target.LastModifiedBy)
+
+            UpdateResult result = _targets.UpdateOne<TargetDto>(t => t.Id == docId, updateDef);
+
+            return result.IsAcknowledged ? 1 : 0;
         }
     }
 }

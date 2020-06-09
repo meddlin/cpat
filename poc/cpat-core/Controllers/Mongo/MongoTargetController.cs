@@ -4,6 +4,7 @@ using cpat_core.Models.Utility;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Morcatko.AspNetCore.JsonMergePatch;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,6 +69,57 @@ namespace cpat_core.Controllers.Mongo
         {
             Guid docId = new Guid(id);
             return _targetDbService.Update(docId, data);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="patch"></param>
+        /// <returns></returns>
+        [HttpPatch]
+        [Consumes(JsonMergePatchDocument.ContentType)]
+        public int PartialUpdate([FromRoute] string id, [FromBody] JsonMergePatchDocument<Target> patch)
+        {
+            Guid docId = new Guid(id);
+
+            var ops = new List<string>();
+            patch.Operations.ForEach(op =>
+            {
+                ops.Add(op.path.TrimStart('/'));
+            });
+
+            var data = new Target();
+            patch.ApplyTo(data);
+
+            //var query = new TargetQuery();
+            //return query.PartialUpdate(docId, data, ops);
+            return _targetDbService.PartialUpdate(docId, data, ops);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public int Remove([FromBody] string id)
+        {
+            Guid docId = new Guid(id);
+            return _targetDbService.Remove(docId);
+        }
+
+        /// <summary>
+        /// Set a <c>Target</c> as the chosen <c>Target</c> for scans.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public bool Set([FromBody] string id)
+        {
+            Guid docId = new Guid(id);
+            _targetDbService.SetTarget(docId);
+            return true;
         }
     }
 }

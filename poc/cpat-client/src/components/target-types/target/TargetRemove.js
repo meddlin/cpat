@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'evergreen-ui';
+import { connect } from 'react-redux';
 import { targetActions } from '../../../state-management/target/actions';
 const DocumentAnalyticsDetail = React.lazy(() => import ('../../DocumentAnalyticsDetail'));
 
@@ -36,4 +37,11 @@ const TargetRemove = (props) => {
     );
 };
 
-export default TargetRemove;
+function mapStateToProps(state) {
+    return {
+        loading: state.target ? state.target.loading : false
+     };
+}
+
+const TargetRemoveConnection = connect(mapStateToProps)(TargetRemove);
+export { TargetRemoveConnection as TargetRemove };

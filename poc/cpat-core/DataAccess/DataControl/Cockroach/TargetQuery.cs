@@ -208,7 +208,7 @@ namespace cpat_core.DataAccess.DataControl
         }
 
         /// <summary>
-        /// Updates a <c>TargetDto</c> object as the configured "chosen"
+        /// Updates a <c>TargetDto</c> object as the configured "chosen" Target.
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
