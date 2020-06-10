@@ -59,12 +59,46 @@ namespace cpat_core.Models
             };
         }
 
+        public static Person Translate(DataAccess.DataTransferModels.Mongo.TargetTypes.PersonDto data)
+        {
+            return new Person()
+            {
+                Id = data.Id,
+                FirstName = data.FirstName,
+                MiddleName = data.MiddleName,
+                LastName = data.LastName,
+                Nicknames = data.Nicknames,
+                PhoneNumbers = data.PhoneNumbers,
+                EmailAddresses = data.EmailAddresses,
+                Organizations = data.Organizations,
+                Employers = data.Employers,
+                SocialLinks = data.SocialLinks,
+
+                DocumentRelation = data.DocumentRelation,
+
+                DateCreated = data.DateCreated,
+                UpdatedAt = data.UpdatedAt,
+                //LastModifiedBy = data.LastModifiedByUserId
+            };
+        }
+
         /// <summary>
         /// Converts a collection of <c>PersonDto</c> to a collection of <c>Person</c>.
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
         public static IEnumerable<Person> Translate(List<PersonDto> data)
+        {
+            var personList = new List<Person>();
+            data.ForEach(d =>
+            {
+                personList.Add(Person.Translate(d));
+            });
+
+            return personList;
+        }
+
+        public static IEnumerable<Person> Translate(List<DataAccess.DataTransferModels.Mongo.TargetTypes.PersonDto> data)
         {
             var personList = new List<Person>();
             data.ForEach(d =>

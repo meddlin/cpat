@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 
 namespace cpat_core.DataAccess.DataTransferModels.Mongo.TargetTypes
 {
-    
+    /// <summary>
+    /// Data transfer model for a <c>Target</c> to be stored in MongoDB as a <c>TargetDto</c>.
+    /// </summary>
     public class TargetDto
     {
         [BsonId]
@@ -26,8 +28,8 @@ namespace cpat_core.DataAccess.DataTransferModels.Mongo.TargetTypes
         [BsonElement("dateCreated")] public DateTime DateCreated { get; set; }
         [BsonElement("updatedAt")] public DateTime UpdatedAt { get; set; }
 
+        [BsonElement("lastModifiedUserId")]
         [BsonRepresentation(MongoDB.Bson.BsonType.String)]
-        [BsonElement("lastModifiedUserId")] 
         public Guid LastModifiedByUserId { get; set; }
     }
 }
