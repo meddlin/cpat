@@ -6,12 +6,15 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace cpat_core.DataAccess.DataControl.Mongo
+namespace cpat_core.DataAccess.DataControl.Mongo.Publishers
 {
+    // TODO : Convert this into a generic <c>MongoPublisher</c> able to be used for any type of publishing 
+    //          abilities with MongoDB.
+
     /// <summary>
     /// Handles listening to MongoDB change streams and publishes data back to database services.
     /// </summary>
-    public class MongoPublisher
+    public class TargetMongoPublisher
     {
         public Action action;
         private Task t { get; }
@@ -22,13 +25,21 @@ namespace cpat_core.DataAccess.DataControl.Mongo
 
         public event EventHandler<TargetMessageEventArgs> MessageEmitted;
 
-        public MongoPublisher(IMongoCollection<TargetDto> targets, PipelineDefinition<ChangeStreamDocument<TargetDto>, ChangeStreamDocument<TargetDto>> pipeline, ChangeStreamOptions options)
+
+        public TargetMongoPublisher(IMongoCollection<TargetDto> targets, 
+            PipelineDefinition<ChangeStreamDocument<TargetDto>, ChangeStreamDocument<TargetDto>> pipeline, 
+            ChangeStreamOptions options)
         {
             cancelToken = tokenSource.Token;
             action = () => { StartChangeStream(targets); };
             t = new Task(action, cancelToken);
         }
 
+        /// <summary>
+        /// Create a registration id <c>Guid</c> for the <c>MongoPublisher</c> instance
+        /// and return the id.
+        /// </summary>
+        /// <returns></returns>
         public Guid Register()
         {
             RegistrationId = Guid.NewGuid();
@@ -62,7 +73,7 @@ namespace cpat_core.DataAccess.DataControl.Mongo
         /// </summary>
         internal void StopChangeStream()
         {
-            // TODO : Stop task
+            // Issue task cancellation
             tokenSource.Cancel();
 
             // Dispose cursor
