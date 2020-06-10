@@ -1,4 +1,5 @@
-﻿using cpat_core.DataAccess.DataTransferModels.Mongo.TargetTypes;
+﻿using cpat_core.DataAccess.DataControl.Mongo.Publishers;
+using cpat_core.DataAccess.DataTransferModels.Mongo.TargetTypes;
 using cpat_core.DataAccess.Hubs.Mongo;
 using cpat_core.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using static cpat_core.DataAccess.DataControl.Mongo.MongoPublisher;
+using static cpat_core.DataAccess.DataControl.Mongo.Publishers.TargetMongoPublisher;
 
 namespace cpat_core.DataAccess.DataControl.Mongo
 {
@@ -20,8 +21,7 @@ namespace cpat_core.DataAccess.DataControl.Mongo
     {
         private readonly IMongoCollection<TargetDto> _targets;
         private readonly IHubContext<TargetHub> _hubContext;
-        
-        private List<MongoPublisher> publisherList = new List<MongoPublisher>();
+        private List<TargetMongoPublisher> publisherList = new List<TargetMongoPublisher>();
         
 
         public TargetDbService(IConfiguration config, IHubContext<TargetHub> hubContext)
@@ -59,7 +59,7 @@ namespace cpat_core.DataAccess.DataControl.Mongo
         public Guid Subscribe(PipelineDefinition<ChangeStreamDocument<TargetDto>, ChangeStreamDocument<TargetDto>> pipeline, ChangeStreamOptions options)
         {
             // Setup publisher
-            var mp = new MongoPublisher(_targets, pipeline, options);
+            var mp = new TargetMongoPublisher(_targets, pipeline, options);
             mp.MessageEmitted += EmitMessage;
 
             // Register MongoPublisher in collection

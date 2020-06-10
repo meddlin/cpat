@@ -11,6 +11,11 @@ const config = {
  */
 function handleHttpResponse(response) {
     return response.text().then(text => {
+        if (response.status === 500) {
+            console.error('HTTP 500: A server error was encountered.');
+            console.error(text);
+        }
+
         const data = text && JSON.parse(text);
         if (!response.ok) {
 

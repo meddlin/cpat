@@ -1,6 +1,7 @@
 using cpat_core.DataAccess.DataControl.Mongo;
 using cpat_core.DataAccess.Hubs;
 using cpat_core.DataAccess.Hubs.Mongo;
+using cpat_core.Hubs.Mongo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -31,12 +32,12 @@ namespace cpat_core
                                 .AllowAnyMethod()
                                 .WithOrigins("http://localhost:3000")
                                 .AllowCredentials();
-
                     });
             });
             services.AddRouting(r => r.SuppressCheckForUnhandledSecurityMetadata = true);
             services.AddControllers();
             services.AddScoped<TargetDbService>();
+            services.AddScoped<PersonDbService>();
 
             // Configure strongly typed settings objects
             //var appSettingsSection = Configuration.GetSection("ConnectionStrings");
@@ -68,6 +69,7 @@ namespace cpat_core
                 endpoints.MapControllers();
                 endpoints.MapHub<ChatHub>("/chatHub");
                 endpoints.MapHub<TargetHub>("/targetHub");
+                endpoints.MapHub<PersonHub>("/personHub");
             });
         }
     }

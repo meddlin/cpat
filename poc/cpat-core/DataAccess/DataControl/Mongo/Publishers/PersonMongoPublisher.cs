@@ -6,29 +6,34 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace cpat_core.DataAccess.DataControl.Mongo
+namespace cpat_core.DataAccess.DataControl.Mongo.Publishers
 {
-    /// <summary>
-    /// Handles listening to MongoDB change streams and publishes data back to database services.
-    /// </summary>
-    public class MongoPublisher
+    public class PersonMongoPublisher
     {
         public Action action;
         private Task t { get; }
         private CancellationTokenSource tokenSource = new CancellationTokenSource();
         private CancellationToken cancelToken;
         public Guid RegistrationId { get; private set; }
-        private IChangeStreamCursor<ChangeStreamDocument<TargetDto>> cursor;
+        private IChangeStreamCursor<ChangeStreamDocument<PersonDto>> cursor;
 
-        public event EventHandler<TargetMessageEventArgs> MessageEmitted;
+        public event EventHandler<PersonMessageEventArgs> MessageEmitted;
 
-        public MongoPublisher(IMongoCollection<TargetDto> targets, PipelineDefinition<ChangeStreamDocument<TargetDto>, ChangeStreamDocument<TargetDto>> pipeline, ChangeStreamOptions options)
+
+        public PersonMongoPublisher(IMongoCollection<PersonDto> collection,
+            PipelineDefinition<ChangeStreamDocument<PersonDto>, ChangeStreamDocument<PersonDto>> pipeline,
+            ChangeStreamOptions options)
         {
             cancelToken = tokenSource.Token;
-            action = () => { StartChangeStream(targets); };
+            action = () => { StartChangeStream(collection); };
             t = new Task(action, cancelToken);
         }
 
+        /// <summary>
+        /// Create a registration id <c>Guid</c> for the <c>MongoPublisher</c> instance
+        /// and return the id.
+        /// </summary>
+        /// <returns></returns>
         public Guid Register()
         {
             RegistrationId = Guid.NewGuid();
@@ -40,13 +45,13 @@ namespace cpat_core.DataAccess.DataControl.Mongo
         /// </summary>
         public void Kickoff() => t.Start();
 
-        internal void StartChangeStream(IMongoCollection<TargetDto> targets)
+        internal void StartChangeStream(IMongoCollection<PersonDto> collection)
         {
             // IChangeStreamCursor<ChangeStreamDocument<TargetDto>> cursor = targets.Watch(pipeline, options);
-            cursor = targets.Watch();
-            ChangeStreamDocument<TargetDto> nextDoc;
+            cursor = collection.Watch();
+            ChangeStreamDocument<PersonDto> nextDoc;
 
-            while(true)
+            while (true)
             {
                 // if there is a new batch of documents in the cursor
                 if (!(cursor.MoveNext() && cursor.Current.Count() == 0))
@@ -62,25 +67,24 @@ namespace cpat_core.DataAccess.DataControl.Mongo
         /// </summary>
         internal void StopChangeStream()
         {
-            // TODO : Stop task
+            // Issue task cancellation
             tokenSource.Cancel();
 
             // Dispose cursor
             cursor.Dispose();
         }
 
-        private void MessageEncountered(ChangeStreamDocument<TargetDto> document)
+        private void MessageEncountered(ChangeStreamDocument<PersonDto> document)
         {
-            OnEmitMessage(new TargetMessageEventArgs
+            OnEmitMessage(new PersonMessageEventArgs
             {
-                MessageInfo = $"coming from OnEmitMessage: {document.FullDocument.Id} - {document.FullDocument.Name}",
+                MessageInfo = $"coming from OnEmitMessage: {document.FullDocument.Id} - {document.FullDocument.FirstName}",
                 DocumentData = document.FullDocument
             });
         }
 
 
-        protected virtual void OnEmitMessage(TargetMessageEventArgs e) => MessageEmitted?.Invoke(this, e);
-
+        protected virtual void OnEmitMessage(PersonMessageEventArgs e) => MessageEmitted?.Invoke(this, e);
 
         /// <summary>
         /// Custom <c>EventArgs</c> container for <c>MongoPublisher</c>.
@@ -88,10 +92,10 @@ namespace cpat_core.DataAccess.DataControl.Mongo
         /// <remarks>
         /// Data sent from <c>MongoPublisher</c> to other classes is contained here.
         /// </remarks>
-        public class TargetMessageEventArgs : EventArgs
+        public class PersonMessageEventArgs : EventArgs
         {
             public string MessageInfo { get; set; }
-            public TargetDto DocumentData { get; set; }
+            public PersonDto DocumentData { get; set; }
         }
     }
 }
