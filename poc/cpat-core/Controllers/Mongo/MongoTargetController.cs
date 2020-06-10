@@ -21,9 +21,9 @@ namespace cpat_core.Controllers.Mongo
         private readonly ILogger<MongoTargetController> _logger;
         private readonly TargetDbService _targetDbService;
 
-        public MongoTargetController(TargetDbService targetDbServer)
+        public MongoTargetController(TargetDbService targetDbService)
         {
-            _targetDbService = targetDbServer;
+            _targetDbService = targetDbService;
         }
 
         /// <summary>
@@ -70,6 +70,7 @@ namespace cpat_core.Controllers.Mongo
             Guid docId = new Guid(id);
             return _targetDbService.Update(docId, data);
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -91,16 +92,13 @@ namespace cpat_core.Controllers.Mongo
             var data = new Target();
             patch.ApplyTo(data);
 
-            //var query = new TargetQuery();
-            //return query.PartialUpdate(docId, data, ops);
             return _targetDbService.PartialUpdate(docId, data, ops);
         }
-
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="data"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost]
         public int Remove([FromBody] string id)
