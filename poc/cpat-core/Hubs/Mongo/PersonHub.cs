@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace cpat_core.Hubs.Mongo
 {
     [EnableCors("AppPolicy")]
-    public class PersonHub :  Hub
+    public class PersonHub :  Hub, IHub
     {
         private readonly PersonDbService _personDbService;
 
