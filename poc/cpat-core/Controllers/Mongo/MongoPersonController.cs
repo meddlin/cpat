@@ -19,7 +19,7 @@ namespace cpat_core.Controllers.Mongo
     [ApiController]
     public class MongoPersonController : ControllerBase
     {
-        private readonly ILogger<MongoTargetController> _logger;
+        private readonly ILogger<MongoPersonController> _logger;
         private readonly PersonDbService _personDbService;
 
         public MongoPersonController(PersonDbService personDbService)
