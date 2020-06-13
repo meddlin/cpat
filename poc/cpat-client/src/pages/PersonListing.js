@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Dialog, Table, Button, Heading } from 'evergreen-ui';
 import { useHistory } from 'react-router-dom';
 import { personActions } from '../state-management/person/actions';
-const PersonRemove = React.lazy(() => import ('../components/target-types/person/PersonRemove'));
+import { PersonRemove } from '../components/target-types/person/PersonRemove';
 
 const PersonListing = (props) => {
     const [isShown, setIsShown] = useState(false);

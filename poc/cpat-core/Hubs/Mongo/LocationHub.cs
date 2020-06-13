@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 namespace cpat_core.Hubs.Mongo
 {
     [EnableCors("AppPolicy")]
-    public class PersonHub :  Hub, IHub
+    public class LocationHub : Hub, IHub
     {
-        private readonly PersonDbService _personDbService;
+        private readonly LocationDbService _locationDbService;
 
-        public PersonHub(PersonDbService personDbService)
+        public LocationHub(LocationDbService locationDbService)
         {
-            _personDbService = personDbService;
+            _locationDbService = locationDbService;
         }
 
         public async Task SubscribeById(string docId)
@@ -32,10 +32,10 @@ namespace cpat_core.Hubs.Mongo
             // Set our matching criteria
             // Example: The operationType can be one of the following: insert, update, replace, delete, invalidate
             // Example: var pipeline = new EmptyPipelineDefinition<ChangeStreamDocument<BsonDocument>>().Match("{ operationType: { $in: [ 'replace', 'insert', 'update' ] } }");
-            var pipeline = new EmptyPipelineDefinition<ChangeStreamDocument<PersonDto>>()
+            var pipeline = new EmptyPipelineDefinition<ChangeStreamDocument<LocationDto>>()
                     .Match(t => t.FullDocument.Id == Guid.Parse(""));
 
-            Guid subscriptionId = _personDbService.Subscribe(pipeline, options);
+            Guid subscriptionId = _locationDbService.Subscribe(pipeline, options);
         }
     }
 }

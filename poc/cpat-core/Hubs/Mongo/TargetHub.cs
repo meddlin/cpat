@@ -1,5 +1,6 @@
 ﻿using cpat_core.DataAccess.DataControl.Mongo;
 using cpat_core.DataAccess.DataTransferModels.Mongo.TargetTypes;
+using cpat_core.Hubs.Mongo;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 namespace cpat_core.DataAccess.Hubs.Mongo
 {
     [EnableCors("AppPolicy")]
-    public class TargetHub : Hub
+    public class TargetHub : Hub, IHub
     {
         private readonly TargetDbService _targetDbService;
 

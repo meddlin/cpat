@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Dialog, Table, Button, Heading } from 'evergreen-ui';
 import { useHistory } from 'react-router-dom';
 import { locationActions } from '../state-management/location/actions';
-const LocationRemove = React.lazy(() => import ('../components/target-types/location/LocationRemove'));
+import { LocationRemove } from '../components/target-types/location/LocationRemove';
 
 const LocationListing = (props) => {
     const [isShown, setIsShown] = useState(false);

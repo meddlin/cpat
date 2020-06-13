@@ -7,8 +7,6 @@ const DocumentAnalyticsDetail = React.lazy(() => import ('../../DocumentAnalytic
 const TargetRemove = (props) => {
     const { data, dispatch } = props;
 
-    console.log(`Showing data from...${data && data.name ? data.name : ''}`)
-
     return (
         <div>
             <h3>Remove - Target: &lt;insert-here&gt;</h3>

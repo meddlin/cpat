@@ -98,15 +98,15 @@ export function location(state = {}, action) {
 
 
         case locationConstants.REMOVE_LOCATION_REQUEST:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: true
             });
         case locationConstants.REMOVE_LOCATION_SUCCESS:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: false
             });
         case locationConstants.REMOVE_LOCATION_FAILURE:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: false
             });    
 

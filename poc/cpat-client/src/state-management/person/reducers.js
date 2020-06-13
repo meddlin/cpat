@@ -96,15 +96,15 @@ export function person(state = {}, action) {
 
 
         case personConstants.REMOVE_PERSON_REQUEST:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: true
             });
         case personConstants.REMOVE_PERSON_SUCCESS:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: false
             });
         case personConstants.REMOVE_PERSON_FAILURE:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: false
             });    
 

@@ -38,6 +38,7 @@ namespace cpat_core
             services.AddControllers();
             services.AddScoped<TargetDbService>();
             services.AddScoped<PersonDbService>();
+            services.AddScoped<LocationDbService>();
 
             // Configure strongly typed settings objects
             //var appSettingsSection = Configuration.GetSection("ConnectionStrings");
@@ -70,6 +71,7 @@ namespace cpat_core
                 endpoints.MapHub<ChatHub>("/chatHub");
                 endpoints.MapHub<TargetHub>("/targetHub");
                 endpoints.MapHub<PersonHub>("/personHub");
+                endpoints.MapHub<LocationHub>("/locationHub");
             });
         }
     }
