@@ -1,12 +1,11 @@
 import React from 'react';
 import { Button } from 'evergreen-ui';
+import { connect } from 'react-redux';
 import { locationActions } from '../../../state-management/location/actions';
 const DocumentAnalyticsDetail = React.lazy(() => import ('../../DocumentAnalyticsDetail'));
 
 const LocationRemove = (props) => {
     const { data, dispatch } = props;
-
-    console.log(`Showing data from...${data && data.name ? data.name : ''}`)
 
     return (
         <div>
@@ -36,4 +35,11 @@ const LocationRemove = (props) => {
     );
 };
 
-export default LocationRemove;
+function mapStateToProps(state) {
+    return {
+        loading: state.location ? state.location.loading : false
+     };
+}
+
+const LocationRemoveConnection = connect(mapStateToProps)(LocationRemove);
+export { LocationRemoveConnection as LocationRemove };
