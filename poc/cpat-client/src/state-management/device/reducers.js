@@ -91,15 +91,15 @@ export function device(state = {}, action) {
 
 
         case deviceConstants.REMOVE_DEVICE_REQUEST:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: true
             });
         case deviceConstants.REMOVE_DEVICE_SUCCESS:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: false
             });
         case deviceConstants.REMOVE_DEVICE_FAILURE:
-            return Object.assign({}, ...state, {
+            return Object.assign({}, state, {
                 loading: false
             });    
 

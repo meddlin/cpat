@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { Dialog, Table, Button, Heading } from 'evergreen-ui';
 import { useHistory } from 'react-router-dom';
 import { deviceActions } from '../state-management/device/actions';
-
-const DeviceRemove = React.lazy(() => import ('../components/target-types/device/DeviceRemove'));
+import { DeviceRemove } from '../components/target-types/device/DeviceRemove';
 
 
 const DeviceListing = (props) => {
