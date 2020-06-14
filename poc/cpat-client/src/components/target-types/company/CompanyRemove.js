@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'evergreen-ui';
+import { connect } from 'react-redux';
 import { companyActions } from '../../../state-management/company/actions';
 const DocumentAnalyticsDetail = React.lazy(() => import ('../../DocumentAnalyticsDetail'));
 
@@ -34,4 +35,11 @@ const CompanyRemove = (props) => {
     );
 };
 
-export default CompanyRemove;
+function mapStateToProps(state) {
+    return {
+        loading: state.company ? state.company.loading : false
+     };
+}
+
+const CompanyRemoveConnection = connect(mapStateToProps)(CompanyRemove);
+export { CompanyRemoveConnection as CompanyRemove };
