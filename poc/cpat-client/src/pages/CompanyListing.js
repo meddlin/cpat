@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { Dialog, Table, Button, Heading } from 'evergreen-ui';
 import { useHistory } from 'react-router-dom';
 import { companyActions } from '../state-management/company/actions';
-
-const CompanyRemove = React.lazy(() => import('../components/target-types/company/CompanyRemove'));
+import { CompanyRemove } from '../components/target-types/company/CompanyRemove';
 
 const CompanyListing = (props) => {
     const [isShown, setIsShown] = useState(false);

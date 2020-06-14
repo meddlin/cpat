@@ -34,12 +34,36 @@ namespace cpat_core.Models
             };
         }
 
+        public static Company Translate(DataAccess.DataTransferModels.Mongo.TargetTypes.CompanyDto data)
+        {
+            return new Company()
+            {
+                Id = data.Id,
+                Name = data.Name,
+                DocumentRelation = data.DocumentRelation,
+                DateCreated = data.DateCreated,
+                UpdatedAt = data.UpdatedAt,
+                //LastModifiedBy = data.LastModifiedByUserId
+            };
+        }
+
         /// <summary>
         /// Converts a collection of <c>CompanyDto</c> to a collection of <c>Company</c>.
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
         public static IEnumerable<Company> Translate(List<CompanyDto> data)
+        {
+            var compList = new List<Company>();
+            data.ForEach(d =>
+            {
+                compList.Add(Company.Translate(d));
+            });
+
+            return compList;
+        }
+
+        public static IEnumerable<Company> Translate(List<DataAccess.DataTransferModels.Mongo.TargetTypes.CompanyDto> data)
         {
             var compList = new List<Company>();
             data.ForEach(d =>

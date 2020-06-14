@@ -106,5 +106,5 @@ function remove(id) {
         body: JSON.stringify(id)
     };
 
-    return fetch(`${handlers.config.apiUrl}/company`, requestOptions).then(handlers.handleHttpResponse);
+    return fetch(`${handlers.config.apiUrl}/company/remove`, requestOptions).then(handlers.handleHttpResponse);
 };
