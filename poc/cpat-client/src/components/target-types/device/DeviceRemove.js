@@ -1,12 +1,11 @@
 import React from 'react';
 import { Button } from 'evergreen-ui';
+import { connect } from 'react-redux';
 import { deviceActions } from '../../../state-management/device/actions';
 const DocumentAnalyticsDetail = React.lazy(() => import ('../../DocumentAnalyticsDetail'));
 
 const DeviceRemove = (props) => {
     const { data, dispatch } = props;
-
-    console.log(`Showing data from...${data && data.name ? data.name : ''}`)
 
     return (
         <div>
@@ -36,4 +35,11 @@ const DeviceRemove = (props) => {
     );
 };
 
-export default DeviceRemove;
+function mapStateToProps(state) {
+    return {
+        loading: state.device ? state.device.loading : false
+     };
+}
+
+const DeviceRemoveConnection = connect(mapStateToProps)(DeviceRemove);
+export { DeviceRemoveConnection as DeviceRemove };

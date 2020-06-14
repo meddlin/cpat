@@ -44,12 +44,43 @@ namespace cpat_core.Models
             };
         }
 
+        public static Device Translate(DataAccess.DataTransferModels.Mongo.TargetTypes.DeviceDto data)
+        {
+            return new Device()
+            {
+                Id = data.Id,
+                Name = data.Name,
+                Organizations = data.Organizations,
+                DocumentRelation = data.DocumentRelation,
+
+                DateCreated = data.DateCreated,
+                UpdatedAt = data.UpdatedAt,
+                //LastModifiedBy = data.LastModifiedByUserId
+            };
+        }
+
         /// <summary>
         /// Converts a collection of <c>DeviceDto</c> to a collection of <c>Device</c>.
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
         public static IEnumerable<Device> Translate(List<DeviceDto> data)
+        {
+            var deviceList = new List<Device>();
+            data.ForEach(d =>
+            {
+                deviceList.Add(Device.Translate(d));
+            });
+
+            return deviceList;
+        }
+
+        /// <summary>
+        /// Converts a collection of <c>DeviceDto</c> to a collection of <c>Device</c>.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static IEnumerable<Device> Translate(List<DataAccess.DataTransferModels.Mongo.TargetTypes.DeviceDto> data)
         {
             var deviceList = new List<Device>();
             data.ForEach(d =>
