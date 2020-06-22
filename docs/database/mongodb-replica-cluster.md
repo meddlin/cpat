@@ -1,4 +1,4 @@
-# MongoDB Replica Cluster
+# MongoDB Replica Cluster (in Docker)
 
 This document covers how to stand up a basic 3-node MongoDB replica cluster for testing purposes.
 
