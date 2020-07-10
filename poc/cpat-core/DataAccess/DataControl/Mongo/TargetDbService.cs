@@ -27,8 +27,8 @@ namespace cpat_core.DataAccess.DataControl.Mongo
         public TargetDbService(IConfiguration config, IHubContext<TargetHub> hubContext)
         {
             var client = new MongoClient(config.GetConnectionString("CPAT_DATASTORE"));
-            var database = client.GetDatabase("cpat_data");
-            _targets = database.GetCollection<TargetDto>("target");
+            var database = client.GetDatabase("cpatdb");
+            _targets = database.GetCollection<TargetDto>("targets");
 
             _hubContext = hubContext;
         }
