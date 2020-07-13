@@ -1,12 +1,5 @@
 # Basic Development Environment: Setup Notes
 
-
-/**
-* Notice in MongoDB
-* -- DB: logistics
-* -- coll(s): orders, shipments
-*/
-
 ## MongoDB Test Data
 
 _Be careful. This test data DOESN'T share the same schema as the Target data type coming from the API. This test data 

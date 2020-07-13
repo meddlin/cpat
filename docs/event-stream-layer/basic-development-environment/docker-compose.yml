@@ -47,10 +47,13 @@
       container_name: kibana
       depends_on:
         - elastic
-      volumes:
-        - ./kibana.yml:/usr/share/kibana/config/kibana.yml
       ports:
         - 5601:5601
+      environment:
+        SERVER_NAME: kibana
+        ELASTICSEARCH_HOSTS: http://elastic:9200
+      # volumes:
+      #   - ./kibana.yml:/usr/share/kibana/config/kibana.yml
   
     zookeeper:
       image: confluentinc/cp-zookeeper:5.5.0
