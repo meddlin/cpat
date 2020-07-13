@@ -4,6 +4,12 @@
 
 Ref: [https://stackoverflow.com/questions/33537950/how-to-delete-a-topic-in-apache-kafka](https://stackoverflow.com/questions/33537950/how-to-delete-a-topic-in-apache-kafka)
 
+## Persisting Data
+
+Starting point: [https://docs.confluent.io/current/installation/docker/operations/external-volumes.html](https://docs.confluent.io/current/installation/docker/operations/external-volumes.html)
+
+Data balancing; looks useful: [https://docs.confluent.io/current/installation/docker/installation/automatic-data-balancing.html](https://docs.confluent.io/current/installation/docker/installation/automatic-data-balancing.html)
+
 ## ksql: Data not moving through `ksql` streams, topics
 
 Here's a summary of what happened. *This came down to a schema issue.*
