@@ -1,5 +1,7 @@
 # Schemas: Target Types
 
+These schemas were created for Cockroach DB.
+
 ## Company
 
 ```sql

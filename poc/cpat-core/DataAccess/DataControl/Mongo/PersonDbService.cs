@@ -22,7 +22,7 @@ namespace cpat_core.DataAccess.DataControl.Mongo
         public PersonDbService(IConfiguration config, IHubContext<PersonHub> hubContext)
         {
             var client = new MongoClient(config.GetConnectionString("CPAT_DATASTORE"));
-            var database = client.GetDatabase("cpat_data");
+            var database = client.GetDatabase("cpatdb");
             _collection = database.GetCollection<PersonDto>("person");
 
             _hubContext = hubContext;

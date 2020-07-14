@@ -21,3 +21,13 @@ Ref: [https://stackoverflow.com/questions/46428420/docker-compose-up-down-stop-s
 Ref - `docker-compose down`: [https://docs.docker.com/compose/reference/down/](https://docs.docker.com/compose/reference/down/)
 
 Ref - `docker-compose stop`: [https://docs.docker.com/compose/reference/stop/](https://docs.docker.com/compose/reference/stop/)
+
+## Another Fix (Revisiting Issue)
+
+Ref [https://stackoverflow.com/questions/56463705/mongodb-secondary-replica-does-not-show-databases-code-notmasternoslaveok?noredirect=1&lq=1](https://stackoverflow.com/questions/56463705/mongodb-secondary-replica-does-not-show-databases-code-notmasternoslaveok?noredirect=1&lq=1)
+
+From within MongoDB CLI, run this
+
+```bash
+rs.slaveOk();
+```
