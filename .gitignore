@@ -1,3 +1,10 @@
+cpat-client/node_modules/
+cpat-core/bin/*
+cpat-core/obj/*
+CpatCoreTests/bin/*
+CpatCoreTests/obj/*
+
+
 node_modules/
 metagoofil/
 python-rest-api/venv
