@@ -1,0 +1,13 @@
+C:\Users\meddlin\Documents\Junkyard\git\cockroach-test-app\bin\Debug\netcoreapp3.0\cockroach-test-app.exe
+C:\Users\meddlin\Documents\Junkyard\git\cockroach-test-app\bin\Debug\netcoreapp3.0\cockroach-test-app.deps.json
+C:\Users\meddlin\Documents\Junkyard\git\cockroach-test-app\bin\Debug\netcoreapp3.0\cockroach-test-app.runtimeconfig.json
+C:\Users\meddlin\Documents\Junkyard\git\cockroach-test-app\bin\Debug\netcoreapp3.0\cockroach-test-app.runtimeconfig.dev.json
+C:\Users\meddlin\Documents\Junkyard\git\cockroach-test-app\bin\Debug\netcoreapp3.0\cockroach-test-app.dll
+C:\Users\meddlin\Documents\Junkyard\git\cockroach-test-app\bin\Debug\netcoreapp3.0\cockroach-test-app.pdb
+C:\Users\meddlin\Documents\Junkyard\git\cockroach-test-app\bin\Debug\netcoreapp3.0\Npgsql.dll
+C:\Users\meddlin\Documents\Junkyard\git\cockroach-test-app\obj\Debug\netcoreapp3.0\cockroach-test-app.csprojAssemblyReference.cache
+C:\Users\meddlin\Documents\Junkyard\git\cockroach-test-app\obj\Debug\netcoreapp3.0\cockroach-test-app.AssemblyInfoInputs.cache
+C:\Users\meddlin\Documents\Junkyard\git\cockroach-test-app\obj\Debug\netcoreapp3.0\cockroach-test-app.AssemblyInfo.cs
+C:\Users\meddlin\Documents\Junkyard\git\cockroach-test-app\obj\Debug\netcoreapp3.0\cockroach-test-app.csproj.CopyComplete
+C:\Users\meddlin\Documents\Junkyard\git\cockroach-test-app\obj\Debug\netcoreapp3.0\cockroach-test-app.dll
+C:\Users\meddlin\Documents\Junkyard\git\cockroach-test-app\obj\Debug\netcoreapp3.0\cockroach-test-app.pdb
