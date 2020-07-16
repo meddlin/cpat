@@ -1,9 +1,0 @@
-/cockroach-test-app/.vscode/*
-/cockroach-test-app/bin/*
-/cockroach-test-app/obj/*
-
-/SignalRTest/.vs/*
-/SignalRTest/SignalRTest/bin/*
-/SignalRTest/SignalRTest/obj/*
-
-/signalrclient/node_modules/*
