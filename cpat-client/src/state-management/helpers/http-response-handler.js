@@ -2,7 +2,9 @@
  * Holds configuration info for interacting with any attached APIs.
  */
 const config = {
-    apiUrl: process.env.REACT_APP_API_URL || 'https://localhost:5001/api/mongo'
+    apiUrl: process.env.REACT_APP_API_URL || 'https://localhost:5001/api/mongo',
+    // osintApiUrl: process.env.OSINT_APP_API_URL || 'http://192.168.1.44:5000'
+    osintApiUrl: process.env.OSINT_APP_API_URL || 'http://localhost:4000'
 };
 
 /**

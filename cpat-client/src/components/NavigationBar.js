@@ -74,6 +74,8 @@ const NavigationBar = () => {
                 size={600} 
                 marginTop="default" 
                 onClick={() => history.push('/')}>CPAT</Heading>
+            
+            <Link to="/scripts/test">Scripts Test</Link>
         </StyledBar>
     );
 };
