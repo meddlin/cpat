@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using cpat_core.DataAccess.DataControl.Mongo;
+using cpat_core.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace cpat_core.Controllers.Osint
 {
@@ -14,7 +17,13 @@ namespace cpat_core.Controllers.Osint
     [ApiController]
     public class OsintController : ControllerBase
     {
-        public OsintController() { }
+        private readonly ILogger<OsintController> _logger;
+        private readonly OsintDbService _osintDbService;
+
+        public OsintController(OsintDbService osintDbService)
+        { 
+            _osintDbService = osintDbService;
+        }
 
         [HttpGet]
         public string Test([FromRoute] int id)
@@ -27,6 +36,13 @@ namespace cpat_core.Controllers.Osint
         public void NmapData([FromBody] NmapRequest data)
         {
             Console.WriteLine($"OsintBasicController: {data.Payload}");
+            
+            // Send data.Payload to MongoDB :)
+            var test = new OsintData() {
+                ToolName = "nmap",
+                RawData = data.Payload
+            };
+            _osintDbService.Insert(test);
         }
     }
 

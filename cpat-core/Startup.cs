@@ -48,6 +48,7 @@ namespace cpat_core
             services.AddScoped<LocationDbService>();
             services.AddScoped<DeviceDbService>();
             services.AddScoped<CompanyDbService>();
+            services.AddScoped<OsintDbService>();
 
             // Configure strongly typed settings objects
             //var appSettingsSection = Configuration.GetSection("ConnectionStrings");
