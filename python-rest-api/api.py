@@ -66,7 +66,7 @@ def nmap():
 	printer.pprint(result)
 
 	url = 'http://localhost:5000/api/osint/nmapdata'
-	req_payload = {"payload": "test data after nmap"}
+	req_payload = {"payload": result}
 	r = requests.post(url, headers={'mode': 'cors'}, json=req_payload)
 	printer.pprint("called cpat-core API")
 	printer.pprint(r.text)
