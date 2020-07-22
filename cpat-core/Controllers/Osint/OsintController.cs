@@ -24,9 +24,14 @@ namespace cpat_core.Controllers.Osint
         }
 
         [HttpPost]
-        public void NmapData(object postData)
+        public void NmapData([FromBody] NmapRequest data)
         {
-            Console.WriteLine($"OsintBasicController: {postData}");
+            Console.WriteLine($"OsintBasicController: {data.Payload}");
         }
+    }
+
+    public class NmapRequest
+    {
+        public string Payload { get; set; }
     }
 }

@@ -47,7 +47,7 @@ def ls():
 @app.route('/nmap', methods=['POST'])
 def nmap():
 	# options = request.args.get('options')
-	
+
 	# What does this turn into when we don't have a request body?
 	# data = request.json
 	# options = ""
@@ -65,8 +65,9 @@ def nmap():
 	result = p.communicate()[0]
 	printer.pprint(result)
 
-	url = 'http://localhost:5000/api/osint/test/5'
-	r = requests.get(url, headers={'mode': 'cors'})
+	url = 'http://localhost:5000/api/osint/nmapdata'
+	req_payload = {"payload": "test data after nmap"}
+	r = requests.post(url, headers={'mode': 'cors'}, json=req_payload)
 	printer.pprint("called cpat-core API")
 	printer.pprint(r.text)
 	return result
