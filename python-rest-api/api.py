@@ -1,8 +1,11 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import pprint
 from subprocess import Popen, PIPE
+import requests
 
 app = Flask(__name__)
+CORS(app)
 app.config["DEBUG"] = True
 printer = pprint.PrettyPrinter(indent=4)
 
@@ -44,22 +47,29 @@ def ls():
 @app.route('/nmap', methods=['POST'])
 def nmap():
 	# options = request.args.get('options')
-	
+
 	# What does this turn into when we don't have a request body?
-	data = request.json
-	options = ""
-	for q in data:
-		options = options + "{} {}".format(q, data[q]) + " "
-	printer.pprint(data)
+	# data = request.json
+	# options = ""
+	# for q in data:
+	# 	options = options + "{} {}".format(q, data[q]) + " "
+	# printer.pprint(data)
 
-	# Decide how to invoke the tool based on if we have options
-	if (options != None):
-		p = Popen(["nmap", options], stdout = PIPE)
-	else:
-		p = Popen("nmap", stdout = PIPE)
+	# # Decide how to invoke the tool based on if we have options
+	# if (options != None):
+	# 	p = Popen(["nmap", options], stdout = PIPE)
+	# else:
+	# 	p = Popen("nmap", stdout = PIPE)
 
+	p = Popen(["nmap", "-v"], stdout = PIPE)
 	result = p.communicate()[0]
 	printer.pprint(result)
+
+	url = 'http://localhost:5000/api/osint/nmapdata'
+	req_payload = {"payload": result}
+	r = requests.post(url, headers={'mode': 'cors'}, json=req_payload)
+	printer.pprint("called cpat-core API")
+	printer.pprint(r.text)
 	return result
 
 
@@ -70,4 +80,5 @@ def metagoofil():
 	printer.pprint(result)
 	return result
 
-app.run()
+# app.run(host='0.0.0.0')
+app.run(port=4000)

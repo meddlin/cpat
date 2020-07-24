@@ -25,12 +25,19 @@ namespace cpat_core
         {
             services.AddCors(options =>
             {
+                string[] DEV_ORIGINS = new string[] { 
+                    "http://localhost:3000", 
+                    "http://localhost:4000",
+                    "http://localhost:5000",
+                    "http://192.168.1.44:5000" 
+                };
+
                 options.AddPolicy("AppPolicy",
                     builder =>
                     {
                         builder.AllowAnyHeader()
                                 .AllowAnyMethod()
-                                .WithOrigins("http://localhost:3000")
+                                .WithOrigins(DEV_ORIGINS)
                                 .AllowCredentials();
                     });
             });
@@ -41,6 +48,7 @@ namespace cpat_core
             services.AddScoped<LocationDbService>();
             services.AddScoped<DeviceDbService>();
             services.AddScoped<CompanyDbService>();
+            services.AddScoped<OsintDbService>();
 
             // Configure strongly typed settings objects
             //var appSettingsSection = Configuration.GetSection("ConnectionStrings");
@@ -63,7 +71,7 @@ namespace cpat_core
 
             app.UseCors("AppPolicy");
 
-            app.UseHttpsRedirection();
+            /*app.UseHttpsRedirection();*/
             app.UseRouting();
             app.UseAuthorization();
 

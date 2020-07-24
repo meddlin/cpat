@@ -1,5 +1,7 @@
 # Basic Development Environment: Setup Notes
 
+Originally pulled from this tutorial: [https://docs.ksqldb.io/en/latest/tutorials/etl/](https://docs.ksqldb.io/en/latest/tutorials/etl/)
+
 ## MongoDB Test Data
 
 _Be careful. This test data DOESN'T share the same schema as the Target data type coming from the API. This test data 
