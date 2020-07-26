@@ -15,5 +15,8 @@ export function scriptsTest(state = {}, action) {
             return Object.assign([], state, {
                 loading: false,
             });
+        
+        default:
+            return state;
     }
 };
