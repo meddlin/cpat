@@ -2,7 +2,22 @@
  * Holds configuration info for interacting with any attached APIs.
  */
 const config = {
-    apiUrl: process.env.REACT_APP_API_URL || 'https://localhost:5001/api/mongo',
+    /* TESTING INFORMATION
+     * Make sure all 3 of these points are accounted for when troubleshooting connection issues.
+     * 
+     * - HTTPS is disabled
+     *   - For testing/development purposes among React/JS, .NET Core, and Python (Flask)
+     * - /api/mongo
+     *   - Be watchful of /mongo route. This is how we're determining data is to be routed to MongDB
+     * - Watch the ports
+     *   - 5001: HTTPS-enabled .NET Core (cpat-core)
+     *   - 5000: HTTP .NET Core (cpat-core)
+     *   - 3000: HTTP React (cpat-client)
+     *   - 4000: HTTP Python Flask (python-osint)
+     */
+
+    apiUrl: process.env.REACT_APP_API_URL || 'http://localhost:5000/api/mongo',
+    apiCoreUrl: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
     // osintApiUrl: process.env.OSINT_APP_API_URL || 'http://192.168.1.44:5000'
     osintApiUrl: process.env.OSINT_APP_API_URL || 'http://localhost:4000'
 };

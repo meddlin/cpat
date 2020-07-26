@@ -6,6 +6,8 @@ import { device } from '../device/reducers';
 import { location } from '../location/reducers';
 import { person } from '../person/reducers';
 import { target } from '../target/reducers';
+import { scriptsTest } from '../scripts-test/reducers';
+import { search } from '../search/reducers';
 
 const loggerMiddleware = createLogger();
 const rootReducer = combineReducers({
@@ -13,7 +15,9 @@ const rootReducer = combineReducers({
     device,
     location,
     person,
-    target
+    target,
+    scriptsTest,
+    search
 });
 
 export const store = createStore(
