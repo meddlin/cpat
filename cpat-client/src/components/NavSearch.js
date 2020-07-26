@@ -1,13 +1,17 @@
 import React from 'react';
 import { SearchInput } from 'evergreen-ui';
+import { connect } from 'react-redux';
+import { searchActions } from '../state-management/search/actions';
 
-const NavSearch = () => {
+const NavSearch = (props) => {
+    const { dispatch, loading } = props;
 
     const handleKeyPress = (ev) => {
-        console.log('key press...');
-        console.log(`ev: ${ev.target.value}`)
+        if (ev.keyCode === 13) {
+            console.log(`ev: ${ev.target.value}`);
 
-        if (ev.keyCode === 13) console.log('ENTER PRESSED...')
+            dispatch(searchActions.searchQuery());
+        }
     }
 
     return (
@@ -17,4 +21,12 @@ const NavSearch = () => {
     );
 };
 
-export default NavSearch;
+function mapStateToProps(state) {
+    return {
+        results: (state.search && state.search.searchResult && Array.isArray(state.search.searchResult)) ? state.search.searchResult : [],
+        loading: state.search ? state.search.loading : false
+    }
+}
+
+const connectedNavSearch = connect(mapStateToProps)(NavSearch);
+export { connectedNavSearch as NavSearch };

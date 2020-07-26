@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Pane, SideSheet, Position, Heading, Icon, Menu, SearchInput } from 'evergreen-ui';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import NavSearch from './NavSearch';
+import { NavSearch } from './NavSearch';
 
 const StyledBar = styled.div`
     display: flex;

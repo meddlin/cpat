@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver.Core.Configuration;
 using cpat_core.DataAccess.DataTransferModels;
 using Nest;
+using cpat_core.DataAccess.DataTransferModels.Elastic;
 
 namespace cpat_core.Controllers.Search
 {
@@ -72,6 +73,9 @@ namespace cpat_core.Controllers.Search
             var searchResponse = client.Search<DataAccess.DataTransferModels.Elastic.TargetDto>(s => s
                 .Query(q => q.MatchAll())
             );
+
+            var analyticsEntry = new SearchAnalytics() { Index = "targets", searchDate = DateTime.Now };
+            var analyticsResponse = client.Index<SearchAnalytics>(analyticsEntry, i => i.Index("analytics"));
 
             return searchResponse.Documents.ToList();
         }

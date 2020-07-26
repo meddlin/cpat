@@ -7,5 +7,7 @@ namespace cpat_core.DataAccess.DataTransferModels.Elastic
 {
     public class SearchAnalytics
     {
+        public string Index { get; set; }
+        public DateTime searchDate { get; set; }
     }
 }
