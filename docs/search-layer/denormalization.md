@@ -67,7 +67,7 @@ So, we still create each document, but each document holds a relation to some ot
 
 In other MongoDB collections...
 
-- _[...and the rest follow]
+- _[...and the rest follow]_
 
 ## Further Reading
 
