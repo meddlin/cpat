@@ -8,11 +8,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
-    <PackageReference Include="MongoDB.Driver" Version="2.11.1" />
+    <PackageReference Include="MongoDB.Driver" Version="2.11.2" />
     <PackageReference Include="Morcatko.AspNetCore.JsonMergePatch.NewtonsoftJson" Version="3.0.4" />
     <PackageReference Include="NEST" Version="7.9.0" />
     <PackageReference Include="Npgsql" Version="4.1.4" />
     <PackageReference Include="NPoco" Version="4.0.2" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.20427.1" />
+    <PackageReference Include="System.CommandLine.DragonFruit" Version="0.3.0-alpha.20427.1" />
   </ItemGroup>
 
 

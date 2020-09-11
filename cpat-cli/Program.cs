@@ -1,6 +1,14 @@
 ﻿using System;
+using System.CommandLine;
+using System.CommandLine.DragonFruit;
+using System.CommandLine.Invocation;
+using System.CommandLine.Rendering;
+using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.NetworkInformation;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace cpat_cli
@@ -10,12 +18,38 @@ namespace cpat_cli
         private static readonly HttpClient client = new HttpClient();
 
         // static void Main(string[] args)
-        static async Task Main(string[] args)
+        // static async Task Main(string[] args)
+
+        /// <summary>
+        /// Testing the DragonFruit CLI parsing abilities
+        /// </summary>
+        /// <param name="context">Represents the ConsoleRenderer context. Not entered by user.</param>
+        /// <param name="verbose"></param>
+        /// <param name="numbers"></param>
+        /// <param name="get">Submit a REST endpoint to GET from the cpat-core API.</param>
+        static async Task Main(InvocationContext context, bool verbose, int[] numbers, string get)
         {
-            Console.WriteLine("Welcome to CPAT (Collaborative Penetration-testing and Analysis Toolkit)");
+            var consoleRenderer = new ConsoleRenderer(
+                context.Console,
+                context.BindingContext.OutputMode(),
+                true);
 
-            await SendApiGet("/targets");
+            if (get == "targets")
+            {
+                await SendApiGet("/targets");
+            }
 
+            if (numbers != null)
+            {
+                if (verbose)
+                    Console.WriteLine($"Adding {string.Join("", numbers)}");
+
+                Console.WriteLine(numbers.Sum());
+            }
+            else
+            {
+                if (verbose) Console.WriteLine("No numbers to sum.");
+            }
         }
 
         public static async Task SendApiGet(string route)
