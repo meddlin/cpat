@@ -21,7 +21,7 @@ namespace cpat_core.Controllers.Osint
         private readonly OsintDbService _osintDbService;
 
         public OsintController(OsintDbService osintDbService)
-        { 
+        {
             _osintDbService = osintDbService;
         }
 

@@ -1,6 +1,6 @@
 ## Connect and Combine Reducers
 
-Now, the reducers. These perform most of the work of maintaing our store. When our actions and/or services have finished retrieving data doing whatever is necessary that data is dropped off here, and we have to decide how to update the store.
+Now, the reducers. These perform most of the work of maintaining our store. When our actions and/or services have finished retrieving data doing whatever is necessary that data is dropped off here, and we have to decide how to update the store.
 
 <hr />
 

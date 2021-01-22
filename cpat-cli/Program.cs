@@ -3,6 +3,7 @@ using System.CommandLine;
 using System.CommandLine.DragonFruit;
 using System.CommandLine.Invocation;
 using System.CommandLine.Rendering;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -13,9 +14,16 @@ using System.Threading.Tasks;
 
 namespace cpat_cli
 {
+    public class ExampleProfile
+    {
+        public string User { get; set; }
+        public string ApiKey { get; set; }
+    }
+
     class Program
     {
         private static readonly HttpClient client = new HttpClient();
+
 
         // static void Main(string[] args)
         // static async Task Main(string[] args)
@@ -27,29 +35,27 @@ namespace cpat_cli
         /// <param name="verbose"></param>
         /// <param name="numbers"></param>
         /// <param name="get">Submit a REST endpoint to GET from the cpat-core API.</param>
-        static async Task Main(InvocationContext context, bool verbose, int[] numbers, string get)
+        static async Task Main(InvocationContext context, bool verbose, int[] numbers, string create, ExampleProfile profile)
         {
             var consoleRenderer = new ConsoleRenderer(
                 context.Console,
                 context.BindingContext.OutputMode(),
                 true);
 
-            if (get == "targets")
+            var profileComm = new RootCommand("setProfile")
             {
-                await SendApiGet("/targets");
-            }
+                new Command("user")
+            };
+            profileComm.Handler = CommandHandler.Create(() =>
+            {
+                Console.WriteLine("inside the profile command handler");
+            });
 
-            if (numbers != null)
-            {
-                if (verbose)
-                    Console.WriteLine($"Adding {string.Join("", numbers)}");
+            if (verbose) Console.WriteLine("verbose flag -> ON");
 
-                Console.WriteLine(numbers.Sum());
-            }
-            else
-            {
-                if (verbose) Console.WriteLine("No numbers to sum.");
-            }
+            Console.WriteLine("CPAT - Hello!");
+
+            // profileComm.InvokeAsync(args).Wait();
         }
 
         public static async Task SendApiGet(string route)
