@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "cpat-cli": {
+      "commandName": "Project",
+      "commandLineArgs": "--create company"
+    }
+  }
+}
