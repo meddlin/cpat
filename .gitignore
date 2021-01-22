@@ -10,3 +10,6 @@ metagoofil/
 python-rest-api/venv
 
 *.pdf
+
+*/bin/*
+*/obj/*
